@@ -6,12 +6,14 @@ using System.IO;
 public class MapGenerator : MonoBehaviour
 {   
     [SerializeField]private GameObject[] mapObjects;
+    [SerializeField]private GameObject player;
+    [SerializeField]private int mapNum;
     
     float objSize = 5.0f;
     float offset = 37.5f;
     const int mapSizeX = 16;
     const int mapSizeZ = 16;
-    int[,] mapData = new int[mapSizeX, mapSizeZ];
+    string[,] mapData = new string[mapSizeX, mapSizeZ];
 
      void Awake() 
     {
@@ -28,17 +30,23 @@ public class MapGenerator : MonoBehaviour
         FileLoad(in mapData);
         for(int z = 0; z < mapData.GetLength(1); ++z){
             for(int x = 0; x < mapData.GetLength(0); ++x){
-                if(mapData[z, x] == -1) continue;
-                GameObject obj = mapObjects[mapData[z, x]];
+                GameObject obj;
                 Vector3 pos = new Vector3(-offset + (objSize * x), 0, offset - (objSize * z));
-                Instantiate(obj, pos, Quaternion.identity, transform);
+                if(mapData[z, x] == "-1") continue;
+                if(mapData[z, x] != "p"){
+                    obj = mapObjects[int.Parse(mapData[z, x])];
+                    Instantiate(obj, pos, Quaternion.identity, transform);
+                }
+                else{
+                    player.transform.position = pos;
+                }
             }
         }
     }
-
-    void FileLoad(in int[,] datas)
+    
+    void FileLoad(in string[,] datas)
     {
-        TextAsset csvFile = Resources.Load("map1") as TextAsset;
+        TextAsset csvFile = Resources.Load("map" + mapNum) as TextAsset;
         if(csvFile == null) return;
 
         StringReader reader = new StringReader(csvFile.text);;
@@ -48,10 +56,10 @@ public class MapGenerator : MonoBehaviour
                 string line = reader.ReadLine();
                 for(int x = 0; x < mapData.GetLength(0); ++x){
                     if(string.IsNullOrEmpty(line.Split(',')[x])){
-                        datas[z, x] = -1;
+                        datas[z, x] = "-1";
                     }
                     else{
-                        datas[z, x] = int.Parse(line.Split(',')[x]);
+                        datas[z, x] = line.Split(',')[x];
                     }
                 }
             }

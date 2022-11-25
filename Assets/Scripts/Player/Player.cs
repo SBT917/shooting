@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     private GameManager gm;
     public GameObject hpContainer;
-    public GameObject menu;
+    [SerializeField]private GameObject menu;
     [SerializeField]private Camera minimapCamera;
     [SerializeField]private ShotSlot[] shotSlots;
     [SerializeField]private GameObject shot1;

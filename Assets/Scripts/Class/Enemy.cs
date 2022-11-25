@@ -16,21 +16,11 @@ public enum EnemyState
 
 public abstract class Enemy : MonoBehaviour
 {
-    
-
+    public EnemyData enemyData;
     private Rigidbody rb;
     protected NavMeshAgent nav;
 
-    public float maxHp;
     public float hp;
-    public int attackToPlayer;
-    public float attackToObject;
-    public float normalSpeed;
-    public float attackSpeed;
-    public int socore;
-    public float searchAngle;
-    public GameObject[] dropItems;
-
     public GameObject player;
     public GameObject target;
     public GameObject[] targetObjects;
@@ -51,8 +41,8 @@ public abstract class Enemy : MonoBehaviour
         enemyCanvas = transform.Find("EnemyCanvas").gameObject;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         state = EnemyState.Normal;
-        hp = maxHp;
-        nav.speed = normalSpeed;
+        hp = enemyData.maxHp;
+        nav.speed = enemyData.normalSpeed;
     }
 
     public void SetState(EnemyState newState)
@@ -75,7 +65,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Dead()
     {   
-        player.GetComponent<Player>().nowScore += socore;
+        player.GetComponent<Player>().nowScore += enemyData.score;
         ItemDrop();
         gameObject.SetActive(false);
     }
@@ -89,7 +79,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if(state == EnemyState.Normal)
         {
-            nav.speed = normalSpeed;
+            nav.speed = enemyData.normalSpeed;
 
             float[] distances = new float[targetObjects.Length];
             for(int i = 0; i < targetObjects.Length; ++i)
@@ -106,7 +96,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if(state == EnemyState.Attack)
         {
-            nav.speed = attackSpeed;
+            nav.speed = enemyData.attackSpeed;
             target = player;
 
             if(CheckDistance(player) > outRange || GetPlayerState() == PlayerState.Invisible)
@@ -153,9 +143,11 @@ public abstract class Enemy : MonoBehaviour
     }
 
     private void ItemDrop()
-    {
-        int itemValue = UnityEngine.Random.Range(0, dropItems.Length);
-        Instantiate(dropItems[itemValue], new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
+    {   
+        int randValue = UnityEngine.Random.Range(0, 100);
+        if(enemyData.itemDropRatio > randValue) return;
+        int itemValue = UnityEngine.Random.Range(0, enemyData.dropItems.Length);
+        Instantiate(enemyData.dropItems[itemValue], new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
     }
 
     private IEnumerator CanvasAvtiveCo()
@@ -185,10 +177,10 @@ public abstract class Enemy : MonoBehaviour
         switch(other.tag)
         {
             case "Player":
-                other.GetComponent<Player>().TakeDamage(attackToPlayer);
+                other.GetComponent<Player>().TakeDamage(enemyData.attackToPlayer);
                 break;
             case "Target":
-                other.GetComponent<TargetObject>().TakeDamage(attackToObject);
+                other.GetComponent<TargetObject>().TakeDamage(enemyData.attackToObject);
                 Disappearing();
                 break;
         }
@@ -198,7 +190,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player")){
-            other.GetComponent<Player>().TakeDamage(attackToPlayer);
+            other.GetComponent<Player>().TakeDamage(enemyData.attackToPlayer);
         }
     }
 }

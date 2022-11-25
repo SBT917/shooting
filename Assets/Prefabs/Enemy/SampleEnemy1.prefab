@@ -102,14 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb7a7ae9fea300d4ca39814e96700499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 0
+  enemyData: {fileID: 11400000, guid: b593861ca7fb7fb488baf64ea3060721, type: 2}
   hp: 0
-  attackToPlayer: 0
-  attackToObject: 0
-  normalSpeed: 0
-  attackSpeed: 0
-  socore: 0
-  searchAngle: 0
   dropItems:
   - {fileID: 6739383237830082110, guid: 0548600664617414eb3c60f492d0409d, type: 3}
   player: {fileID: 0}

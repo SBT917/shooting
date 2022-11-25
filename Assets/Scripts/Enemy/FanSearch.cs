@@ -10,7 +10,7 @@ public class FanSearch : MonoBehaviour
 
     void Start() 
     {
-        angle = transform.root.gameObject.GetComponent<Enemy>().searchAngle;
+        angle = transform.root.gameObject.GetComponent<Enemy>().enemyData.searchAngle;
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         parentEnemy = transform.root.gameObject.GetComponent<Enemy>();
     }

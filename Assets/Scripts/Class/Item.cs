@@ -17,6 +17,7 @@ public class Item : MonoBehaviour
 
     void Update()
     {
+        if(!player.gameObject.activeSelf) return;
         transform.LookAt(player.transform);
         transform.position += transform.forward * speed * Time.deltaTime;
     }

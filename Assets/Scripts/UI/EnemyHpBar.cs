@@ -12,7 +12,7 @@ public class EnemyHpBar : MonoBehaviour
     {
         parentEnemy = transform.root.gameObject.GetComponent<Enemy>();
         slider = GetComponent<Slider>();
-        slider.maxValue = parentEnemy.maxHp;
+        slider.maxValue = parentEnemy.enemyData.maxHp;
     }
 
     void Update()

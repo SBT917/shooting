@@ -6,14 +6,6 @@ public class SampleEnemy : Enemy
 {
     protected override void Awake()
     {
-        maxHp = 3.0f;
-        attackToPlayer = 1;
-        attackToObject = 1.0f;
-        normalSpeed = 1.0f;
-        attackSpeed = 2.0f;
-        socore = 100;
-        searchAngle = 90.0f;
-
         base.Awake();
     }
 

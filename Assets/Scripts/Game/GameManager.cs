@@ -15,8 +15,6 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    
-
     [SerializeField]private GameState state;
     [SerializeField]private TextMeshProUGUI gameText;
     [SerializeField]private TextMeshProUGUI waveText;
@@ -28,7 +26,7 @@ public class GameManager : MonoBehaviour
     private TargetSpawner targetSpawner;
     private Player player;
     private GameObject[] targetObjects;
-    private int waveCount = 1;
+    private int waveCount;
     private int startCount;
 
     private Coroutine spawnCo;
@@ -66,7 +64,9 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameStart()
     {
         state = GameState.Start;
+        SetLevel();
         startCount = 10;
+        
         while(startCount > 0){
             gameText.text = startCount.ToString();
             if(startCount == 5){
@@ -91,11 +91,7 @@ public class GameManager : MonoBehaviour
         StopCoroutine(spawnCo);
         EnemyDestroyer();
         shotShop.DrawingShop();
-        ++waveCount;
-        
-        leftTime = 90;
-        enemySpawnSpan = 30;
-        enemySpawnOneTime = 10;
+        SetLevel();
 
         startCount = 30;
         while(startCount > 0){
@@ -182,5 +178,23 @@ public class GameManager : MonoBehaviour
 
         targetSpawner.Spawner(count);
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
+    }
+
+    private void SetParameter(int time, int spawnSpan, int spawnOneTime)
+    {
+        leftTime = time;
+        enemySpawnSpan = spawnSpan;
+        enemySpawnOneTime = spawnOneTime;
+    }
+
+    private void SetLevel()
+    {
+        ++waveCount;
+        if(waveCount >= 1 && waveCount < 3){
+            SetParameter(60, 20, 20);
+        }
+        else if(waveCount >= 3 && waveCount < 6){
+            SetParameter(80, 20, 30);
+        }
     }
 }
