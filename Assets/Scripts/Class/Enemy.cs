@@ -31,7 +31,7 @@ public abstract class Enemy : MonoBehaviour
     private float canvasDisapCnt;
     
 
-     protected virtual void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
@@ -43,6 +43,12 @@ public abstract class Enemy : MonoBehaviour
         state = EnemyState.Normal;
         hp = enemyData.maxHp;
         nav.speed = enemyData.normalSpeed;
+    }
+
+    protected virtual void Update()
+    {
+        if(GetState() == EnemyState.Death) return;
+        Act();
     }
 
     public void SetState(EnemyState newState)
@@ -61,7 +67,12 @@ public abstract class Enemy : MonoBehaviour
         return playerState;
     }
 
-    protected abstract void Act();
+    protected virtual void Act()
+    {
+        NormalAction();
+        AttackAction(enemyData.attackOutRange, enemyData.searchTime);
+        nav.SetDestination(target.transform.position);
+    }
 
     protected virtual void Dead()
     {   
@@ -145,7 +156,7 @@ public abstract class Enemy : MonoBehaviour
     private void ItemDrop()
     {   
         int randValue = UnityEngine.Random.Range(0, 100);
-        if(enemyData.itemDropRatio > randValue) return;
+        if(enemyData.itemDropRatio < randValue) return;
         int itemValue = UnityEngine.Random.Range(0, enemyData.dropItems.Length);
         Instantiate(enemyData.dropItems[itemValue], new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
     }

@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 90216212223453039}
   - component: {fileID: 90216212223453038}
   - component: {fileID: 90216212223453033}
-  - component: {fileID: 90216212223453026}
   - component: {fileID: 90216212223453041}
   - component: {fileID: 90216212223453037}
   - component: {fileID: 90216212223453027}
+  - component: {fileID: 9138972525797220793}
   m_Layer: 10
-  m_Name: SampleEnemy2
+  m_Name: HeavyEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 29bd40f6cfa2d2d4989739f490ec8aad, type: 2}
+  - {fileID: 2100000, guid: c774791bebfad9046ab5ddc76821c184, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,25 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &90216212223453026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 90216212223453032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb7a7ae9fea300d4ca39814e96700499, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: b593861ca7fb7fb488baf64ea3060721, type: 2}
-  hp: 0
-  dropItems:
-  - {fileID: 6739383237830082110, guid: 0548600664617414eb3c60f492d0409d, type: 3}
-  player: {fileID: 0}
-  target: {fileID: 0}
-  targetObjects: []
 --- !u!136 &90216212223453041
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -161,6 +142,23 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &9138972525797220793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90216212223453032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565c244520d2fbc4380c33306fa8bcb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 06883d12a94b18e4f8dc642f0d352e8f, type: 2}
+  hp: 0
+  player: {fileID: 0}
+  target: {fileID: 0}
+  targetObjects: []
 --- !u!1001 &23098786179858725
 PrefabInstance:
   m_ObjectHideFlags: 0

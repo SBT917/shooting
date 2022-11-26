@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         state = PlayerState.Normal;
         inWall = false;
 
-        StartCoroutine(HealEnergy(1.0f, 0.1f));
+        StartCoroutine(HealEnergy());
     }
 
     void Update()
@@ -102,13 +102,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator HealEnergy(float value, float span)
+    private IEnumerator HealEnergy()
     {
+        float defaultEnergy = maxEnergy;
         while (true){
             if(state == PlayerState.Normal && energy < maxEnergy){
-                energy += value;
+                energy += maxEnergy / defaultEnergy;
             }
-            yield return new WaitForSeconds(span);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

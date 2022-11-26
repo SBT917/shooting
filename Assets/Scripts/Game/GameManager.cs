@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOver()
     {
         state = GameState.GameOver;
+        EnemyDestroyer();
         StopCoroutine(timeCo);
         StopCoroutine(spawnCo);   
 
@@ -191,10 +192,16 @@ public class GameManager : MonoBehaviour
     {
         ++waveCount;
         if(waveCount >= 1 && waveCount < 3){
-            SetParameter(60, 20, 20);
+            SetParameter(60, 20, 10);
         }
         else if(waveCount >= 3 && waveCount < 6){
-            SetParameter(80, 20, 30);
+            SetParameter(80, 20, 15);
+        }
+        else if(waveCount >= 6 && waveCount < 10){
+            SetParameter(80, 15, 15);
+        }
+        else if(waveCount >= 10){
+            SetParameter(100, 15, 20);
         }
     }
 }

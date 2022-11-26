@@ -2778,6 +2778,7 @@ MonoBehaviour:
   enemys:
   - {fileID: 915462805102263828, guid: a8a08379888fc134c982c8fc0cea8bcf, type: 3}
   - {fileID: 90216212223453032, guid: 927072c40e1f00d48acf4d6cbc9ce001, type: 3}
+  - {fileID: 90216212223453032, guid: d4224f23a897fe74697737c682516081, type: 3}
   spawnArea: []
 --- !u!1 &1475874593
 GameObject:

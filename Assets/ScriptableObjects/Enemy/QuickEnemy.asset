@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88268fa288e0d6b4d885b8163be54ef4, type: 3}
-  m_Name: NormalEnemy
+  m_Name: QuickEnemy
   m_EditorClassIdentifier: 
-  maxHp: 3
+  maxHp: 1
   attackToPlayer: 1
-  attackToObject: 2
-  normalSpeed: 1.5
-  attackSpeed: 2
-  score: 100
-  searchAngle: 90
-  attackOutRange: 20
-  searchTime: 3
-  itemDropRatio: 30
+  attackToObject: 1
+  normalSpeed: 3
+  attackSpeed: 3
+  score: 50
+  searchAngle: 70
+  attackOutRange: 10
+  searchTime: 1
+  itemDropRatio: 20
   dropItems:
   - {fileID: 6739383237830082110, guid: 0548600664617414eb3c60f492d0409d, type: 3}

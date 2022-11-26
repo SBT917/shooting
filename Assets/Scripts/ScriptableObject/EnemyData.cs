@@ -12,6 +12,8 @@ public class EnemyData : ScriptableObject
     public float attackSpeed;
     public int score;
     public float searchAngle;
+    public float attackOutRange;
+    public float searchTime;
     public int itemDropRatio;
     public GameObject[] dropItems;
 }
