@@ -9,7 +9,7 @@ public class Shot : MonoBehaviour
 
     public ShotData shotData;
     protected float disapCnt;
-    protected float offsetY = 0.0f;
+    protected float offset = 1.0f;
 
     protected virtual void Awake()
     {
