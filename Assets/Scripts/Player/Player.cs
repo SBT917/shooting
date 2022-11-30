@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField]private ShotSlot[] shotSlots;
     [SerializeField]private GameObject shot1;
     [SerializeField]private GameObject shot2;
+    [SerializeField]private Material defaultMaterial;
+    [SerializeField]private Material invisibleMaterial;
 
     public int hp;
     public float energy;
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        mesh = GetComponent<MeshRenderer>();
+        mesh = GetComponentInChildren<MeshRenderer>();
         coll = GetComponent<Collider>();
         gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 
@@ -267,7 +269,7 @@ public class Player : MonoBehaviour
 
                     state = PlayerState.Invisible;
 
-                    mesh.material.color = new Color32(255, 255, 255, 100);
+                    mesh.material = invisibleMaterial;
                     coll.isTrigger = true;
                 }
             }
@@ -282,7 +284,7 @@ public class Player : MonoBehaviour
                     StopCoroutine(invCo);
                     state = PlayerState.Normal;
                     moveSpeed = defaultMoveSpeed;
-                    mesh.material.color = new Color32(255, 255, 255, 255);
+                    mesh.material = defaultMaterial;
                     coll.isTrigger = false;
                 }
             }

@@ -9,7 +9,7 @@ public class Shot : MonoBehaviour
 
     public ShotData shotData;
     protected float disapCnt;
-    protected float offsetY = 0.7f;
+    protected float offsetY = 0.0f;
 
     protected virtual void Awake()
     {
@@ -35,7 +35,7 @@ public class Shot : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         float randomRotate = Random.Range(-shotData.blur, shotData.blur);
         Quaternion rotate = Quaternion.Euler(0, randomRotate, 0);
-        Instantiate(gameObject, player.transform.position + new Vector3(0, offsetY, 0), player.transform.rotation * rotate);
+        Instantiate(gameObject, player.transform.localPosition, player.transform.rotation * rotate);
     }
 
     protected virtual void OnTriggerEnter(Collider other)

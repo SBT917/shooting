@@ -38,6 +38,7 @@ public class MapGenerator : MonoBehaviour
                     Instantiate(obj, pos, Quaternion.identity, transform);
                 }
                 else{
+                    pos.y = 1.0f;
                     player.transform.position = pos;
                 }
             }
