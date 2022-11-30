@@ -1268,7 +1268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapObjects:
-  - {fileID: 3451098377627572709, guid: f40c152487ce2b043bc2c4d1e85e85a2, type: 3}
+  - {fileID: 7177311397526938860, guid: c52ddf2e986aeff4fb116ca7e525030f, type: 3}
   - {fileID: 8558722282674652118, guid: 800a063769df8d04c8a0ff492f45d2f7, type: 3}
   - {fileID: 1401434917885036776, guid: 541da5a041ecf4b439edab6d238d8c42, type: 3}
   player: {fileID: 1242735546}
@@ -2010,7 +2010,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 9.660254, z: -3.9999998}
+  m_LocalPosition: {x: 0, y: 9.660255, z: -4.0000014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2856,7 +2856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7427045490905727862, guid: 89b9e467845b0e04480cba07681d0cb5, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7427045490905727862, guid: 89b9e467845b0e04480cba07681d0cb5, type: 3}
       propertyPath: m_LocalScale.x
@@ -3589,11 +3589,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc5cff6a6dcf5b44996aa8e16910c0b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.0000019
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc5cff6a6dcf5b44996aa8e16910c0b2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.0000014305115
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc5cff6a6dcf5b44996aa8e16910c0b2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3601,7 +3601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc5cff6a6dcf5b44996aa8e16910c0b2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc5cff6a6dcf5b44996aa8e16910c0b2, type: 3}
       propertyPath: m_LocalRotation.y
@@ -3746,7 +3746,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3763,7 +3763,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047443589}
   m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 9.660254, z: -3.9999998}
+  m_LocalPosition: {x: 0, y: 9.660255, z: -4.0000014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
