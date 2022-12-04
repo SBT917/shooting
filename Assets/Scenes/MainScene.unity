@@ -1271,8 +1271,25 @@ MonoBehaviour:
   - {fileID: 7177311397526938860, guid: c52ddf2e986aeff4fb116ca7e525030f, type: 3}
   - {fileID: 8558722282674652118, guid: 800a063769df8d04c8a0ff492f45d2f7, type: 3}
   - {fileID: 1401434917885036776, guid: 541da5a041ecf4b439edab6d238d8c42, type: 3}
+  blocks:
+  - {fileID: 7177311397526938860, guid: c52ddf2e986aeff4fb116ca7e525030f, type: 3}
+  - {fileID: 7177311397526938860, guid: 2914e2939a942a84db410b8fcedc121f, type: 3}
+  - {fileID: 7177311397526938860, guid: 12b4a58ce4f61044fb6828ca2cf366a9, type: 3}
+  - {fileID: 7177311397526938860, guid: 5f1b3f297e4b2804183e6a13a1cedceb, type: 3}
+  - {fileID: 7177311397526938860, guid: d4c779199737fb14fb13ca9f17fb1d5b, type: 3}
+  - {fileID: 7177311397526938860, guid: c6a7343442b18db4db3c04680dfd61da, type: 3}
+  - {fileID: 7177311397526938860, guid: a2db830e2842b794c9cea6aa93860e2b, type: 3}
+  - {fileID: 7177311397526938860, guid: dcf7bc5ad0cbbee4ca33e8d5fe848e47, type: 3}
+  - {fileID: 7177311397526938860, guid: 868e97bc17fae5d4f835d6a302e45a45, type: 3}
+  - {fileID: 7177311397526938860, guid: 71d1983d8cf955b4faff790ef864d411, type: 3}
+  - {fileID: 7177311397526938860, guid: 66461b0b976f4dc45bea709d7a0bc7f2, type: 3}
+  - {fileID: 7177311397526938860, guid: 1ab9b7c6c51f97542bbcd43b654071fd, type: 3}
+  - {fileID: 7177311397526938860, guid: aa012ca370a140444a74dae2ec6bb84c, type: 3}
+  - {fileID: 7177311397526938860, guid: 8af94d4a956a5f742a944892790fae07, type: 3}
+  - {fileID: 7177311397526938860, guid: c783f6b4286677345b64964c0b9cdaf5, type: 3}
+  - {fileID: 7177311397526938860, guid: 19fdabb8b3bd7154485b184a5c1cf145, type: 3}
   player: {fileID: 1242735546}
-  mapNum: 1
+  mapNum: 3
 --- !u!114 &553684539 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8659486974567536088, guid: 2f9298a8e4656ac49835330f7f2bf751, type: 3}

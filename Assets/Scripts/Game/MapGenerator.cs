@@ -6,6 +6,7 @@ using System.IO;
 public class MapGenerator : MonoBehaviour
 {   
     [SerializeField]private GameObject[] mapObjects;
+    [SerializeField]private GameObject[] blocks;
     [SerializeField]private GameObject player;
     [SerializeField]private int mapNum;
     
@@ -21,7 +22,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     /* -1 = None
-        0 = Wall
+        0 = Block
         1 = EnemySpawnArea
         2 = TargetSpawnArea
     */
@@ -35,7 +36,8 @@ public class MapGenerator : MonoBehaviour
                 if(mapData[z, x] == "-1") continue;
                 if(mapData[z, x] != "p"){
                     obj = mapObjects[int.Parse(mapData[z, x])];
-                    Instantiate(obj, pos, Quaternion.identity, transform);
+                    GameObject block = Instantiate(obj, pos, Quaternion.identity, transform);
+                    BlockConnect(block, x, z);
                 }
                 else{
                     pos.y = 1.0f;
@@ -44,10 +46,32 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
+
+    void BlockConnect(GameObject block, int x, int z)
+    {
+        int blockType = 0;
+        if(mapData[z, x] == "0"){
+            if(z - 1 >= 0 && mapData[z - 1, x] == "0"){
+                blockType += 1;
+            }
+            if(x + 1 <= mapData.GetLength(0) - 1 && mapData[z, x + 1] == "0"){
+                blockType += 2;
+            }
+            if(z + 1 <= mapData.GetLength(1) - 1 && mapData[z + 1, x] == "0"){
+                blockType += 4;
+            }
+            if(x - 1 >= 0 && mapData[z, x - 1] == "0"){
+                blockType += 8;
+            }
+
+            Instantiate(blocks[blockType], block.transform.position, blocks[blockType].transform.rotation);
+            Destroy(block);
+        }
+    }
     
     void FileLoad(in string[,] datas)
     {
-        TextAsset csvFile = Resources.Load("map" + mapNum) as TextAsset;
+        TextAsset csvFile = Resources.Load("MapData/map" + mapNum) as TextAsset;
         if(csvFile == null) return;
 
         StringReader reader = new StringReader(csvFile.text);;

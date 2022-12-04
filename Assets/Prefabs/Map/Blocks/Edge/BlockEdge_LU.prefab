@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6046688150599527185}
   - component: {fileID: -4353240189199963421}
   m_Layer: 7
-  m_Name: Block_1
+  m_Name: BlockEdge_LU
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,14 +27,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7177311397526938860}
-  m_LocalRotation: {x: 0.000000021855696, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -37.5, y: -0, z: -27.5}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 5.56, y: 5, z: 5.56}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &6881189660451402227
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7177311397526938860}
-  m_Mesh: {fileID: -7564337127824345927, guid: 0c27da26f7d8baf45bcffb2c90433d07, type: 3}
+  m_Mesh: {fileID: -7983694918599938511, guid: b9fdf631722ff4e44a0db7e337a58cb2, type: 3}
 --- !u!23 &8690279048239842617
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,9 +63,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8380899515281890207, guid: 0c27da26f7d8baf45bcffb2c90433d07, type: 3}
-  - {fileID: -5269060652807744738, guid: 0c27da26f7d8baf45bcffb2c90433d07, type: 3}
-  - {fileID: -4869096888009782287, guid: 0c27da26f7d8baf45bcffb2c90433d07, type: 3}
+  - {fileID: 8380899515281890207, guid: 28e52221fde4cfb43b487cd44a3c1e2b, type: 3}
+  - {fileID: -4869096888009782287, guid: 6f3e69abac0302046bf476e7275f8ac2, type: 3}
+  - {fileID: 8380899515281890207, guid: fdfd67ea3381bd241b70c5faec2ea980, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
