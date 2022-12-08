@@ -10,7 +10,6 @@ public class ShotSlot : MonoBehaviour
     public GameObject shot;
     private TextMeshProUGUI text;
     private Image image;
-
     void Start()
     {
         text = GetComponentInChildren<TextMeshProUGUI>();

@@ -314,13 +314,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Wall")){
-            inWall = true;
-        }
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Wall")){
