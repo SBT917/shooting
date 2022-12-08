@@ -64,7 +64,7 @@ public class MapGenerator : MonoBehaviour
                 blockType += 8;
             }
 
-            Instantiate(blocks[blockType], block.transform.position, blocks[blockType].transform.rotation);
+            Instantiate(blocks[blockType], block.transform.position, blocks[blockType].transform.rotation, transform);
             Destroy(block);
         }
     }

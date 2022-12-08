@@ -1289,7 +1289,7 @@ MonoBehaviour:
   - {fileID: 7177311397526938860, guid: c783f6b4286677345b64964c0b9cdaf5, type: 3}
   - {fileID: 7177311397526938860, guid: 19fdabb8b3bd7154485b184a5c1cf145, type: 3}
   player: {fileID: 1242735546}
-  mapNum: 3
+  mapNum: 2
 --- !u!114 &553684539 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8659486974567536088, guid: 2f9298a8e4656ac49835330f7f2bf751, type: 3}
@@ -2324,7 +2324,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &1242735550
 CapsuleCollider:

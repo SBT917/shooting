@@ -13,6 +13,7 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
 
     private Player player;
     private Rarity rarity;
+    private ShotData shotData;
     private TextMeshProUGUI shotNameText;
     private TextMeshProUGUI priceText;
     private Image image;
@@ -21,9 +22,10 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
 
     void Start()
     {
-        shotName = shot.GetComponent<Shot>().shotData.shotName;
-        price = shot.GetComponent<Shot>().shotData.price;
-        rarity = shot.GetComponent<Shot>().shotData.rarity;
+        shotData = shot.GetComponent<Shot>().shotData;
+        shotName = shotData.shotName;
+        price = shotData.price;
+        rarity = shotData.rarity;
         image = GetComponent<Image>();
         shotNameText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         priceText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
@@ -50,7 +52,7 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
         transform.position = prevPos;
     }
 
-    public  void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData)
     {
         var raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, raycastResults);

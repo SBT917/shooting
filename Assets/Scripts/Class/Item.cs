@@ -6,20 +6,18 @@ using UnityEngine.AI;
 public class Item : MonoBehaviour
 {
     public int point;
-    private float speed;
     protected Player player;
-    
+    protected float disapCnt;
     protected virtual void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        speed = 20.0f;
+        disapCnt = 30.0f;
+        StartCoroutine(DisapItem());
     }
 
     void Update()
     {
         if(!player.gameObject.activeSelf) return;
-        transform.LookAt(player.transform);
-        transform.position += transform.forward * speed * Time.deltaTime;
     }
 
     protected virtual void Get()
@@ -33,5 +31,11 @@ public class Item : MonoBehaviour
         if(other.CompareTag("Player")){
             Get();
         }    
+    }
+
+    private IEnumerator DisapItem()
+    {
+        yield return new WaitForSeconds(disapCnt);
+        Destroy(gameObject);
     }
 }
