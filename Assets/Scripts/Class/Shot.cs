@@ -9,10 +9,15 @@ public class Shot : MonoBehaviour
 
     public ShotData shotData;
     protected float disapCnt;
+    protected ParticleSystem particle;
+    private ParticleSystem.MainModule particleMain;
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        particle = GetComponentInChildren<ParticleSystem>();
+        particleMain = particle.main;
+        particleMain.startColor = GetComponent<Renderer>().sharedMaterial.color;
         disapCnt = shotData.disapCnt;
     }
 
@@ -40,11 +45,15 @@ public class Shot : MonoBehaviour
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy")){
+            ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+            p.Play();
             Destroy(gameObject);
             other.GetComponent<Enemy>().TakeDamage(shotData.damage);
         }
         
         if(other.CompareTag("Wall")){
+            ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+            p.Play();
             Destroy(gameObject);
         }
     }

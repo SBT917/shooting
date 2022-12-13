@@ -7,7 +7,7 @@ using TMPro;
 
 public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragHandler,IDropHandler
 {
-    public GameObject shot;
+    public Shot shot;
     public string shotName;
     public int price;
 
@@ -32,7 +32,7 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
 
         shotNameText.text = shotName;   
         priceText.text = "x" + price.ToString();
-        image.color = shot.GetComponent<Shot>().shotData.rarity.color;
+        image.color = shot.shotData.rarity.color;
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
@@ -58,11 +58,11 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
         EventSystem.current.RaycastAll(eventData, raycastResults);
 
         foreach(var hit in raycastResults){
-            if(hit.gameObject.CompareTag("ShotSlot")){
-                ShotSlot slot = hit.gameObject.GetComponent<ShotSlot>();
-                if(player.nowPoint >= price && slot.shot != shot){
+            if(hit.gameObject.CompareTag("ShotInfo")){
+                ShotInfo shotInfo = hit.gameObject.GetComponent<ShotInfo>();
+                if(player.nowPoint >= price && shotInfo.shot != shot){
                     player.nowPoint -= price;
-                    slot.ChangeShot(shot);
+                    shotInfo.slot.SetShot(shot);
                     Destroy(gameObject);
                 } 
             }       

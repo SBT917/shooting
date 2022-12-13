@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShotSlot : MonoBehaviour
+public class ShotInfo : MonoBehaviour
 {   
-    public GameObject shot;
+    public Shot shot;
+    public ShotSlot slot;
     private TextMeshProUGUI text;
     private Image image;
+
     void Start()
     {
         text = GetComponentInChildren<TextMeshProUGUI>();
@@ -18,20 +19,17 @@ public class ShotSlot : MonoBehaviour
 
     void Update() 
     {
+        shot = slot.shot;
+
         if(shot != null){
-            text.text = shot.GetComponent<Shot>().shotData.shotName;
-            image.color = shot.GetComponent<Shot>().shotData.rarity.color;
+            text.text = shot.shotData.shotName;
+            image.color = shot.shotData.rarity.color;
         }
         else{
             text.text = "None";
             image.color = Color.grey;
         }
        
-    }
-
-    public void ChangeShot(GameObject changeShot)
-    {
-        shot = changeShot;  
     }
 
 }

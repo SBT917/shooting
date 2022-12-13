@@ -19,11 +19,15 @@ public class ReflectShot : Shot
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy")){
+            ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+            p.Play();
             other.GetComponent<Enemy>().TakeDamage(shotData.damage);
             Reflection();
         }
         
         if(other.CompareTag("Wall")){
+            ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+            p.Play();
             Reflection();
         }
     }

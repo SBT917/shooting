@@ -46,7 +46,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-
     void BlockConnect(GameObject block, int x, int z)
     {
         int blockType = 0;

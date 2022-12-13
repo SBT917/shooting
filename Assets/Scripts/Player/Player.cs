@@ -16,12 +16,10 @@ public class Player : MonoBehaviour
     private Collider coll;
 
     private GameManager gm;
-    public GameObject hpContainer;
+    public HpContainer hpContainer;
     [SerializeField]private GameObject menu;
     [SerializeField]private Camera minimapCamera;
     [SerializeField]private ShotSlot[] shotSlots;
-    [SerializeField]private GameObject shot1;
-    [SerializeField]private GameObject shot2;
     [SerializeField]private Material defaultMaterial;
     [SerializeField]private Material invisibleMaterial;
 
@@ -33,15 +31,13 @@ public class Player : MonoBehaviour
     public float defaultMoveSpeed;
     public int nowScore;
     public int nowPoint;
-    public float invTime;
     
+    [SerializeField] private float invTime;
     [SerializeField] private Vector3 velocity;
     [SerializeField] private PlayerState state;
     [SerializeField] private bool inWall;
 
     private bool isInv = false;
-    private bool isShotWait1 = false;
-    private bool isShotWait2 = false;
     
     void Start()
     {
@@ -55,6 +51,7 @@ public class Player : MonoBehaviour
         moveSpeed = defaultMoveSpeed;
         state = PlayerState.Normal;
         inWall = false;
+        
 
         StartCoroutine(HealEnergy());
     }
@@ -62,9 +59,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (state != PlayerState.Death && gm.GetState() != GameState.GameOver){
-            Invisible();
             Shot();
-
+            Invisible();
             EnergyController();
             BreakTimeController(); 
         }
@@ -128,7 +124,7 @@ public class Player : MonoBehaviour
         if(!(state == PlayerState.Death || state == PlayerState.Invisible) && !isInv){
             hp -= damage;
             isInv = true;
-            hpContainer.GetComponent<HpContainer>().Relocation();
+            hpContainer.Relocation();
             StartCoroutine(InvTimeCo(invTime));
         }
             
@@ -216,43 +212,18 @@ public class Player : MonoBehaviour
         MovingRangeFixed(); 
     }
 
-    private Coroutine shotCo;
     private void Shot()
     {
         if(state != PlayerState.Normal) return;
         if(menu.activeSelf == true) return;
         
-        shot1 = shotSlots[0].shot;
-        shot2 = shotSlots[1].shot;
-        if (Input.GetButton("Fire1") && !isShotWait1 && !Input.GetButton("Fire2") && shot1 != null){
-            if(energy < shot1.GetComponent<Shot>().shotData.useEnergy) return;
-            energy -= shot1.GetComponent<Shot>().shotData.useEnergy;
-            shot1.GetComponent<Shot>().Instance();
-            float shotRate = shot1.GetComponent<Shot>().shotData.rate;
-            isShotWait1 = true;
-            StartCoroutine(ShotRateCo1(shotRate));
+        if (Input.GetButton("Fire1") && !Input.GetButton("Fire2")){
+            shotSlots[0].Fire();
         }
 
-        if (Input.GetButton("Fire2") && !isShotWait2 && !Input.GetButton("Fire1") && shot2 != null){
-            if(energy < shot2.GetComponent<Shot>().shotData.useEnergy) return;
-            energy -= shot2.GetComponent<Shot>().shotData.useEnergy;
-            shot2.GetComponent<Shot>().Instance();
-            float shotRate = shot2.GetComponent<Shot>().shotData.rate;
-            isShotWait2 = true;
-            StartCoroutine(ShotRateCo2(shotRate));
+        if (Input.GetButton("Fire2") && !Input.GetButton("Fire1")){
+            shotSlots[1].Fire();
         }
-    }
-
-    private IEnumerator ShotRateCo1(float rate)
-    {
-        yield return new WaitForSeconds(rate);
-        isShotWait1 = false;
-    }
-
-    private IEnumerator ShotRateCo2(float rate)
-    {
-        yield return new WaitForSeconds(rate);
-        isShotWait2 = false;
     }
 
     Coroutine invCo;

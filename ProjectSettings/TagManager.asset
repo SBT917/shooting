@@ -19,7 +19,8 @@ TagManager:
   - TargetSpawnArea
   - TargetSpawner
   - Item
-  - ShotSlot
+  - Menu
+  - ShotInfo
   layers:
   - Default
   - TransparentFX
