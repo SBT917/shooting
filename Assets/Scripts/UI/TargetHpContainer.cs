@@ -7,16 +7,6 @@ public class TargetHpContainer : MonoBehaviour
 {
     [SerializeField]private GameObject targetHpBar;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void Placement(GameObject target, int num)
     {
         GameObject bar = Instantiate(targetHpBar, transform);

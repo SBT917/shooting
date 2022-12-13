@@ -13,6 +13,8 @@ public class ContagionShot : Shot
     protected override void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Enemy")){
+            ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+            p.Play();
             other.GetComponent<Enemy>().TakeDamage(shotData.damage + (damageIncrease * hitCount));
             homing.targetEnemys.Remove(other.gameObject);
             if(homing.targetEnemys.Count > 0){
@@ -26,6 +28,8 @@ public class ContagionShot : Shot
         }
 
         if(other.CompareTag("Wall")){
+            ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+            p.Play();
             Destroy(gameObject);
         }  
     }

@@ -17,6 +17,8 @@ public class FanSearch : MonoBehaviour
 
     public void OnTriggerStay(Collider other)
     { 
+        if(parentEnemy.GetState() == EnemyState.Attack) return;
+        
         Vector3 offset = new Vector3(0.0f, 0.5f, 0.0f);
         if(other.CompareTag("Player") && player.GetState() == PlayerState.Normal)
         {

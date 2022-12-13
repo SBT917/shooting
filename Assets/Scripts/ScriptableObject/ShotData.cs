@@ -9,6 +9,8 @@ public class ShotData : ScriptableObject
     public Rarity rarity;
     public float moveSpeed;
     public float damage;
+    public int maxAmount;
+    public float rechargeTime;
     public float useEnergy;
     public float rate;
     public float disapCnt;

@@ -18,15 +18,17 @@ public abstract class Enemy : MonoBehaviour
 {
     public EnemyData enemyData;
     private Rigidbody rb;
+    private Material material;
+    private ParticleSystem particle;
     protected NavMeshAgent nav;
 
     public float hp;
-    public GameObject player;
+    public Player player;
     public GameObject target;
     public GameObject[] targetObjects;
 
     private GameManager gameManager;
-    private EnemyState state;
+    [SerializeField]private EnemyState state;
     private GameObject enemyCanvas;
     private float canvasDisapCnt;
     
@@ -35,8 +37,10 @@ public abstract class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
+        material = GetComponent<Renderer>().material;
+        particle = GetComponentInChildren<ParticleSystem>();
 
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         targetObjects = GameObject.FindGameObjectsWithTag("Target");  
         enemyCanvas = transform.Find("EnemyCanvas").gameObject;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -47,7 +51,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(GetState() == EnemyState.Death) return;
+        if(state == EnemyState.Death) return;
         Act();
     }
 
@@ -61,14 +65,10 @@ public abstract class Enemy : MonoBehaviour
         return state;
     }
 
-    public PlayerState GetPlayerState()
-    {
-        PlayerState playerState = player.GetComponent<Player>().GetState();
-        return playerState;
-    }
-
     protected virtual void Act()
     {
+        if(state == EnemyState.Death) return;
+
         NormalAction();
         AttackAction(enemyData.attackOutRange, enemyData.searchTime);
         nav.SetDestination(target.transform.position);
@@ -76,14 +76,18 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Dead()
     {   
-        player.GetComponent<Player>().nowScore += enemyData.score;
+        state = EnemyState.Death;
+        ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+        p.Play();
+
+        player.nowScore += enemyData.score;
         ItemDrop();
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     protected virtual void Disappearing()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     protected virtual void NormalAction()
@@ -108,9 +112,9 @@ public abstract class Enemy : MonoBehaviour
         if(state == EnemyState.Attack)
         {
             nav.speed = enemyData.attackSpeed;
-            target = player;
+            target = player.gameObject;
 
-            if(CheckDistance(player) > outRange || GetPlayerState() == PlayerState.Invisible)
+            if(CheckDistance(player.gameObject) > outRange || player.GetState() == PlayerState.Invisible)
             {
                 SetState(EnemyState.Search);
                 StartCoroutine(SearchCo(searchTime));
@@ -143,6 +147,7 @@ public abstract class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if(state == EnemyState.Death) return;
         hp -= damage;
         SetState(EnemyState.Attack);
         StartCoroutine(CanvasAvtiveCo());

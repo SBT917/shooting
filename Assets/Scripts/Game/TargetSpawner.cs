@@ -8,16 +8,6 @@ public class TargetSpawner : MonoBehaviour
     [SerializeField]private GameObject[] spawnArea;
     [SerializeField]private TargetHpContainer targetHpContainer;
 
-    void Awake()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void Spawner(int count)
     {
         for(int i = 0; i < count; ++i){
