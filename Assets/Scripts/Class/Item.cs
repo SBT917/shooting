@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//アイテムのクラス
 public class Item : MonoBehaviour
 {
-    public int point;
+    public int point; //獲得した際に増えるポイント
     protected Player player;
-    protected float disapCnt;
+    protected float disapCnt; //消えるまでの時間
     protected virtual void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
@@ -17,13 +18,21 @@ public class Item : MonoBehaviour
 
     void Update()
     {
-        if(!player.gameObject.activeSelf) return;
+        if(!player.gameObject.activeSelf) return; //プレイヤーが非アクティブになったら機能停止
     }
 
-    protected virtual void Get()
+    //プレイヤーが入手した際の処理
+        protected virtual void Get()
     {
         player.nowPoint += point;
         gameObject.SetActive(false);
+    }
+
+    //アイテムが時間切れで消滅するまでの処理
+    private IEnumerator DisapItem()
+    {
+        yield return new WaitForSeconds(disapCnt);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other) 
@@ -33,9 +42,5 @@ public class Item : MonoBehaviour
         }    
     }
 
-    private IEnumerator DisapItem()
-    {
-        yield return new WaitForSeconds(disapCnt);
-        Destroy(gameObject);
-    }
+    
 }

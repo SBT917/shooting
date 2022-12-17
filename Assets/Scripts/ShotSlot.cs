@@ -2,22 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//ショットスロットの状態
 public enum SlotState
 {
-    Ready,
-    Wait,
-    Recharging
+    Ready, //発射可能
+    Wait, //発射不可能
+    Recharging //リロード中
 }
 
+//プレイヤーが所持しているショットの情報を保存する。この情報を基にショットを撃つ。
 public class ShotSlot : MonoBehaviour
 {
-    public Shot shot;
-    public int shotAmount;
-    private Player player;
-    private Color shotColor;
-    private ParticleSystem particle;
-    private ParticleSystem.MainModule particleMain;
-    [SerializeField]private SlotState state;
+    public Shot shot; //スロットが持つショット
+    public int shotAmount; //ショットの残弾数
+    private Player player; //プレイヤー
+    private Color shotColor; //ショットの色
+    private ParticleSystem particle; //撃った時に発生させるパーティクル
+    private ParticleSystem.MainModule particleMain; //パーティクルの値を制御
+    [SerializeField]private SlotState state; //ショットの現在の状態
     
     void Start()
     {
@@ -48,34 +50,45 @@ public class ShotSlot : MonoBehaviour
     {
         shot = newShot;
         shotAmount = newShot.shotData.maxAmount;
-        shotColor = shot.gameObject.GetComponent<Renderer>().sharedMaterial.color;
-        particleMain.startColor = shotColor;
+        shotColor = shot.gameObject.GetComponent<Renderer>().sharedMaterial.color; //色をショットのマテリアルから取得
+        particleMain.startColor = shotColor; //マテリアルから取得した色をパーティクルの色に設定
     }
 
-    public void Fire()
+    public void Fire() //ショットを放つ
     {   
-        if(state != SlotState.Ready) return;
         if(shot == null) return;
+        if(shotAmount <= 0) return;
+        if(state != SlotState.Ready) return;
         
+        --shotAmount; 
         particle.Play();
         shot.Instance();
-        --shotAmount;
-        if(shotAmount <= 0){
-            StartCoroutine(ShotRecharge(0, shot));
-            return;
-        }
-        float shotRate = shot.shotData.rate;
-        StartCoroutine(ShotRateCo(shotRate));
-    }
 
-    private IEnumerator ShotRateCo(float rate)
+        if(shotAmount > 0){ //ショットを放った後に残弾数が0だったら自動でリチャージ
+            StartCoroutine(ShotRateCo());
+        }
+        else{
+            StartCoroutine(ShotRechargeCo());
+        }
+        
+    }   
+
+    private IEnumerator ShotRateCo() //ショットの連射速度をコルーチンで制御
     {
         state = SlotState.Wait;
-        yield return new WaitForSeconds(rate);
+        yield return new WaitForSeconds(shot.shotData.rate);
         state = SlotState.Ready;
     }
 
-    private IEnumerator ShotRecharge(int slotNum, Shot shot)
+    private void ShotRecharge()
+    {
+        if(shotAmount > 0) return;
+        if(state == SlotState.Recharging) return;
+
+        StartCoroutine(ShotRechargeCo());
+    }
+
+    private IEnumerator ShotRechargeCo() //ショットのリチャージ
     {
         if(player.energy >= shot.shotData.useEnergy){
             state = SlotState.Recharging;

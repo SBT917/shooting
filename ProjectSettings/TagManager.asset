@@ -21,6 +21,8 @@ TagManager:
   - Item
   - Menu
   - ShotInfo
+  - ShotSlot
+  - CinemachineVirtualCamera
   layers:
   - Default
   - TransparentFX
