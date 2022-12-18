@@ -7,7 +7,7 @@ public class TitleManager : MonoBehaviour
 {
     void Start()
     {
-        
+        Cursor.visible = true;   
     }
 
     void Update()

@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: TripleShot
   m_EditorClassIdentifier: 
   shotName: TripleShot
+  icon: {fileID: 21300000, guid: 713df7f6ebe234b42919a53560c72aab, type: 3}
   rarity: {fileID: 11400000, guid: 17c9b61ec87be004fbfc03fdbdcdbd14, type: 2}
   moveSpeed: 20
-  damage: 1
-  maxAmount: 5
+  damage: 0.5
+  maxAmount: 15
   rechargeTime: 0.5
-  useEnergy: 9
+  useEnergy: 30
   rate: 0.2
   disapCnt: 1
   blur: 0

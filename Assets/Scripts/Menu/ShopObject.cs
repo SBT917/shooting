@@ -5,18 +5,20 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
+//ショットを購入する時に使用するUIオブジェクトの制御
 public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragHandler,IDropHandler
 {
-    public Shot shot;
-    public string shotName;
-    public int price;
+    public Shot shot; //オブジェクトで購入できるショット
+    public string shotName; //ショットの名前
+    public int price; //ショットの値段
 
     private Player player;
     private Rarity rarity;
     private ShotData shotData;
-    private TextMeshProUGUI shotNameText;
-    private TextMeshProUGUI priceText;
-    private Image image;
+    private TextMeshProUGUI shotNameText; //ショットの名前を表示するテキスト
+    private TextMeshProUGUI priceText; //ショットの値段を表示するテキスト
+    private Image icon; //ショットのアイコン
+    private Image backImage; //オブジェクトの背景
 
     private Vector2 prevPos;
 
@@ -26,32 +28,38 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
         shotName = shotData.shotName;
         price = shotData.price;
         rarity = shotData.rarity;
-        image = GetComponent<Image>();
+        backImage = GetComponent<Image>();
         shotNameText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         priceText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        icon = transform.GetChild(2).GetComponent<Image>();
 
         shotNameText.text = shotName;   
         priceText.text = "x" + price.ToString();
-        image.color = shot.shotData.rarity.color;
+        backImage.color = shot.shotData.rarity.color;
+        icon.sprite = shot.shotData.icon;
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
+    //オブジェクトをドラッグし始めた時の処理
     public void OnBeginDrag(PointerEventData eventData)
     {
-        prevPos = transform.position;
+        prevPos = transform.position; //ドラッグの開始位置の保存
     }
 
+    //オブジェクトをドラッグ中の処理
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = eventData.position;
+        transform.position = eventData.position; //オブジェクトの位置をマウスポインタの位置にする
     }
 
+    //オブジェクトをドラッグし終えた時の処理
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.position = prevPos;
+        transform.position = prevPos; //オブジェクトをドラッグの位置に戻す
     }
 
+    //オブジェクトがレイキャスト判定にドラッグされたときの処理
     public void OnDrop(PointerEventData eventData)
     {
         var raycastResults = new List<RaycastResult>();

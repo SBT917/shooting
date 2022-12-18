@@ -6,26 +6,28 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
+//エネミーの状態
 public enum EnemyState
 {
-    Normal,
-    Attack,
-    Search,
-    Death
+    Normal, //通常状態(目標に向かっている状態)
+    Attack, //攻撃状態(プレイヤーに向かっている状態)
+    Search, //サーチ状態(プレイヤーを見失っている状態)
+    Death //倒された状態
 }
 
+//エネミーのクラス
 public abstract class Enemy : MonoBehaviour
 {
-    public EnemyData enemyData;
+    public EnemyData enemyData; //エネミーデータの取得(スクリプタブルオブジェクト)
     private Rigidbody rb;
     private Material material;
     private ParticleSystem particle;
     protected NavMeshAgent nav;
 
-    public float hp;
+    public float hp; //エネミーの現在のHP
     public Player player;
-    public GameObject target;
-    public GameObject[] targetObjects;
+    public GameObject target; //エネミーが狙っているもの
+    public GameObject[] targetObjects; //マップ上に存在する目標オブジェクト
 
     private GameManager gameManager;
     [SerializeField]private EnemyState state;
@@ -65,6 +67,7 @@ public abstract class Enemy : MonoBehaviour
         return state;
     }
 
+    //エネミーの行動
     protected virtual void Act()
     {
         if(state == EnemyState.Death) return;
@@ -74,6 +77,7 @@ public abstract class Enemy : MonoBehaviour
         nav.SetDestination(target.transform.position);
     }
 
+    //プレイヤーに倒された時の処理
     protected virtual void Dead()
     {   
         state = EnemyState.Death;
@@ -82,14 +86,18 @@ public abstract class Enemy : MonoBehaviour
 
         player.nowScore += enemyData.score;
         ItemDrop();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
-    protected virtual void Disappearing()
+    //エネミーが目標に到達した、またはタイムアップで消滅する際の処理
+    public virtual void Disappearing()
     {
+        ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+        p.Play();
         Destroy(gameObject);
     }
 
+    //通常状態の行動
     protected virtual void NormalAction()
     {
         if(state == EnemyState.Normal)
@@ -107,6 +115,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    //攻撃状態の行動
     protected virtual void AttackAction(float outRange, float searchTime)
     {
         if(state == EnemyState.Attack)
@@ -121,15 +130,17 @@ public abstract class Enemy : MonoBehaviour
             }  
         }
     }
+
+    //サーチ状態のコルーチン
     private IEnumerator SearchCo(float time)
     {
         float count = time * 10;
         nav.speed = 0.0f;
-        while(state == EnemyState.Search)
+        while(state == EnemyState.Search) 
         {   
             yield return new WaitForSeconds(0.1f);
             count--;
-            if(count < 0)
+            if(count < 0) //サーチ状態のままカウントが0になればサーチ状態終了(通常状態に戻る)
             {
                 SetState(EnemyState.Normal);
                 yield break;
@@ -137,6 +148,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    //引数targetとの距離を返す
     public float CheckDistance(GameObject target)
     {
         Vector3 yPos = target.transform.position;
@@ -145,6 +157,7 @@ public abstract class Enemy : MonoBehaviour
         return Vector3.Distance(yPos, mPos);
     }
 
+    //ダメージを受けた際の処理
     public void TakeDamage(float damage)
     {
         if(state == EnemyState.Death) return;
@@ -158,6 +171,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    //アイテムのドロップ制御
     private void ItemDrop()
     {   
         int randValue = UnityEngine.Random.Range(0, 100);
@@ -166,6 +180,7 @@ public abstract class Enemy : MonoBehaviour
         Instantiate(enemyData.dropItems[itemValue], new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
     }
 
+    //プレイヤーからダメージを受けた際、頭上にHPバーを表示する
     private IEnumerator CanvasAvtiveCo()
     {
         canvasDisapCnt = 10.0f;
@@ -174,7 +189,7 @@ public abstract class Enemy : MonoBehaviour
         {
             enemyCanvas.SetActive(true);
 
-            while(canvasDisapCnt > 0.0f)
+            while(canvasDisapCnt > 0.0f) //一定時間ダメージを受けなければHPバーは消える
             {
                 canvasDisapCnt -= 1.0f;
                 yield return new WaitForSeconds(1.0f);

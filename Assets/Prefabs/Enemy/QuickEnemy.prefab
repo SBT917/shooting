@@ -70,6 +70,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 29bd40f6cfa2d2d4989739f490ec8aad, type: 2}
+  - {fileID: 2100000, guid: ea4022bc38ebe1349aaa81f8972687c9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,6 +161,7 @@ MonoBehaviour:
   player: {fileID: 0}
   target: {fileID: 0}
   targetObjects: []
+  state: 0
 --- !u!1001 &23098786179858725
 PrefabInstance:
   m_ObjectHideFlags: 0

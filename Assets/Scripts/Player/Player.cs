@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//プレイヤーの状態
 public enum PlayerState
 {
-    Normal,
-    Invisible,
-    Death
+    Normal, //通常状態
+    Invisible, //透明化状態
+    Death //やられた
 }
 
+//プレイヤーの制御
 public class Player : MonoBehaviour
 {
     private Rigidbody rb;
@@ -22,22 +24,23 @@ public class Player : MonoBehaviour
     [SerializeField]private ShotSlot[] shotSlots;
     [SerializeField]private Material defaultMaterial;
     [SerializeField]private Material invisibleMaterial;
+    [SerializeField]private ParticleSystem particle;
 
-    public int hp;
-    public float energy;
-    public int maxHp;
-    public float maxEnergy;
-    public float moveSpeed;
-    public float defaultMoveSpeed;
-    public int nowScore;
-    public int nowPoint;
+    public int hp; //現在のHP
+    public float energy; //現在のENERGY
+    public int maxHp; //最大HP
+    public float maxEnergy; //最大ENERGY
+    public float moveSpeed; //移動速度
+    public float defaultMoveSpeed; //移動速度の初期値
+    public int nowScore; //現在のスコア
+    public int nowPoint; //現在のポイント数
+    public bool inWall; //壁の中にいるかどうか
     
-    [SerializeField] private float invTime;
-    [SerializeField] private Vector3 velocity;
-    [SerializeField] private PlayerState state;
-    [SerializeField] private bool inWall;
+    [SerializeField] private float invTime; //ダメージを受けた時の無敵時間
+    [SerializeField] private Vector3 velocity; //移動に使用するベクトル
+    [SerializeField] private PlayerState state; //プレイヤーの状態
 
-    private bool isInv = false;
+    private bool isInv = false; //ダメージを受けた際の無敵時間かどうか
     
     void Start()
     {
@@ -83,12 +86,16 @@ public class Player : MonoBehaviour
         state = newState;
     }
 
+    //倒されたときの処理
     private void Dead()
     {
         state = PlayerState.Death;
+        ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+        p.Play();
         gameObject.SetActive(false);
     }
 
+    //Energyが最小値、最大値を超えないように
     private void EnergyController()
     {
         if (energy < 0.0f){
@@ -100,31 +107,37 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Energyの回復コルーチン
     private IEnumerator HealEnergy()
     {
-        float defaultEnergy = maxEnergy;
+        float defaultEnergy = maxEnergy; //開始時の最大Energyをデフォルトとする
+        float healSpeed = 8.0f;
+        
         while (true){
             if(state == PlayerState.Normal && energy < maxEnergy){
-                energy += maxEnergy / defaultEnergy;
+                float healingAmount = maxEnergy / defaultEnergy; //回復量は現在の最大Energyをデフォルトで割った値(Energyが強化されても最大回復するまでの時間を一定にするため)
+                energy = Mathf.MoveTowards(energy, energy + healingAmount, Time.deltaTime * healingAmount * healSpeed); //スライダーがなめらかになるよう補完して回復
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
     }
 
+    //Energyを継続して消費する時のコルーチン
     private IEnumerator DecreaseEnergy(float limit, float value, float span)
     {
         while(energy > limit){
-            energy -= value;
-            yield return new WaitForSeconds(span);
+            energy = Mathf.MoveTowards(energy, energy - value, Time.deltaTime * span); //スライダーがなめらかになるよう補完して消費
+            yield return null;
         }
     }
 
+    //ダメージを受けた時の処理
     public void TakeDamage(int damage)
     {
         if(!(state == PlayerState.Death || state == PlayerState.Invisible) && !isInv){
             hp -= damage;
             isInv = true;
-            hpContainer.Relocation();
+            hpContainer.TakeDamage();
             StartCoroutine(InvTimeCo(invTime));
         }
             
@@ -133,6 +146,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //ダメージを受けた時の無敵時間
     private IEnumerator InvTimeCo(float time)
     {
         StartCoroutine(Flashing());
@@ -140,6 +154,7 @@ public class Player : MonoBehaviour
         isInv = false;
     }
 
+    //無敵時間中は点滅する
     private IEnumerator Flashing()
     {
         while(isInv){
@@ -150,19 +165,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool CheckRaycastHit(float distance, string tag)
-    {   
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, distance)){
-            return hit.collider.CompareTag(tag);
-        }
-        else{
-            return false;
-        }
-            
-    }
-
+    //マップ上の移動範囲の制限
     private void MovingRangeFixed()
     {   
         GameObject floor = GameObject.FindWithTag("Floor");
@@ -175,6 +178,7 @@ public class Player : MonoBehaviour
         transform.position = currentPosition;
     }
 
+    //マウスポインターの方向を見る
     private void LookMousePoint()
     {
         if(state != PlayerState.Normal) return;
@@ -193,6 +197,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //移動処理
     private protected void Move()
     {
         velocity = Vector3.zero;
@@ -202,6 +207,7 @@ public class Player : MonoBehaviour
 
         velocity = velocity.normalized * moveSpeed * Time.deltaTime;
         
+        //入力された方向に向く処理
         if (velocity.magnitude > 0){
             float turnSpeed = 0.2f;
             rb.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), turnSpeed);
@@ -212,6 +218,7 @@ public class Player : MonoBehaviour
         MovingRangeFixed(); 
     }
 
+    //ショットを放つ
     private void Shot()
     {
         if(state != PlayerState.Normal) return;
@@ -226,17 +233,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    //透明化状態の処理
     Coroutine invCo;
     private void Invisible()
     {
-        float useEnergy = 1.0f;
-        float useEnergySpan = 0.1f;
-        float speedMagnification = 2.0f;
+        float useEnergy = 1.0f; //透明化中の際に消費し続けるEnergy
+        float useEnergySpeed = 10.0f; //Energyを消費するスピード
+        float speedMagnification = 2.0f; //透明化状態の移動速度倍率
 
+        //プレイヤーが通常状態の時にのみ透明化状態になる操作を受け付ける
         if(state == PlayerState.Normal){
             if (Input.GetButtonDown("Inv")){
                 if (energy >= useEnergy){
-                    invCo = StartCoroutine(DecreaseEnergy(0.0f, useEnergy, useEnergySpan));
+                    invCo = StartCoroutine(DecreaseEnergy(0.0f, useEnergy, useEnergySpeed));
 
                     state = PlayerState.Invisible;
 
@@ -244,14 +253,15 @@ public class Player : MonoBehaviour
                     coll.isTrigger = true;
                 }
             }
-        }
+        }   
 
+        //透明化状態時の処理
         if(state == PlayerState.Invisible)
         {
             moveSpeed = defaultMoveSpeed * speedMagnification;
 
             if (!inWall){
-                if (!Input.GetButton("Inv") || energy <= 0){
+                if (!Input.GetButton("Inv") || energy <= 0){ //壁の外にいる時にEnergyが切れてしまったら強制的に戻される
                     StopCoroutine(invCo);
                     state = PlayerState.Normal;
                     moveSpeed = defaultMoveSpeed;
@@ -260,7 +270,7 @@ public class Player : MonoBehaviour
                 }
             }
             else{
-                if (energy <= 0){
+                if (energy <= 0){ //壁の中にいる時にEnergyが切れてしまったら速度が半減
                     StopCoroutine(invCo);
                     moveSpeed = defaultMoveSpeed / 2;
                 }
@@ -268,6 +278,7 @@ public class Player : MonoBehaviour
         }  
     }
 
+    //ゲームがwaveの間に入った時の処理(強化画面が開ける様になる)
     private void BreakTimeController()
     {
         if(gm.GetState() == GameState.BreakTime){

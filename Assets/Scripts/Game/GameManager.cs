@@ -33,12 +33,16 @@ public class GameManager : MonoBehaviour
     private Coroutine timeCo;
     private Coroutine scoreCo;
 
+    public static int finalScore;
+    public static int finalWave;
+
     [SerializeField]private int leftTime;
     [SerializeField]private int enemySpawnSpan;
     [SerializeField]private int enemySpawnOneTime;
 
     void Awake()
     {
+        Time.timeScale = 1.0f;
         targetObjects = System.Array.Empty<GameObject>();
         enemySpawner = GameObject.FindWithTag("EnemySpawner").GetComponent<EnemySpawner>();
         targetSpawner = GameObject.FindWithTag("TargetSpawner").GetComponent<TargetSpawner>();
@@ -120,13 +124,19 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOver()
     {
         state = GameState.GameOver;
-        EnemyDestroyer();
-        StopCoroutine(timeCo);
-        StopCoroutine(spawnCo);   
 
-        gameText.text = "GAME OVER";
-        yield return new WaitForSeconds(5.0f);
-        SceneManager.LoadScene("TitleScene");
+        Time.timeScale = 0.2f;
+        yield return new WaitForSecondsRealtime(2.0f);
+        Time.timeScale = 1.0f;
+
+        StopCoroutine(timeCo);
+        StopCoroutine(spawnCo);
+
+        finalWave = waveCount;
+        finalScore = player.nowScore;
+
+        yield return new WaitForSecondsRealtime(3.0f);
+        SceneManager.LoadScene("ResultScene");
     }
 
     public GameState GetState()
@@ -149,7 +159,7 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i < targetObjects.Length; ++i){
             TargetObject target = targetObjects[i].GetComponent<TargetObject>();
             
-            if(target.GetState() == TargetObject.TargetState.Break){
+            if(target.GetState() == TargetState.Break){
                 isTargetBreak = true;
                 break;
             }
@@ -163,7 +173,7 @@ public class GameManager : MonoBehaviour
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
 
         foreach(GameObject enemy in enemys){
-            Destroy(enemy);
+            enemy.GetComponent<Enemy>().Disappearing();
         }
     }
 

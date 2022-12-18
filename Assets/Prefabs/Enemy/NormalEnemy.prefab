@@ -70,6 +70,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: b75e77dbd59e91d4e87ea6115e1cf6c4, type: 2}
+  - {fileID: 2100000, guid: ea4022bc38ebe1349aaa81f8972687c9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,6 +109,7 @@ MonoBehaviour:
   player: {fileID: 0}
   target: {fileID: 0}
   targetObjects: []
+  state: 0
 --- !u!136 &915462805102263821
 CapsuleCollider:
   m_ObjectHideFlags: 0
