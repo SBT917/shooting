@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShotData : ScriptableObject
 {
     public string shotName; //ショット名
+    public Sprite icon; //ショットのアイコン
     public Rarity rarity; //レアリティ
     public float moveSpeed; //移動速度
     public float damage; //ダメージ量

@@ -10,13 +10,13 @@ public enum SlotState
     Recharging //リロード中
 }
 
-//プレイヤーが所持しているショットの情報を保存する。この情報を基にショットを撃つ。
+//プレイヤーが所持しているショットの情報を保存するクラス。この情報を基にショットを撃つ。
 public class ShotSlot : MonoBehaviour
 {
     public Shot shot; //スロットが持つショット
     public int shotAmount; //ショットの残弾数
     private Player player; //プレイヤー
-    private Color shotColor; //ショットの色
+    public Color shotColor; //ショットの色
     private ParticleSystem particle; //撃った時に発生させるパーティクル
     private ParticleSystem.MainModule particleMain; //パーティクルの値を制御
     [SerializeField]private SlotState state; //ショットの現在の状態
@@ -49,16 +49,21 @@ public class ShotSlot : MonoBehaviour
     public void SetShot(Shot newShot)
     {
         shot = newShot;
-        shotAmount = newShot.shotData.maxAmount;
+        shotAmount = 0;
+        StartCoroutine(ShotRechargeCo());
         shotColor = shot.gameObject.GetComponent<Renderer>().sharedMaterial.color; //色をショットのマテリアルから取得
         particleMain.startColor = shotColor; //マテリアルから取得した色をパーティクルの色に設定
     }
 
-    public void Fire() //ショットを放つ
+    //ショットを放つ
+    public void Fire() 
     {   
         if(shot == null) return;
-        if(shotAmount <= 0) return;
         if(state != SlotState.Ready) return;
+        if(shotAmount <= 0){
+            StartCoroutine(ShotRechargeCo());
+            return;
+        }
         
         --shotAmount; 
         particle.Play();
@@ -73,19 +78,12 @@ public class ShotSlot : MonoBehaviour
         
     }   
 
-    private IEnumerator ShotRateCo() //ショットの連射速度をコルーチンで制御
+    //ショットの連射速度をコルーチンで制御
+    private IEnumerator ShotRateCo() 
     {
         state = SlotState.Wait;
         yield return new WaitForSeconds(shot.shotData.rate);
         state = SlotState.Ready;
-    }
-
-    private void ShotRecharge()
-    {
-        if(shotAmount > 0) return;
-        if(state == SlotState.Recharging) return;
-
-        StartCoroutine(ShotRechargeCo());
     }
 
     private IEnumerator ShotRechargeCo() //ショットのリチャージ

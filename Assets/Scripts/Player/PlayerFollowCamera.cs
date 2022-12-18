@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//プレイヤーを追いかけるカメラの制御
 public class PlayerFollowCamera : MonoBehaviour
 {
     [SerializeField] private Transform player;

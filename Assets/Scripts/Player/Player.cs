@@ -34,11 +34,11 @@ public class Player : MonoBehaviour
     public float defaultMoveSpeed; //移動速度の初期値
     public int nowScore; //現在のスコア
     public int nowPoint; //現在のポイント数
+    public bool inWall; //壁の中にいるかどうか
     
     [SerializeField] private float invTime; //ダメージを受けた時の無敵時間
     [SerializeField] private Vector3 velocity; //移動に使用するベクトル
     [SerializeField] private PlayerState state; //プレイヤーの状態
-    [SerializeField] private bool inWall; //壁の中にいるかどうか
 
     private bool isInv = false; //ダメージを受けた際の無敵時間かどうか
     
@@ -111,20 +111,23 @@ public class Player : MonoBehaviour
     private IEnumerator HealEnergy()
     {
         float defaultEnergy = maxEnergy; //開始時の最大Energyをデフォルトとする
+        float healSpeed = 8.0f;
+        
         while (true){
             if(state == PlayerState.Normal && energy < maxEnergy){
-                energy += maxEnergy / defaultEnergy; //回復量は現在の最大Energyをデフォルトで割った値(Energyが強化されても最大回復するまでの時間を一定にするため)
+                float healingAmount = maxEnergy / defaultEnergy; //回復量は現在の最大Energyをデフォルトで割った値(Energyが強化されても最大回復するまでの時間を一定にするため)
+                energy = Mathf.MoveTowards(energy, energy + healingAmount, Time.deltaTime * healingAmount * healSpeed); //スライダーがなめらかになるよう補完して回復
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
     }
 
-    //Energyを消費する時のコルーチン
+    //Energyを継続して消費する時のコルーチン
     private IEnumerator DecreaseEnergy(float limit, float value, float span)
     {
         while(energy > limit){
-            energy -= value;
-            yield return new WaitForSeconds(span);
+            energy = Mathf.MoveTowards(energy, energy - value, Time.deltaTime * span); //スライダーがなめらかになるよう補完して消費
+            yield return null;
         }
     }
 
@@ -134,7 +137,7 @@ public class Player : MonoBehaviour
         if(!(state == PlayerState.Death || state == PlayerState.Invisible) && !isInv){
             hp -= damage;
             isInv = true;
-            hpContainer.Relocation();
+            hpContainer.TakeDamage();
             StartCoroutine(InvTimeCo(invTime));
         }
             
@@ -235,14 +238,14 @@ public class Player : MonoBehaviour
     private void Invisible()
     {
         float useEnergy = 1.0f; //透明化中の際に消費し続けるEnergy
-        float useEnergySpan = 0.1f; //Energyを消費するスパン
+        float useEnergySpeed = 10.0f; //Energyを消費するスピード
         float speedMagnification = 2.0f; //透明化状態の移動速度倍率
 
         //プレイヤーが通常状態の時にのみ透明化状態になる操作を受け付ける
         if(state == PlayerState.Normal){
             if (Input.GetButtonDown("Inv")){
                 if (energy >= useEnergy){
-                    invCo = StartCoroutine(DecreaseEnergy(0.0f, useEnergy, useEnergySpan));
+                    invCo = StartCoroutine(DecreaseEnergy(0.0f, useEnergy, useEnergySpeed));
 
                     state = PlayerState.Invisible;
 

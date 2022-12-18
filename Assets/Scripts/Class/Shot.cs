@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//ショットのクラス
 public class Shot : MonoBehaviour
 {
-    protected Rigidbody rb;
-    protected GameObject player;
+    protected Rigidbody rb; //リジットボディ
+    protected GameObject player; //プレイヤー
 
-    public ShotData shotData;
-    protected float disapCnt;
-    protected ParticleSystem particle;
+    public ShotData shotData; //ショットのデータをスクリプタブルオブジェクトから取得
+    protected float disapCnt; //ショットが消滅するまでの時間
+    protected ParticleSystem particle; //壁や敵に当たった時のパーティクル
     private ParticleSystem.MainModule particleMain;
 
     protected virtual void Awake()
@@ -26,6 +27,7 @@ public class Shot : MonoBehaviour
         Move();
     }
 
+    //移動処理
     protected virtual void Move()
     {
         disapCnt -= Time.deltaTime;
@@ -34,10 +36,11 @@ public class Shot : MonoBehaviour
             Destroy(gameObject);
     }
 
+    //ショットを出現させる際の処理
     public virtual void Instance()
     {
         player = GameObject.FindWithTag("Player");
-        float randomRotate = Random.Range(-shotData.blur, shotData.blur);
+        float randomRotate = Random.Range(-shotData.blur, shotData.blur); //弾のブレをshotDataのblurから取得し、その分ランダムに回転させてブレを表す。
         Quaternion rotate = Quaternion.Euler(0, randomRotate, 0);
         Instantiate(gameObject, player.transform.localPosition + player.transform.forward, player.transform.rotation * rotate);
     }

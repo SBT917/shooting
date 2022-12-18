@@ -86,7 +86,7 @@ public abstract class Enemy : MonoBehaviour
 
         player.nowScore += enemyData.score;
         ItemDrop();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     //エネミーが目標に到達した、またはタイムアップで消滅する際の処理
