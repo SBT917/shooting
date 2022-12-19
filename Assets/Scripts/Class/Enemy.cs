@@ -83,6 +83,7 @@ public abstract class Enemy : MonoBehaviour
         state = EnemyState.Death;
         ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
         p.Play();
+        --gameManager.enemyCount;
 
         player.nowScore += enemyData.score;
         ItemDrop();
@@ -94,7 +95,9 @@ public abstract class Enemy : MonoBehaviour
     {
         ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
         p.Play();
-        Destroy(gameObject);
+        --gameManager.enemyCount;
+
+        gameObject.SetActive(false);
     }
 
     //通常状態の行動

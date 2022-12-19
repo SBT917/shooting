@@ -5,23 +5,28 @@ using UnityEngine.SceneManagement;
 using System;
 using TMPro;
 
+//現在のゲームの状態
 public enum GameState
 {
-    Start,
-    Game,
-    BreakTime,
-    GameOver
+    Start, //開始直後
+    Game, //ゲーム中
+    BreakTime, //Waveの間
+    GameOver //ゲームオーバー
 }
 
+
+//ゲーム進行を制御する
 public class GameManager : MonoBehaviour
 {
     [SerializeField]private GameState state;
     [SerializeField]private TextMeshProUGUI gameText;
     [SerializeField]private TextMeshProUGUI waveText;
-    [SerializeField]private TextMeshProUGUI leftTimeText;
+    [SerializeField]private TextMeshProUGUI enemyCountText;
     [SerializeField]private TargetHpContainer targetHpContainer;
     [SerializeField]private ScoreCounter scoreCounter;
     [SerializeField]private ShotShop shotShop;
+    public int enemyCount;
+    private bool isEnemySpawning;
     private EnemySpawner enemySpawner;
     private TargetSpawner targetSpawner;
     private Player player;
@@ -36,7 +41,7 @@ public class GameManager : MonoBehaviour
     public static int finalScore;
     public static int finalWave;
 
-    [SerializeField]private int leftTime;
+    [SerializeField]private int enemySpawnTime;
     [SerializeField]private int enemySpawnSpan;
     [SerializeField]private int enemySpawnOneTime;
 
@@ -52,11 +57,15 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {   
-        TimeSpan timeSpan = new TimeSpan(0, 0, leftTime);
-        leftTimeText.text = timeSpan.ToString(@"mm\:ss");
+        enemyCountText.text = "x" + enemyCount.ToString("00");
         waveText.text = "WAVE " + waveCount.ToString();
 
-        if(leftTime <= 0){
+        if(enemySpawnTime <= 0 && isEnemySpawning){
+            StopCoroutine(spawnCo);
+            isEnemySpawning = false;
+        }
+
+        if(enemyCount <= 0 && !isEnemySpawning && state == GameState.Game){
             StartCoroutine(WaveBetween());
         }
         
@@ -92,7 +101,6 @@ public class GameManager : MonoBehaviour
         }
 
         StopCoroutine(timeCo);
-        StopCoroutine(spawnCo);
         EnemyDestroyer();
         shotShop.DrawingShop();
         SetLevel();
@@ -114,6 +122,7 @@ public class GameManager : MonoBehaviour
         gameText.text = "";
         timeCo = StartCoroutine(TimeCount());
         spawnCo = StartCoroutine(enemySpawner.SpawnCo(enemySpawnSpan, enemySpawnOneTime));
+        isEnemySpawning = true;
     }
 
     public void ForceGameStart()
@@ -130,8 +139,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
 
         StopCoroutine(timeCo);
-        StopCoroutine(spawnCo);
-
+        
         finalWave = waveCount;
         finalScore = player.nowScore;
 
@@ -148,7 +156,7 @@ public class GameManager : MonoBehaviour
     {
         while(true){
             yield return new WaitForSeconds(1.0f);
-            --leftTime;
+            --enemySpawnTime;
         }
     }
 
@@ -193,7 +201,7 @@ public class GameManager : MonoBehaviour
 
     private void SetParameter(int time, int spawnSpan, int spawnOneTime)
     {
-        leftTime = time;
+        enemySpawnTime = time;
         enemySpawnSpan = spawnSpan;
         enemySpawnOneTime = spawnOneTime;
     }
@@ -202,16 +210,16 @@ public class GameManager : MonoBehaviour
     {
         ++waveCount;
         if(waveCount >= 1 && waveCount < 3){
-            SetParameter(60, 20, 10);
+            SetParameter(60, 100, 10);
         }
         else if(waveCount >= 3 && waveCount < 6){
-            SetParameter(80, 20, 15);
+            SetParameter(60, 100, 15);
         }
         else if(waveCount >= 6 && waveCount < 10){
-            SetParameter(80, 15, 15);
+            SetParameter(90, 50, 15);
         }
         else if(waveCount >= 10){
-            SetParameter(100, 15, 20);
+            SetParameter(90, 50, 20);
         }
     }
 }

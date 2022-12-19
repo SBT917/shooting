@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
+//敵をスポーンさせるオブジェクトの制御
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField]private GameObject[] enemys;
-    [SerializeField]private GameObject[] spawnArea;
+    [SerializeField]private GameObject[] enemys; //スポーンする敵
+    [SerializeField]private GameObject[] spawnArea; //スポーンする場所
+    [SerializeField]private Image spawnGauge; //エネミーがスポーンするまでの時間を表すUI
+    private GameManager gameManager;
     
     void Start()
     {
         spawnArea = GameObject.FindGameObjectsWithTag("EnemySpawnArea");
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -19,10 +24,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void Spawner()
     {
-        int spawnAreaValue = Random.Range(0, spawnArea.Length);
-        int spawnEnemyValue = Random.Range(0, enemys.Length);
+        int spawnAreaValue = Random.Range(0, spawnArea.Length); //スポーンする場所をランダムで選出
+        int spawnEnemyValue = Random.Range(0, enemys.Length); //スポーンする敵をランダムで選出
 
         Vector3 areaEdge = Vector3.zero;
+
+        //spawnAreaの四角形の内側の何処かから出現させる
         areaEdge.x = spawnArea[spawnAreaValue].transform.position.x - spawnArea[spawnAreaValue].transform.localScale.x * 5;
         areaEdge.z = spawnArea[spawnAreaValue].transform.position.z + spawnArea[spawnAreaValue].transform.localScale.z * 5;
 
@@ -39,10 +46,12 @@ public class EnemySpawner : MonoBehaviour
                 count = span;
                 for(int i = 0; i < spawnOneTime; ++i){
                     Spawner();
+                    ++gameManager.enemyCount;
                 }
             }
-            --count;   
-            yield return new WaitForSeconds(1.0f);
+            count = Mathf.MoveTowards(count, count - 1, Time.deltaTime * 10.0f); //ゲージをなめらかに見せるため補完して減らす
+            spawnGauge.fillAmount = 1 - (count / span);
+            yield return null;
         } 
     }
 }
