@@ -5,20 +5,23 @@ using UnityEngine.SceneManagement;
 using System;
 using TMPro;
 
+//現在のゲームの状態
 public enum GameState
 {
-    Start,
-    Game,
-    BreakTime,
-    GameOver
+    Start, //開始直後
+    Game, //ゲーム中
+    BreakTime, //Waveの間
+    GameOver //ゲームオーバー
 }
 
+
+//ゲーム進行を制御する
 public class GameManager : MonoBehaviour
 {
     [SerializeField]private GameState state;
     [SerializeField]private TextMeshProUGUI gameText;
     [SerializeField]private TextMeshProUGUI waveText;
-    [SerializeField]private TextMeshProUGUI leftTimeText;
+    [SerializeField]private TextMeshProUGUI enemyCountText;
     [SerializeField]private TargetHpContainer targetHpContainer;
     [SerializeField]private ScoreCounter scoreCounter;
     [SerializeField]private ShotShop shotShop;
@@ -30,13 +33,12 @@ public class GameManager : MonoBehaviour
     private int startCount;
 
     private Coroutine spawnCo;
-    private Coroutine timeCo;
     private Coroutine scoreCo;
 
     public static int finalScore;
     public static int finalWave;
 
-    [SerializeField]private int leftTime;
+    [SerializeField]private int enemySpawnCount;
     [SerializeField]private int enemySpawnSpan;
     [SerializeField]private int enemySpawnOneTime;
 
@@ -52,11 +54,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {   
-        TimeSpan timeSpan = new TimeSpan(0, 0, leftTime);
-        leftTimeText.text = timeSpan.ToString(@"mm\:ss");
         waveText.text = "WAVE " + waveCount.ToString();
 
-        if(leftTime <= 0){
+        if(enemySpawner.enemyCount <= 0 && !enemySpawner.isEnemySpawning && state == GameState.Game){
             StartCoroutine(WaveBetween());
         }
         
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameStart()
     {
         state = GameState.Start;
-        SetLevel();
+        ChangeLevel();
         startCount = 10;
         
         while(startCount > 0){
@@ -91,11 +91,9 @@ public class GameManager : MonoBehaviour
             StartCoroutine(TargetRelocation(2));
         }
 
-        StopCoroutine(timeCo);
-        StopCoroutine(spawnCo);
         EnemyDestroyer();
         shotShop.DrawingShop();
-        SetLevel();
+        ChangeLevel();
 
         startCount = 30;
         while(startCount > 0){
@@ -112,8 +110,7 @@ public class GameManager : MonoBehaviour
         state = GameState.Game;
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
         gameText.text = "";
-        timeCo = StartCoroutine(TimeCount());
-        spawnCo = StartCoroutine(enemySpawner.SpawnCo(enemySpawnSpan, enemySpawnOneTime));
+        spawnCo = StartCoroutine(enemySpawner.SpawnCo(enemySpawnCount, enemySpawnSpan, enemySpawnOneTime));
     }
 
     public void ForceGameStart()
@@ -128,10 +125,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0.2f;
         yield return new WaitForSecondsRealtime(2.0f);
         Time.timeScale = 1.0f;
-
-        StopCoroutine(timeCo);
-        StopCoroutine(spawnCo);
-
+        
         finalWave = waveCount;
         finalScore = player.nowScore;
 
@@ -142,14 +136,6 @@ public class GameManager : MonoBehaviour
     public GameState GetState()
     {
         return state;
-    }
-
-    private IEnumerator TimeCount()
-    {
-        while(true){
-            yield return new WaitForSeconds(1.0f);
-            --leftTime;
-        }
     }
 
     private bool CheckPlayerAndTargetState()
@@ -191,27 +177,34 @@ public class GameManager : MonoBehaviour
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
     }
 
-    private void SetParameter(int time, int spawnSpan, int spawnOneTime)
+    //spawnCount:敵がスポーンする回数
+    //spawnSpan:敵がスポーンする間隔
+    //spawnOneTime:敵が一度にスポーンする量
+    private void SetParameter(int spawnCount, int spawnSpan, int spawnOneTime)
     {
-        leftTime = time;
+        enemySpawnCount = spawnCount;
         enemySpawnSpan = spawnSpan;
         enemySpawnOneTime = spawnOneTime;
     }
 
-    private void SetLevel()
+    private void ChangeLevel()
     {
         ++waveCount;
-        if(waveCount >= 1 && waveCount < 3){
-            SetParameter(60, 20, 10);
+
+        if(waveCount == 1){
+            SetParameter(50, 20, 20);
+        }
+        if(waveCount >= 2 && waveCount < 3){
+            SetParameter(3, 20, 10);
         }
         else if(waveCount >= 3 && waveCount < 6){
-            SetParameter(80, 20, 15);
+            SetParameter(3, 20, 15);
         }
         else if(waveCount >= 6 && waveCount < 10){
-            SetParameter(80, 15, 15);
+            SetParameter(6, 10, 15);
         }
         else if(waveCount >= 10){
-            SetParameter(100, 15, 20);
+            SetParameter(6, 10, 20);
         }
     }
 }

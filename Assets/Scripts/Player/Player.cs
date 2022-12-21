@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
         if(state != PlayerState.Normal) return;
         if(menu.activeSelf == true) return;
 
-        if(Input.GetButton("Fire1") || Input.GetButton("Fire2")){
+        if(Input.GetButton("Fire1") || (shotSlots[1].shot != null && Input.GetButton("Fire2")) ){
             Plane plane = new Plane();
 	        float distance = 0;
 
