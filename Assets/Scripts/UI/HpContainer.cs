@@ -45,7 +45,7 @@ public class HpContainer : MonoBehaviour
         {
             GameObject go = Instantiate<GameObject>(hpObj, transform);
 
-            if(i == player.maxHp){ //最終ループの時にSpriteをフタのSpriteに変えて、青いImageと背景を削除
+            if(i == player.maxHp){ //最終ループの時にhpObjのSpriteをフタのSpriteに変えて、青いImageと背景を削除
                 Destroy(go.transform.GetChild(0).gameObject);
                 Destroy(go.transform.GetChild(1).gameObject);
                 go.transform.GetChild(2).GetComponent<Image>().sprite = topFrame;

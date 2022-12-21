@@ -30,6 +30,7 @@ public abstract class Enemy : MonoBehaviour
     public GameObject[] targetObjects; //マップ上に存在する目標オブジェクト
 
     private GameManager gameManager;
+    private EnemySpawner enemySpawner;
     [SerializeField]private EnemyState state;
     private GameObject enemyCanvas;
     private float canvasDisapCnt;
@@ -46,6 +47,7 @@ public abstract class Enemy : MonoBehaviour
         targetObjects = GameObject.FindGameObjectsWithTag("Target");  
         enemyCanvas = transform.Find("EnemyCanvas").gameObject;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        enemySpawner = GameObject.FindWithTag("EnemySpawner").GetComponent<EnemySpawner>();
         state = EnemyState.Normal;
         hp = enemyData.maxHp;
         nav.speed = enemyData.normalSpeed;
@@ -53,7 +55,9 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
+        if(gameManager.GetState() == GameState.GameOver) return;
         if(state == EnemyState.Death) return;
+
         Act();
     }
 
@@ -83,19 +87,19 @@ public abstract class Enemy : MonoBehaviour
         state = EnemyState.Death;
         ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
         p.Play();
-        --gameManager.enemyCount;
+        --enemySpawner.enemyCount;
 
         player.nowScore += enemyData.score;
         ItemDrop();
         gameObject.SetActive(false);
     }
 
-    //エネミーが目標に到達した、またはタイムアップで消滅する際の処理
+    //エネミーが目標に到達して消滅する際の処理
     public virtual void Disappearing()
     {
         ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
         p.Play();
-        --gameManager.enemyCount;
+        --enemySpawner.enemyCount;
 
         gameObject.SetActive(false);
     }
@@ -107,27 +111,24 @@ public abstract class Enemy : MonoBehaviour
         {
             nav.speed = enemyData.normalSpeed;
 
-            float[] distances = new float[targetObjects.Length];
-            for(int i = 0; i < targetObjects.Length; ++i)
-            {
+            float[] distances = new float[targetObjects.Length]; //各ターゲットオブジェクトまでの距離を格納する
+            for(int i = 0; i < targetObjects.Length; ++i){
                 distances[i] = Vector3.Distance(targetObjects[i].transform.position, transform.position);
             }
-            float min = distances.Min();
-            int minIndex = Array.IndexOf(distances, min);
-            target = targetObjects[minIndex];
+            float min = distances.Min(); //配列の一番小さい値を代入
+            int minIndex = Array.IndexOf(distances, min); //一番小さい値のインデックスを代入
+            target = targetObjects[minIndex]; //一番距離が近いオブジェクトをターゲットに設定する。
         }
     }
 
     //攻撃状態の行動
     protected virtual void AttackAction(float outRange, float searchTime)
     {
-        if(state == EnemyState.Attack)
-        {
+        if(state == EnemyState.Attack){
             nav.speed = enemyData.attackSpeed;
             target = player.gameObject;
 
-            if(CheckDistance(player.gameObject) > outRange || player.GetState() == PlayerState.Invisible)
-            {
+            if(CheckDistance(player.gameObject) > outRange || player.GetState() == PlayerState.Invisible){ //プレイヤーが範囲外に行くか、透明状態になったらサーチ状態に移行
                 SetState(EnemyState.Search);
                 StartCoroutine(SearchCo(searchTime));
             }  
