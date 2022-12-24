@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]private TargetHpContainer targetHpContainer;
     [SerializeField]private ScoreCounter scoreCounter;
     [SerializeField]private ShotShop shotShop;
+    private AudioManager audioManager;
     private EnemySpawner enemySpawner;
     private TargetSpawner targetSpawner;
     private Player player;
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
         targetObjects = System.Array.Empty<GameObject>();
         enemySpawner = GameObject.FindWithTag("EnemySpawner").GetComponent<EnemySpawner>();
         targetSpawner = GameObject.FindWithTag("TargetSpawner").GetComponent<TargetSpawner>();
+        audioManager = GetComponentInChildren<AudioManager>();
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         StartCoroutine(GameStart());
     }
@@ -69,24 +71,24 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.Start;
         ChangeLevel();
-        startCount = 10;
+        startCount = 2;
         
         while(startCount > 0){
             gameText.text = startCount.ToString();
-            if(startCount == 5){
-                targetSpawner.Spawner(1);
+            if(startCount == 1){
+                targetSpawner.Spawn(3);
             }
             yield return new WaitForSeconds(1.0f);
             --startCount;
         }
         scoreCo = StartCoroutine(scoreCounter.AppendScore());
-            
         WaveStart();
     }
 
     private IEnumerator WaveBetween()
     {   
         state = GameState.BreakTime;
+        audioManager.Play();
         if(waveCount % 5 == 0){
             StartCoroutine(TargetRelocation(2));
         }
@@ -108,6 +110,7 @@ public class GameManager : MonoBehaviour
     private void WaveStart()
     {
         state = GameState.Game;
+        audioManager.Play();
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
         gameText.text = "";
         spawnCo = StartCoroutine(enemySpawner.SpawnCo(enemySpawnCount, enemySpawnSpan, enemySpawnOneTime));
@@ -173,7 +176,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(5.0f);
 
-        targetSpawner.Spawner(count);
+        targetSpawner.Spawn(count);
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
     }
 
@@ -192,7 +195,7 @@ public class GameManager : MonoBehaviour
         ++waveCount;
 
         if(waveCount == 1){
-            SetParameter(50, 20, 20);
+            SetParameter(0, 20, 20);
         }
         if(waveCount >= 2 && waveCount < 3){
             SetParameter(3, 20, 10);

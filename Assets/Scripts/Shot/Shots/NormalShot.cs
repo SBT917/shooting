@@ -4,5 +4,13 @@ using UnityEngine;
 
 public class NormalShot : Shot
 {
-    
+    protected override void Awake() 
+    {
+        base.Awake();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+    }
 }

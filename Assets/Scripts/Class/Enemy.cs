@@ -51,6 +51,7 @@ public abstract class Enemy : MonoBehaviour
         state = EnemyState.Normal;
         hp = enemyData.maxHp;
         nav.speed = enemyData.normalSpeed;
+        enemyCanvas.SetActive(false);
     }
 
     protected virtual void Update()

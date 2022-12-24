@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class QuickEnemy : Enemy
 {
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+    
+    protected override void Update()
+    {
+        base.Update();
+    }
+
     protected override void AttackAction(float outRange, float searchTime)
     {
         return;
