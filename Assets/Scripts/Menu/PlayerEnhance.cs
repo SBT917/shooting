@@ -84,7 +84,7 @@ public class PlayerEnhance : MonoBehaviour
 
     public void OnSpeedEnhanceButton()
     {
-        float speedIncreaseAmount = 5.0f / (speed.maxLevel - 1.0f);
+        float speedIncreaseAmount = 4.0f / (speed.maxLevel - 1.0f);
 
         if(player.nowPoint >= speed.needPoint){
             player.defaultMoveSpeed += speedIncreaseAmount;
@@ -98,12 +98,12 @@ public class PlayerEnhance : MonoBehaviour
         }
     }
 
-    public void OnStaminaEnhanceButton()
+    public void OnEnergyEnhanceButton()
     {
-        float staminaIncreaseAmount = 50.0f / (energy.maxLevel - 1.0f);
+        float energyIncreaseAmount = 50.0f / (energy.maxLevel - 1.0f);
 
         if(player.nowPoint >= energy.needPoint){
-            player.maxEnergy += staminaIncreaseAmount;
+            player.maxEnergy += energyIncreaseAmount;
             player.energy = player.maxEnergy;
 
             player.nowPoint -= energy.needPoint;

@@ -7,11 +7,11 @@ public class TargetHpContainer : MonoBehaviour
 {
     [SerializeField]private GameObject targetHpBar;
 
-    public void Placement(GameObject target, int num)
+    public void Placement(GameObject target, string targetName)
     {
         GameObject bar = Instantiate(targetHpBar, transform);
         bar.GetComponentInChildren<TargetHpBar>().targetObject = target;
-        string text = "TARGET" + num.ToString();
+        string text = targetName;
         bar.GetComponentInChildren<TextMeshProUGUI>().text = text;
     }
 

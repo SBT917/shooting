@@ -14,15 +14,14 @@ public class MiniMapIcon : MonoBehaviour
     {
         miniMapCamera = GameObject.FindWithTag("MiniMapCamera").GetComponent<Camera>();
         parentObject = transform.root.gameObject.transform;
-        rangeRadiusOffset = 3.0f;
+        rangeRadiusOffset = 2.0f;
         miniMapRangeRadius = miniMapCamera.orthographicSize;
         defaultPosY = transform.position.y;
     }
 
-    void LateUpdate()
+    void Update()
     {
         DispIcon();
-        transform.rotation = Quaternion.Euler(90, transform.position.y, 0);
     }
 
     private void DispIcon()

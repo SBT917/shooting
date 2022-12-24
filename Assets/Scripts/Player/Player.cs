@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
     private IEnumerator HealEnergy()
     {
         float defaultEnergy = maxEnergy; //開始時の最大Energyをデフォルトとする
-        float healSpeed = 8.0f;
+        float healSpeed = 5.0f;
         
         while (true){
             if(state == PlayerState.Normal && energy < maxEnergy){
@@ -240,6 +240,7 @@ public class Player : MonoBehaviour
         float useEnergy = 1.0f; //透明化中の際に消費し続けるEnergy
         float useEnergySpeed = 10.0f; //Energyを消費するスピード
         float speedMagnification = 2.0f; //透明化状態の移動速度倍率
+        float inWallSpeedMagnification = 1.2f; //透明化かつ壁の中にいる時のの移動速度倍率
 
         //プレイヤーが通常状態の時にのみ透明化状態になる操作を受け付ける
         if(state == PlayerState.Normal){
@@ -261,7 +262,7 @@ public class Player : MonoBehaviour
             moveSpeed = defaultMoveSpeed * speedMagnification;
 
             if (!inWall){
-                if (!Input.GetButton("Inv") || energy <= 0){ //壁の外にいる時にEnergyが切れてしまったら強制的に戻される
+                if (!Input.GetButton("Inv") || energy <= 0){ //壁の外にいる時にEnergyが切れてしまったら強制で通常に戻される
                     StopCoroutine(invCo);
                     state = PlayerState.Normal;
                     moveSpeed = defaultMoveSpeed;
@@ -270,6 +271,7 @@ public class Player : MonoBehaviour
                 }
             }
             else{
+                moveSpeed *= inWallSpeedMagnification;
                 if (energy <= 0){ //壁の中にいる時にEnergyが切れてしまったら速度が半減
                     StopCoroutine(invCo);
                     moveSpeed = defaultMoveSpeed / 2;
