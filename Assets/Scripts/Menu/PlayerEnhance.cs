@@ -9,6 +9,7 @@ public class PlayerEnhance : MonoBehaviour
     [System.Serializable]
     public struct Enhancement
     {
+        public string name;
         public int level;
         public int maxLevel;
         public int needPoint;
@@ -27,23 +28,17 @@ public class PlayerEnhance : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
-    void Update()
-    {
-        ButtonActiveCheck(speed);
-        ButtonActiveCheck(energy);
-    }
-
-
     private void ButtonActiveCheck(Enhancement e)
     {
         Text text = e.enhanceButton.GetComponentInChildren<Text>();
         
         if(e.level != e.maxLevel){
-            text.text = "x" + e.needPoint.ToString();
+            text.text = e.needPoint.ToString();
         }
         else{
             e.enhanceButton.interactable = false;
-            text.text = "Max";
+            e.levelText.text = e.name + " Lv.MAX";
+            text.gameObject.SetActive(false);
         }
     }
 
@@ -62,12 +57,12 @@ public class PlayerEnhance : MonoBehaviour
                     
                     hp.levelText.text = "Hp Lv." + hp.level.ToString();
                     hp.needPoint += 5; 
-                    hp.enhanceButton.GetComponentInChildren<Text>().text = "x" + hp.needPoint.ToString();
+                    hp.enhanceButton.GetComponentInChildren<Text>().text = hp.needPoint.ToString();
                 }
                 else{
                     hp.levelText.text = "Heal";
                     hp.needPoint = 10;
-                    hp.enhanceButton.GetComponentInChildren<Text>().text = "x" + hp.needPoint.ToString();
+                    hp.enhanceButton.GetComponentInChildren<Text>().text = hp.needPoint.ToString();
                 }
             }
             else{
@@ -96,6 +91,7 @@ public class PlayerEnhance : MonoBehaviour
             ++speed.level;
             speed.levelText.text = "Speed Lv." + speed.level.ToString();
         }
+        ButtonActiveCheck(speed);
     }
 
     public void OnEnergyEnhanceButton()
@@ -112,6 +108,7 @@ public class PlayerEnhance : MonoBehaviour
             ++energy.level;
             energy.levelText.text = "Energy Lv." + energy.level.ToString();
         }
+        ButtonActiveCheck(energy);
     }
     
 }

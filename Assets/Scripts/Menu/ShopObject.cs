@@ -34,7 +34,7 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
         icon = transform.GetChild(2).GetComponent<Image>();
 
         shotNameText.text = shotName;   
-        priceText.text = "x" + price.ToString();
+        priceText.text = price.ToString();
         backImage.color = shot.shotData.rarity.color;
         icon.sprite = shot.shotData.icon;
 

@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 4823680963266449383}
   - component: {fileID: 4823680963266449384}
   - component: {fileID: 1379648371341100026}
+  - component: {fileID: 3578400264640074086}
   m_Layer: 11
   m_Name: TargetObject
   m_TagString: Target
@@ -312,8 +313,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 10
   hp: 0
-  targetCinemachine: {fileID: 7966204255889445074}
-  targetGroup: {fileID: 632579143741581684}
   hitParticle: {fileID: 9138255879455957892}
   breakParticle: {fileID: 7599779517739641188}
 --- !u!136 &1379648371341100026
@@ -330,6 +329,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: -0.5, z: 0}
+--- !u!114 &3578400264640074086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4823680963266449381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a52ba75c3f0b6408dbd4e6690aee75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cinemachineCamera: {fileID: 7966204255889445074}
+  targetGroup: {fileID: 632579143741581684}
+  inRange: 10
+  outRange: 20
 --- !u!1 &5841248021930666655
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +356,7 @@ GameObject:
   - component: {fileID: 3406526015697411441}
   - component: {fileID: 632579143741581684}
   m_Layer: 0
-  m_Name: CM TargetGroup1
+  m_Name: CM TargetGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -607,15 +622,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7427045490905727862, guid: 89b9e467845b0e04480cba07681d0cb5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.12
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7427045490905727862, guid: 89b9e467845b0e04480cba07681d0cb5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.12
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7427045490905727862, guid: 89b9e467845b0e04480cba07681d0cb5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.12
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7427045490905727862, guid: 89b9e467845b0e04480cba07681d0cb5, type: 3}
       propertyPath: m_LocalPosition.x
