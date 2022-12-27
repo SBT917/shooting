@@ -6,25 +6,33 @@ using UnityEngine.AI;
 //アイテムのクラス
 public class Item : MonoBehaviour
 {
-    public int point; //獲得した際に増えるポイント
+    [SerializeField]protected int point; //獲得した際に増えるポイント
+    private float disapCnt; //消えるまでの時間
+    private float speed; //プレイヤーの方向に吸い付くスピード
+    private float range; //プレイヤーを感知する範囲
     protected Player player;
-    protected float disapCnt; //消えるまでの時間
     protected virtual void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         disapCnt = 30.0f;
+        speed = 10.0f;
+        range = 2.0f;
         StartCoroutine(DisapItem());
     }
 
     void Update()
     {
         if(!player.gameObject.activeSelf) return; //プレイヤーが非アクティブになったら機能停止
+
+        if(Vector3.Distance(player.transform.position, transform.position) < range){ //プレイヤーが近くに来たらアイテムがプレイヤーに吸い付く
+            transform.LookAt(player.transform);
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
     }
 
     //プレイヤーが入手した際の処理
-        protected virtual void Get()
+    protected virtual void Get()
     {
-        player.nowPoint += point;
         gameObject.SetActive(false);
     }
 

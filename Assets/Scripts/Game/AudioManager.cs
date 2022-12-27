@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
         gameManager = transform.root.GetComponent<GameManager>();
     }
 
-    public void Play()
+    public void PlayCheck()
     {   
         //メインが再生されていなければイントロから再生する
         if(!mainSource.isPlaying){
@@ -33,6 +33,10 @@ public class AudioManager : MonoBehaviour
             case GameState.Game:
                 StartCoroutine(VolumeFade(melodySource, 1.0f, true)); //ゲームがスタートしたらメロディの音量を戻す
                 break;
+            case GameState.GameOver:
+                StartCoroutine(VolumeFade(melodySource, 3.0f, false));
+                StartCoroutine(VolumeFade(mainSource, 3.0f, false));
+                break;
         }
     }
 
@@ -40,14 +44,14 @@ public class AudioManager : MonoBehaviour
     private IEnumerator VolumeFade(AudioSource source, float seconds, bool fadeIn){
         if(fadeIn){
             while(source.volume < 1){
-                source.volume += seconds / 10;
-                yield return new WaitForSeconds(0.1f);
+                source.volume += (1.0f / 10.0f) / seconds;
+                yield return new WaitForSecondsRealtime(0.1f);
             }
         }
         else{
             while(source.volume > 0){
-                source.volume -= seconds / 10;
-                yield return new WaitForSeconds(0.1f);
+                source.volume -= (1.0f / 10.0f) / seconds;
+                yield return new WaitForSecondsRealtime(0.1f);
             }
         }     
     }

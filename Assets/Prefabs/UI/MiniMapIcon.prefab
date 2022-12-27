@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7427045490905727862}
   - component: {fileID: 7427045490905727863}
   - component: {fileID: 5753787684215871604}
+  - component: {fileID: 249654654735653693}
   m_Layer: 3
   m_Name: MiniMapIcon
   m_TagString: Untagged
@@ -100,3 +101,15 @@ MonoBehaviour:
   miniMapCamera: {fileID: 0}
   parentObject: {fileID: 0}
   rangeRadiusOffset: 0
+--- !u!114 &249654654735653693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427045490905727861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec8b4ab9f9a35341a669bcc3730d5d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -6,7 +6,8 @@ using TMPro;
 public enum TargetName{
     ALPHA = 0,
     BETA = 1,
-    GANMMA = 2
+    GANMMA = 2,
+    DELTA = 3
 }
 
 public class TargetSpawner : MonoBehaviour

@@ -19,6 +19,6 @@ public class PointCounter : MonoBehaviour
     void Update()
     {
         nowPoint = player.nowPoint;
-        text.text = "x" + nowPoint;
+        text.text = "x" + nowPoint.ToString("00");
     }
 }

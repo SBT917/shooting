@@ -20,8 +20,7 @@ public abstract class Enemy : MonoBehaviour
 {
     public EnemyData enemyData; //エネミーデータの取得(スクリプタブルオブジェクト)
     private Rigidbody rb;
-    private Material material;
-    private ParticleSystem particle;
+    protected ParticleSystem deadParticle;
     protected NavMeshAgent nav;
 
     public float hp; //エネミーの現在のHP
@@ -29,9 +28,9 @@ public abstract class Enemy : MonoBehaviour
     public GameObject target; //エネミーが狙っているもの
     public GameObject[] targetObjects; //マップ上に存在する目標オブジェクト
 
-    private GameManager gameManager;
-    private EnemySpawner enemySpawner;
-    [SerializeField]private EnemyState state;
+    protected GameManager gameManager;
+    protected EnemySpawner enemySpawner;
+    [SerializeField]protected EnemyState state;
     private GameObject enemyCanvas;
     private float canvasDisapCnt;
     
@@ -40,8 +39,7 @@ public abstract class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();
-        material = GetComponent<Renderer>().material;
-        particle = GetComponentInChildren<ParticleSystem>();
+        deadParticle = GetComponentInChildren<ParticleSystem>();
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         targetObjects = GameObject.FindGameObjectsWithTag("Target");  
@@ -86,7 +84,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Dead()
     {   
         state = EnemyState.Death;
-        ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+        ParticleSystem p = Instantiate<ParticleSystem>(deadParticle, transform.position, Quaternion.identity);
         p.Play();
         --enemySpawner.enemyCount;
 
@@ -98,7 +96,7 @@ public abstract class Enemy : MonoBehaviour
     //エネミーが目標に到達して消滅する際の処理
     public virtual void Disappearing()
     {
-        ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+        ParticleSystem p = Instantiate<ParticleSystem>(deadParticle, transform.position, Quaternion.identity);
         p.Play();
         --enemySpawner.enemyCount;
 
@@ -137,7 +135,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     //サーチ状態のコルーチン
-    private IEnumerator SearchCo(float time)
+    protected IEnumerator SearchCo(float time)
     {
         float count = time * 10;
         nav.speed = 0.0f;
@@ -177,7 +175,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     //アイテムのドロップ制御
-    private void ItemDrop()
+    protected void ItemDrop()
     {   
         int randValue = UnityEngine.Random.Range(0, 100);
         if(enemyData.itemDropRatio < randValue) return;

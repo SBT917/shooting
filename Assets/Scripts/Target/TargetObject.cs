@@ -19,8 +19,6 @@ public class TargetObject : MonoBehaviour
     public float hp; //現在のHP
     private TargetState state;
 
-    [SerializeField]private CinemachineVirtualCamera targetCinemachine;
-    [SerializeField]private CinemachineTargetGroup targetGroup;
     [SerializeField]private ParticleSystem hitParticle;
     [SerializeField]private ParticleSystem breakParticle;
 
@@ -28,19 +26,7 @@ public class TargetObject : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        targetGroup.m_Targets[1].target = player.transform;
         hp = maxHp;   
-    }
-
-    void Update()
-    {
-        //プレイヤーがターゲットに接近したらターゲットを中心とするカメラに切り替える
-        if(Vector3.Distance(transform.position, player.transform.position) < 10.0){
-            targetCinemachine.gameObject.SetActive(true);
-        }
-        else if(Vector3.Distance(transform.position, player.transform.position) > 20.0){
-            targetCinemachine.gameObject.SetActive(false);
-        }
     }
 
     public TargetState GetState()
