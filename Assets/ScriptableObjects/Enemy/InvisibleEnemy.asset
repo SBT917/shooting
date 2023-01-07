@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88268fa288e0d6b4d885b8163be54ef4, type: 3}
-  m_Name: TestBossEnemy
+  m_Name: InvisibleEnemy
   m_EditorClassIdentifier: 
-  maxHp: 50
+  maxHp: 2
   attackToPlayer: 1
-  attackToObject: 999
-  normalSpeed: 0.7
-  attackSpeed: 1
-  score: 500
-  searchAngle: 30
-  attackOutRange: 10
-  searchTime: 2
-  itemDropRatio: 100
+  attackToObject: 1
+  normalSpeed: 1.5
+  attackSpeed: 3
+  score: 120
+  searchAngle: 0
+  attackOutRange: 15
+  searchTime: 1
+  itemDropRatio: 70
   dropItems:
-  - {fileID: 6739383237830082110, guid: 841eaf2cebae4ca438be32c5cc5a4f48, type: 3}
+  - {fileID: 6739383237830082110, guid: 0548600664617414eb3c60f492d0409d, type: 3}

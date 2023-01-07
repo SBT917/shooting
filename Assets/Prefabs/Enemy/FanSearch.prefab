@@ -45,7 +45,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5743677515425851107
 Rigidbody:
@@ -75,5 +75,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1e71a38987cd54399a1d0612766a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 45
-  sighting: 0

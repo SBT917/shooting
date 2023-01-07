@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //ショットのクラス
-public class Shot : MonoBehaviour
+public abstract class Shot : MonoBehaviour
 {
     protected Rigidbody rb; //リジットボディ
     protected GameObject player; //プレイヤー

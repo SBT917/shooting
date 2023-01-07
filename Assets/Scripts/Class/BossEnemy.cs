@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //ボスエネミーのクラス
-public class BossEnemy : Enemy
+public abstract class BossEnemy : Enemy
 {
-    [SerializeField]private Enemy[] summonEnemys; //召喚するエネミー配列
-    [SerializeField]private EnemyShot enemyShot; //召喚するショット
+    [SerializeField]protected Enemy[] summonEnemys; //召喚するエネミー配列
+    [SerializeField]protected EnemyShot enemyShot; //召喚するショット
 
-    [SerializeField]private int enemySummonCount; //エネミーを一度に召喚する数
-    [SerializeField]private float enemySummonSpan; //エネミーを召喚するスパン
-
-    [SerializeField]private float shotSummonSpan; //ショットを召喚するスパン
+    [SerializeField]protected int enemySummonCount; //エネミーを一度に召喚する数
+    [SerializeField]protected float enemySummonSpan; //エネミーを召喚するスパン
+    [SerializeField]protected float shotSummonSpan; //ショットを召喚するスパン
 
     [SerializeField]private int enemySummonCountMagnitude; //HPが半分になった後にエネミーの召喚数を増やす数
     [SerializeField]private float enemySummonSpanMagnitude; //HPが半分になった後にエネミーを召喚するスパンを短くする倍率
@@ -60,8 +59,16 @@ public class BossEnemy : Enemy
         }
     }
 
+    //パーティクルを生成してから敵をスポーンさせるコルーチン
+    private IEnumerator SpawnCo(Vector3 spawnPos, int value)
+    {
+        Instantiate(spawnParticle, spawnPos, Quaternion.identity);
+        yield return new WaitForSeconds(spawnParticle.main.duration);
+        Instantiate(summonEnemys[value], spawnPos, transform.rotation);
+    }
+
     //ボスがエネミーを召喚するコルーチン
-    protected IEnumerator SummoningEnemyCo(int count, float span)
+    private IEnumerator SummoningEnemyCo(int count, float span)
     {
         while(true){
             for(int i = 0; i < count; ++i){
@@ -75,22 +82,19 @@ public class BossEnemy : Enemy
         }    
     }
 
+    protected virtual void SummoningShot()
+    {
+        Vector3 summonPos = transform.localPosition + transform.forward;
+        summonPos.y = 0.75f;
+        Instantiate(enemyShot, summonPos, transform.rotation);
+    }
+
     protected IEnumerator SummoningShotCo(float span)
     {
         while(true){
             yield return new WaitForSeconds(span);
-            Vector3 summonPos = transform.localPosition + transform.forward;
-            summonPos.y = 1.0f;
-            Instantiate(enemyShot, summonPos, transform.rotation);
+            SummoningShot();
         }
-    }
-
-    //パーティクルを生成してから敵をスポーンさせるコルーチン
-    private IEnumerator SpawnCo(Vector3 spawnPos, int value)
-    {
-        Instantiate(spawnParticle, spawnPos, Quaternion.identity);
-        yield return new WaitForSeconds(spawnParticle.main.duration);
-        Instantiate(summonEnemys[value], spawnPos, transform.rotation);
     }
 
     //Hpが半分になったらボスの行動が激しくなる
@@ -100,7 +104,7 @@ public class BossEnemy : Enemy
 
         if(hp <= enemyData.maxHp / 2){
             StopCoroutine(summonEnemyCo);
-            StartCoroutine(SummoningEnemyCo(enemySummonCount + enemySummonCountMagnitude , enemySummonSpan *= enemySummonSpanMagnitude));
+            summonEnemyCo = StartCoroutine(SummoningEnemyCo(enemySummonCount + enemySummonCountMagnitude , enemySummonSpan *= enemySummonSpanMagnitude));
             shotSummonSpan *= shotSummonSpanMagnitude;
             isSeriousMode = true;
         }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Uncommon
   m_EditorClassIdentifier: 
   rarityName: Uncommon
-  color: {r: 0.59280384, g: 1, b: 0.3160377, a: 0.5882353}
+  color: {r: 0.59280384, g: 1, b: 0.3160377, a: 1}

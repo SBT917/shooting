@@ -10,13 +10,12 @@ public class ShotInfo : MonoBehaviour
     public Shot shot; //現在のショット
     public ShotSlot slot; //対応するスロット
     private TextMeshProUGUI nameText; //ショット名を表示させるテキスト
-    private Image backImage; //背景のイメージ(ショットのレアリティによって色を変える時に使用する)
+    [SerializeField]private Image Frame; //フレーム(ショットのレアリティによって色を変える)
     [SerializeField]private Image icon; //ショットのアイコンを表示させるアイコン
 
     void Start()
     {
         nameText = GetComponentInChildren<TextMeshProUGUI>();
-        backImage = GetComponent<Image>();
     }
 
     void Update() 
@@ -26,11 +25,11 @@ public class ShotInfo : MonoBehaviour
         if(shot != null){
             nameText.text = shot.shotData.shotName;
             icon.sprite = shot.shotData.icon;
-            backImage.color = shot.shotData.rarity.color;
+            Frame.color = shot.shotData.rarity.color;
         }
         else{
             nameText.text = "-";
-            backImage.color = Color.grey;
+            Frame.color = Color.white;
         }
        
     }

@@ -18,7 +18,7 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
     private TextMeshProUGUI shotNameText; //ショットの名前を表示するテキスト
     private TextMeshProUGUI priceText; //ショットの値段を表示するテキスト
     private Image icon; //ショットのアイコン
-    private Image backImage; //オブジェクトの背景
+    private Image frame; //オブジェクトのフレーム
 
     private Vector2 prevPos;
 
@@ -28,14 +28,14 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
         shotName = shotData.shotName;
         price = shotData.price;
         rarity = shotData.rarity;
-        backImage = GetComponent<Image>();
-        shotNameText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        priceText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        icon = transform.GetChild(2).GetComponent<Image>();
+        frame = transform.GetChild(0).GetComponent<Image>();
+        shotNameText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        priceText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        icon = transform.GetChild(3).GetComponent<Image>();
 
         shotNameText.text = shotName;   
         priceText.text = price.ToString();
-        backImage.color = shot.shotData.rarity.color;
+        frame.color = shot.shotData.rarity.color;
         icon.sprite = shot.shotData.icon;
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
