@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //アイテムのクラス
-public class Item : MonoBehaviour
+public abstract class Item : MonoBehaviour
 {
     [SerializeField]protected int point; //獲得した際に増えるポイント
     private float disapCnt; //消えるまでの時間

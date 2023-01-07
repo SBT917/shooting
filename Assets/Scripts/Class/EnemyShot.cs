@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShot : Shot
+public abstract class EnemyShot : Shot
 {
     protected override void OnTriggerEnter(Collider other)
     {

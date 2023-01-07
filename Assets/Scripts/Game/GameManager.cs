@@ -222,11 +222,11 @@ public class GameManager : MonoBehaviour
     {
         ++waveCount;
         if(waveCount == 1){
-            isBossWave = true;
-            SetParameter(0, 0, 0, 1);
+            SetParameter(1, 0, 0, 1);
         }
         if(waveCount >= 2 && waveCount < 3){
-            SetParameter(1, 3, 20, 10);
+            isBossWave = true;
+            SetParameter(0, 0, 0, 1);
         }
         else if(waveCount >= 3 && waveCount < 6){
             SetParameter(1, 3, 20, 15);
