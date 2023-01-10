@@ -8,4 +8,5 @@ public class Rarity : ScriptableObject
 {
     public string rarityName; //レアリティ名
     public Color color; //色
+    public float weight; //重み
 }

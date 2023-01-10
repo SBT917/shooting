@@ -68,11 +68,12 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.Start;
         ChangeLevel();
-        startCount = 2;
+        
+        startCount = 10;
         
         while(startCount > 0){
             gameText.text = startCount.ToString();
-            if(startCount == 1){
+            if(startCount == 5){
                 targetSpawner.Spawn(1);
             }
             yield return new WaitForSeconds(1.0f);
@@ -120,7 +121,6 @@ public class GameManager : MonoBehaviour
 
         gameText.color = Color.white;
         EnemyDestroyer();
-        StartCoroutine(TargetRelocation(2));
         StartCoroutine(WaveBetween());
     }
 
@@ -221,21 +221,19 @@ public class GameManager : MonoBehaviour
     private void ChangeLevel()
     {
         ++waveCount;
-        if(waveCount == 1){
-            SetParameter(1, 0, 0, 1);
+        isBossWave = waveCount % 5 == 0;
+        
+        if(!isBossWave){
+            int index = Mathf.Clamp(waveCount - 1, 1, 3);
+            int count = Mathf.Clamp(3 + ((waveCount - 1) * 2), 0, 10);
+            int span = Mathf.Clamp(40 - ((waveCount - 1) * 5), 15, 40);
+            int oneTime = Mathf.Clamp(10 + ((waveCount - 1) * 3), 0, 30);
+            SetParameter(index, count, span, oneTime);
         }
-        if(waveCount >= 2 && waveCount < 3){
-            isBossWave = true;
-            SetParameter(0, 0, 0, 1);
+        else{
+            SetParameter(0, 1, 0, 1);
         }
-        else if(waveCount >= 3 && waveCount < 6){
-            SetParameter(1, 3, 20, 15);
-        }
-        else if(waveCount >= 6 && waveCount < 10){
-            SetParameter(2, 6, 10, 15);
-        }
-        else if(waveCount >= 10){
-            SetParameter(3, 6, 10, 20);
-        }
+        //StartCoroutine(TargetRelocation(2));
+
     }
 }

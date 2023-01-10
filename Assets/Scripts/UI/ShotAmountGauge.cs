@@ -31,11 +31,11 @@ public class ShotAmountGauge : MonoBehaviour
         gauge.fillAmount = (float)slot.shotAmount / slot.shot.shotData.maxAmount; //ゲージとスロットの残弾数の同期
 
         if(slot.GetState() == SlotState.Recharging && !rechageImage.gameObject.activeSelf){
-            StartCoroutine(RechargeGauge());
+            StartCoroutine(RechargeGaugeCo());
         }
     }
 
-    private IEnumerator RechargeGauge()
+    private IEnumerator RechargeGaugeCo()
     {
         rechageImage.gameObject.SetActive(true);
         rechageImage.fillAmount = 0;

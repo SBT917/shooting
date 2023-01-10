@@ -51,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
     {   
         spawnGauge.gameObject.SetActive(true);
         isEnemySpawning = true;
-        int spawnCount = count + 1; //初回のスポーンをカウントに含めないようにするため+1
+        int spawnCount = count;
         float timeCnt = 0;
         while(true){
             if(timeCnt <= 0){

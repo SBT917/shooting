@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rarityName: Common
   color: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
+  weight: 50

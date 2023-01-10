@@ -50,6 +50,7 @@ public class ShotSlot : MonoBehaviour
     {
         shot = newShot;
         shotAmount = 0;
+        player.energy += newShot.shotData.useEnergy;
         StartCoroutine(ShotRechargeCo());
         shotColor = shot.gameObject.GetComponent<Renderer>().sharedMaterial.color; //色をショットのマテリアルから取得
         particleMain.startColor = shotColor; //マテリアルから取得した色をパーティクルの色に設定
