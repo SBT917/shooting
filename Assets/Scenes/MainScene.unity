@@ -3033,11 +3033,11 @@ MonoBehaviour:
   hp: 0
   energy: 0
   maxHp: 3
-  maxEnergy: 50
+  maxEnergy: 75
   moveSpeed: 0
   defaultMoveSpeed: 4
   nowScore: 0
-  nowPoint: 1622
+  nowPoint: 0
   inWall: 0
   invTime: 1
   velocity: {x: 0, y: 0, z: 0}
@@ -3671,6 +3671,8 @@ MonoBehaviour:
   - {fileID: 1385997869526371094, guid: 47dafb3dfcf6a36448bf23bee74ecdb6, type: 3}
   - {fileID: -6358410935126514632, guid: 78735e8ceca90564ab3cb3dd3efd1919, type: 3}
   - {fileID: 2798265538326500782, guid: 252d112a42fab244d91c803b1e394b0a, type: 3}
+  - {fileID: 8654740162610509146, guid: 660d267c178da8b408a862877c8b1662, type: 3}
+  - {fileID: 8693787602170276183, guid: ef4df8dc94f29c24593b4507d816c498, type: 3}
   rarities:
   - {fileID: 11400000, guid: e9631131dff861d449573f6d5326cf46, type: 2}
   - {fileID: 11400000, guid: 17c9b61ec87be004fbfc03fdbdcdbd14, type: 2}

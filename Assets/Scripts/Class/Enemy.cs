@@ -179,8 +179,7 @@ public abstract class Enemy : MonoBehaviour
     {   
         int randValue = UnityEngine.Random.Range(0, 100);
         if(enemyData.itemDropRatio < randValue) return;
-        int itemValue = UnityEngine.Random.Range(0, enemyData.dropItems.Length);
-        Instantiate(enemyData.dropItems[itemValue], new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
+        Instantiate(enemyData.dropItem, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
     }
 
     //プレイヤーからダメージを受けた際、頭上にHPバーを表示する

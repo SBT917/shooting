@@ -9,9 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b98a3dffe07cead41a2f9c17da92dee7, type: 3}
-  m_Name: Enemy
+  m_Script: {fileID: 11500000, guid: 88268fa288e0d6b4d885b8163be54ef4, type: 3}
+  m_Name: SandBag
   m_EditorClassIdentifier: 
-  rarityName: Enemy
-  color: {r: 1, g: 0, b: 0, a: 1}
-  weight: 100
+  maxHp: 3
+  attackToPlayer: 1
+  attackToObject: 2
+  normalSpeed: 0
+  attackSpeed: 0
+  score: 0
+  searchAngle: 0
+  attackOutRange: 0
+  searchTime: 0
+  itemDropRatio: 0
+  dropItems: []

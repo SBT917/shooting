@@ -96,7 +96,7 @@ public class PlayerEnhance : MonoBehaviour
 
     public void OnEnergyEnhanceButton()
     {
-        float energyIncreaseAmount = 50.0f / (energy.maxLevel - 1.0f);
+        float energyIncreaseAmount = 75.0f / (energy.maxLevel - 1.0f);
 
         if(player.nowPoint >= energy.needPoint){
             player.maxEnergy += energyIncreaseAmount;

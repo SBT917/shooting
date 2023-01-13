@@ -19,6 +19,10 @@ public class TargetSpawner : MonoBehaviour
 
     public void Spawn(int count)
     {
+        foreach(GameObject area in spawnArea){
+            area.SetActive(true);
+        }
+
         for(int i = 0; i < count; ++i){
             targetName = (TargetName)i;
             spawnArea = GameObject.FindGameObjectsWithTag("TargetSpawnArea");

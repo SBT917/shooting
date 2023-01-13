@@ -62,6 +62,10 @@ public class GameManager : MonoBehaviour
 
         CheckEnemyCount();
         CheckGameOver();
+
+        if(Input.GetKeyDown(KeyCode.T)){
+            shotShop.DrawingShop();
+        }
     }
 
     private IEnumerator GameStart()
@@ -118,7 +122,7 @@ public class GameManager : MonoBehaviour
     {
         isBossWave = false;
         StartCoroutine(HitStop());
-
+        
         gameText.color = Color.white;
         EnemyDestroyer();
         StartCoroutine(WaveBetween());
@@ -126,6 +130,7 @@ public class GameManager : MonoBehaviour
 
     public void ForceGameStart()
     {
+        if(targetObjects.Length == 0) return;
         startCount = 0;
     }
 
@@ -191,6 +196,7 @@ public class GameManager : MonoBehaviour
         foreach(GameObject target in targetObjects){
             Destroy(target);
         }
+        
         targetHpContainer.BarDestroy();
         targetObjects = System.Array.Empty<GameObject>();
 
@@ -226,14 +232,18 @@ public class GameManager : MonoBehaviour
         if(!isBossWave){
             int index = Mathf.Clamp(waveCount - 1, 1, 3);
             int count = Mathf.Clamp(3 + ((waveCount - 1) * 2), 0, 10);
-            int span = Mathf.Clamp(40 - ((waveCount - 1) * 5), 15, 40);
+            int span = Mathf.Clamp(30 - ((waveCount - 1) * 5), 15, 30);
             int oneTime = Mathf.Clamp(10 + ((waveCount - 1) * 3), 0, 30);
             SetParameter(index, count, span, oneTime);
+
+            if((waveCount - 1) % 5 == 0 && waveCount != 1){
+                int targetCount = Mathf.Clamp(((waveCount - 1) / 5) + 1, 1, 4);
+                StartCoroutine(TargetRelocation(targetCount));
+            }
         }
         else{
             SetParameter(0, 1, 0, 1);
         }
-        //StartCoroutine(TargetRelocation(2));
 
     }
 }
