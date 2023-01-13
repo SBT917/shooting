@@ -33,7 +33,7 @@ public class ShotShop : MonoBehaviour
         }
 
         while(shopLineup.Count < 3){
-            List<Shot> box = shotBox[RarityLottery()];
+            List<Shot> box = shotBox[ChooseRarity()];
             int value = Random.Range(0, box.Count);
             Shot choosedShot = box[value];
             if(!shopLineup.Contains(choosedShot) && choosedShot != shotSlots[0].shot && choosedShot != shotSlots[1].shot){
@@ -44,7 +44,7 @@ public class ShotShop : MonoBehaviour
         }
     }
 
-    private string RarityLottery()
+    private string ChooseRarity()
     {
         float total = 0;
 

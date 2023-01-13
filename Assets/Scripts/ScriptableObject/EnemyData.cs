@@ -15,5 +15,5 @@ public class EnemyData : ScriptableObject
     public float attackOutRange; //プレイヤーを見失う距離
     public float searchTime; //プレイヤーを見失った時にどのくらいサーチ状態を維持するか
     public int itemDropRatio; //アイテムがドロップする割合
-    public GameObject[] dropItems; //ドロップするアイテム
+    public GameObject dropItem; //ドロップするアイテム
 }

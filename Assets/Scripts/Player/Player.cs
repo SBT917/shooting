@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
     private IEnumerator HealEnergy()
     {
         float defaultEnergy = maxEnergy; //開始時の最大Energyをデフォルトとする
-        float healSpeed = 5.0f;
+        float healSpeed = 10.0f;
         
         while (true){
             if(state == PlayerState.Normal && energy < maxEnergy){
@@ -184,7 +184,7 @@ public class Player : MonoBehaviour
         if(state != PlayerState.Normal) return;
         if(menu.activeSelf == true) return;
 
-        if(Input.GetButton("Fire1") || (shotSlots[1].shot != null && Input.GetButton("Fire2")) ){
+        if(Input.GetButton("Fire1")){
             Plane plane = new Plane();
 	        float distance = 0;
 
@@ -224,11 +224,8 @@ public class Player : MonoBehaviour
         if(state != PlayerState.Normal) return;
         if(menu.activeSelf == true) return;
         
-        if (Input.GetButton("Fire1") && !Input.GetButton("Fire2")){
+        if (Input.GetButton("Fire1")){
             shotSlots[0].Fire();
-        }
-
-        if (Input.GetButton("Fire2") && !Input.GetButton("Fire1")){
             shotSlots[1].Fire();
         }
     }
