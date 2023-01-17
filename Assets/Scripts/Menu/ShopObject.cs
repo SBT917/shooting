@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 //ショットを購入する時に使用するUIオブジェクトの制御
-public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragHandler,IDropHandler
+public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragHandler,IDropHandler, ISendShotData
 {
     public Shot shot; //オブジェクトで購入できるショット
     public string shotName; //ショットの名前
@@ -75,5 +75,10 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
                 } 
             }       
         }
+    }
+
+    public ShotData SendShotData()
+    {
+        return shot.shotData;
     }
 }

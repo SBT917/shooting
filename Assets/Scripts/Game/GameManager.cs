@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]private GameState state;
     [SerializeField]private TextMeshProUGUI gameText;
     [SerializeField]private TextMeshProUGUI waveText;
+    [SerializeField]private TextMeshProUGUI hintText;
     [SerializeField]private TargetHpContainer targetHpContainer;
     [SerializeField]private ScoreCounter scoreCounter;
     [SerializeField]private ShotShop shotShop;
@@ -70,10 +71,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameStart()
     {
-        state = GameState.Start;
+        state = GameState.BreakTime;
         ChangeLevel();
         
-        startCount = 10;
+        startCount = 255;
         
         while(startCount > 0){
             gameText.text = startCount.ToString();
@@ -91,13 +92,13 @@ public class GameManager : MonoBehaviour
     {   
         state = GameState.BreakTime;
         audioManager.PlayCheck();
-
+        hintText.gameObject.SetActive(true);
+        
         shotShop.DrawingShop();
         ChangeLevel();
 
-        if(isBossWave) gameText.color = Color.red;
-
         startCount = 30;
+        if(isBossWave) gameText.color = Color.red;
         while(startCount > 0){
             gameText.text = startCount.ToString();
             yield return new WaitForSeconds(1.0f);
@@ -110,10 +111,11 @@ public class GameManager : MonoBehaviour
     private void WaveStart()
     {
         state = GameState.Game;
-        
+
         audioManager.PlayCheck();
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
         gameText.text = "";
+        hintText.gameObject.SetActive(false);
     
         spawnCo = StartCoroutine(enemySpawner.SpawnCo(enemySpawnGroups[enemySpawnGroupIndex].enemys, enemySpawnCount, enemySpawnSpan, enemySpawnOneTime));
     }
@@ -193,6 +195,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator TargetRelocation(int count)
     {
+        hintText.gameObject.SetActive(false);
+
         foreach(GameObject target in targetObjects){
             Destroy(target);
         }
@@ -204,6 +208,8 @@ public class GameManager : MonoBehaviour
 
         targetSpawner.Spawn(count);
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
+
+        hintText.gameObject.SetActive(true);
     }
 
     private IEnumerator HitStop()
@@ -228,6 +234,7 @@ public class GameManager : MonoBehaviour
     {
         ++waveCount;
         isBossWave = waveCount % 5 == 0;
+        //isBossWave = true;
         
         if(!isBossWave){
             int index = Mathf.Clamp(waveCount - 1, 1, 3);
@@ -235,6 +242,7 @@ public class GameManager : MonoBehaviour
             int span = Mathf.Clamp(30 - ((waveCount - 1) * 5), 15, 30);
             int oneTime = Mathf.Clamp(10 + ((waveCount - 1) * 3), 0, 30);
             SetParameter(index, count, span, oneTime);
+            //SetParameter(1, 1, 1, 1);
 
             if((waveCount - 1) % 5 == 0 && waveCount != 1){
                 int targetCount = Mathf.Clamp(((waveCount - 1) / 5) + 1, 1, 4);

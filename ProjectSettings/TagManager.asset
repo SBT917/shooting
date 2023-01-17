@@ -23,6 +23,7 @@ TagManager:
   - ShotInfo
   - ShotSlot
   - CinemachineVirtualCamera
+  - ShopObject
   layers:
   - Default
   - TransparentFX
