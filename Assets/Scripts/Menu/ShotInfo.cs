@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 
 //メニュー内の現在のショットを表示させるUIを制御するクラス
-public class ShotInfo : MonoBehaviour
+public class ShotInfo : MonoBehaviour, ISendShotData
 {   
     public Shot shot; //現在のショット
     public ShotSlot slot; //対応するスロット
@@ -32,6 +32,13 @@ public class ShotInfo : MonoBehaviour
             Frame.color = Color.white;
         }
        
+    }
+
+    public ShotData SendShotData()
+    {
+        if(shot == null) return null;
+        
+        return shot.shotData;
     }
 
 }
