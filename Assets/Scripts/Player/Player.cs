@@ -16,8 +16,10 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private MeshRenderer mesh;
     private Collider coll;
+    public AudioSource audioSource;
 
     private GameManager gm;
+    private AudioManager audioManager;
     public HpContainer hpContainer;
     [SerializeField]private GameObject menu;
     [SerializeField]private Camera minimapCamera;
@@ -48,6 +50,8 @@ public class Player : MonoBehaviour
         mesh = GetComponentInChildren<MeshRenderer>();
         coll = GetComponent<Collider>();
         gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
+        audioSource = GetComponent<AudioSource>();
 
         hp = maxHp;
         energy = maxEnergy;
@@ -91,6 +95,7 @@ public class Player : MonoBehaviour
     {
         state = PlayerState.Death;
         ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+        audioManager.PlaySE("Dead", p.GetComponent<AudioSource>());
         p.Play();
         gameObject.SetActive(false);
     }
@@ -135,6 +140,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if(!(state == PlayerState.Death || state == PlayerState.Invisible) && !isInv){
+            audioManager.PlaySE("Damage", audioSource);
             hp -= damage;
             isInv = true;
             hpContainer.TakeDamage();
@@ -237,14 +243,14 @@ public class Player : MonoBehaviour
         float useEnergy = 1.0f; //透明化中の際に消費し続けるEnergy
         float useEnergySpeed = 10.0f; //Energyを消費するスピード
         float speedMagnification = 2.0f; //透明化状態の移動速度倍率
-        float inWallSpeedMagnification = 1.2f; //透明化かつ壁の中にいる時のの移動速度倍率
+        float inWallSpeedMagnification = 1.2f; //透明化かつ壁の中にいる時の移動速度倍率
 
         //プレイヤーが通常状態の時にのみ透明化状態になる操作を受け付ける
         if(state == PlayerState.Normal){
             if (Input.GetButtonDown("Inv")){
                 if (energy >= useEnergy){
+                    audioManager.PlaySE("InvisibleOn", audioSource);
                     invCo = StartCoroutine(DecreaseEnergy(0.0f, useEnergy, useEnergySpeed));
-
                     state = PlayerState.Invisible;
 
                     mesh.material = invisibleMaterial;
@@ -260,6 +266,7 @@ public class Player : MonoBehaviour
 
             if (!inWall){
                 if (!Input.GetButton("Inv") || energy <= 0){ //壁の外にいる時にEnergyが切れてしまったら強制で通常に戻される
+                    audioManager.PlaySE("InvisibleOff", audioSource);
                     StopCoroutine(invCo);
                     state = PlayerState.Normal;
                     moveSpeed = defaultMoveSpeed;
@@ -277,7 +284,7 @@ public class Player : MonoBehaviour
         }  
     }
 
-    //ゲームがwaveの間に入った時の処理(強化画面が開ける様になる)
+    //ゲームがwaveの間に入った時の処理(強化画面が開けるようになる)
     private void BreakTimeController()
     {
         if(gm.GetState() == GameState.BreakTime){

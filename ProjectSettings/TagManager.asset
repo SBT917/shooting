@@ -24,6 +24,7 @@ TagManager:
   - ShotSlot
   - CinemachineVirtualCamera
   - ShopObject
+  - AudioManager
   layers:
   - Default
   - TransparentFX

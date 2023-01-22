@@ -11,9 +11,12 @@ public abstract class Item : MonoBehaviour
     private float speed; //プレイヤーの方向に吸い付くスピード
     private float range; //プレイヤーを感知する範囲
     protected Player player;
+    protected AudioManager audioManager;
+
     protected virtual void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         disapCnt = 30.0f;
         speed = 10.0f;
         range = 2.0f;

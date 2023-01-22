@@ -22,10 +22,12 @@ public class PlayerEnhance : MonoBehaviour
     public Enhancement energy;
 
     private Player player;
+    private AudioManager audioManager;
 
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void ButtonActiveCheck(Enhancement e)
@@ -46,6 +48,7 @@ public class PlayerEnhance : MonoBehaviour
     {
         if(player.nowPoint >= hp.needPoint){
             if(hp.level < hp.maxLevel){
+                audioManager.PlaySE("Buy", player.audioSource);
                 ++player.maxHp;
                 player.hp = player.maxHp;
                 player.hpContainer.GetComponent<HpContainer>().Relocation();
@@ -67,14 +70,21 @@ public class PlayerEnhance : MonoBehaviour
             }
             else{
                 if(player.hp < player.maxHp){
+                    audioManager.PlaySE("Buy", player.audioSource);
                     player.hp = player.maxHp;
                     player.hpContainer.GetComponent<HpContainer>().Relocation();
 
                     player.nowPoint -= hp.needPoint;
                 }
+                else{
+                    audioManager.PlaySE("BuyFailure", player.audioSource);
+                }
             }
             
-        }        
+        }
+        else{
+            audioManager.PlaySE("BuyFailure", player.audioSource);
+        }    
     }
 
     public void OnSpeedEnhanceButton()
@@ -82,6 +92,7 @@ public class PlayerEnhance : MonoBehaviour
         float speedIncreaseAmount = 4.0f / (speed.maxLevel - 1.0f);
 
         if(player.nowPoint >= speed.needPoint){
+            audioManager.PlaySE("Buy", player.audioSource);
             player.defaultMoveSpeed += speedIncreaseAmount;
             player.moveSpeed = player.defaultMoveSpeed;
 
@@ -91,6 +102,9 @@ public class PlayerEnhance : MonoBehaviour
             ++speed.level;
             speed.levelText.text = "Speed Lv." + speed.level.ToString();
         }
+        else{
+            audioManager.PlaySE("BuyFailure", player.audioSource);
+        }
         ButtonActiveCheck(speed);
     }
 
@@ -99,6 +113,7 @@ public class PlayerEnhance : MonoBehaviour
         float energyIncreaseAmount = 75.0f / (energy.maxLevel - 1.0f);
 
         if(player.nowPoint >= energy.needPoint){
+            audioManager.PlaySE("Buy", player.audioSource);
             player.maxEnergy += energyIncreaseAmount;
             player.energy = player.maxEnergy;
 
@@ -107,6 +122,9 @@ public class PlayerEnhance : MonoBehaviour
 
             ++energy.level;
             energy.levelText.text = "Energy Lv." + energy.level.ToString();
+        }
+        else{
+            audioManager.PlaySE("BuyFailure", player.audioSource);
         }
         ButtonActiveCheck(energy);
     }

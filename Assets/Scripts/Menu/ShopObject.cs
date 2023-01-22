@@ -19,6 +19,7 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
     private TextMeshProUGUI priceText; //ショットの値段を表示するテキスト
     private Image icon; //ショットのアイコン
     private Image frame; //オブジェクトのフレーム
+    private AudioManager audioManager;
 
     private Vector2 prevPos;
 
@@ -39,6 +40,7 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
         icon.sprite = shot.shotData.icon;
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     //オブジェクトをドラッグし始めた時の処理
@@ -71,8 +73,12 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
                 if(player.nowPoint >= price && shotInfo.shot != shot){
                     player.nowPoint -= price;
                     shotInfo.slot.SetShot(shot);
+                    audioManager.PlaySE("Buy", player.audioSource);
                     Destroy(gameObject);
-                } 
+                }
+                else{
+                    audioManager.PlaySE("BuyFailure", player.audioSource);
+                }
             }       
         }
     }

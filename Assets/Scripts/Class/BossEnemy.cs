@@ -114,8 +114,9 @@ public abstract class BossEnemy : Enemy
     {
         state = EnemyState.Death;
         ParticleSystem p = Instantiate<ParticleSystem>(deadParticle, transform.position, Quaternion.identity);
-        p.Play();
 
+        audioManager.PlaySE("DeadBoss", p.GetComponent<AudioSource>());
+        p.Play();
         player.nowScore += enemyData.score;
         ItemDrop();
 

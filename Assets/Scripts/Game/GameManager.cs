@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]private TextMeshProUGUI gameText;
     [SerializeField]private TextMeshProUGUI waveText;
     [SerializeField]private TextMeshProUGUI hintText;
+    [SerializeField]private GameObject menu;
     [SerializeField]private TargetHpContainer targetHpContainer;
     [SerializeField]private ScoreCounter scoreCounter;
     [SerializeField]private ShotShop shotShop;
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
     private TargetSpawner targetSpawner;
     private Player player;
     private GameObject[] targetObjects;
-    private int waveCount;
+    private int waveCount = 0;
     private int startCount;
 
     private Coroutine spawnCo;
@@ -71,10 +72,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameStart()
     {
-        state = GameState.BreakTime;
+        state = GameState.Start;
         ChangeLevel();
         
-        startCount = 255;
+        startCount = 10;
         
         while(startCount > 0){
             gameText.text = startCount.ToString();
@@ -91,7 +92,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaveBetween()
     {   
         state = GameState.BreakTime;
-        audioManager.PlayCheck();
+        audioManager.PlayBGM();
         hintText.gameObject.SetActive(true);
         
         shotShop.DrawingShop();
@@ -112,7 +113,7 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.Game;
 
-        audioManager.PlayCheck();
+        audioManager.PlayBGM();
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
         gameText.text = "";
         hintText.gameObject.SetActive(false);
@@ -133,6 +134,7 @@ public class GameManager : MonoBehaviour
     public void ForceGameStart()
     {
         if(targetObjects.Length == 0) return;
+        if(menu.activeSelf) return;
         startCount = 0;
     }
 
@@ -140,7 +142,7 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.GameOver;
         
-        audioManager.PlayCheck();
+        audioManager.PlayBGM();
         StartCoroutine(HitStop());
         
         finalWave = waveCount;
@@ -234,7 +236,6 @@ public class GameManager : MonoBehaviour
     {
         ++waveCount;
         isBossWave = waveCount % 5 == 0;
-        //isBossWave = true;
         
         if(!isBossWave){
             int index = Mathf.Clamp(waveCount - 1, 1, 3);
