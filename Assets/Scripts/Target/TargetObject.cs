@@ -4,9 +4,10 @@ using UnityEngine;
 using Cinemachine;
 
 //ターゲットの状態
-public enum TargetState{
-        Normal, //通常
-        Break //破壊
+public enum TargetState
+{
+    Normal, //通常
+    Break //破壊
 }
 
 //エネミーの目標となるターゲット
@@ -14,10 +15,12 @@ public class TargetObject : MonoBehaviour
 {   
     private Player player;
     private GameManager gm;
+    private AudioManager audioManager;
 
     public float maxHp = 100.0f; //最大HP
     public float hp; //現在のHP
     private TargetState state;
+    private AudioSource audioSource;
 
     [SerializeField]private ParticleSystem hitParticle;
     [SerializeField]private ParticleSystem breakParticle;
@@ -26,6 +29,8 @@ public class TargetObject : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         gm = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
+        audioSource = GetComponent<AudioSource>();
         hp = maxHp;   
     }
 
@@ -38,6 +43,7 @@ public class TargetObject : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if(gm.GetState() != GameState.Game) return;
+        audioManager.PlaySE("TargetDamage", audioSource);
         hp -= damage;
         hitParticle.Play();
         if(hp <= 0)
@@ -55,6 +61,7 @@ public class TargetObject : MonoBehaviour
         playerCinemachine.Follow = transform;
 
         ParticleSystem p = Instantiate<ParticleSystem>(breakParticle, transform.position, Quaternion.identity);
+        audioManager.PlaySE("TargetBreak", p.GetComponent<AudioSource>());
         p.Play();
 
         gameObject.SetActive(false);

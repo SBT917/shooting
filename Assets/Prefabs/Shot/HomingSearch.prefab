@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetEnemy: {fileID: 0}
+  targetEnemys: []
 --- !u!54 &7999966652596676208
 Rigidbody:
   m_ObjectHideFlags: 0

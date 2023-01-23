@@ -8,8 +8,6 @@ using UnityEngine.EventSystems;
 //ShotObjectやShotInfoにカーソルが重なった時にショットのステータスを表示する
 public class ShotStatus : MonoBehaviour
 {
-    [SerializeField]private Vector3 panelPosOffset;
-
     [SerializeField]private GameObject panel;
 
     [SerializeField]private Slider damageSlider;
@@ -17,9 +15,9 @@ public class ShotStatus : MonoBehaviour
     [SerializeField]private Slider lengthSlider;
     [SerializeField]private Slider amountSlider;
     [SerializeField]private Slider energySlider;
-    [SerializeField]private Slider rechargeSlider;
+    [SerializeField]private Slider chargeSlider;
 
-
+    private Vector3 panelPosOffset;
     private GameObject preFrameHitObject = null;
     private List<RaycastResult> results = new List<RaycastResult>();
 
@@ -56,6 +54,7 @@ public class ShotStatus : MonoBehaviour
         }
         
         if(isVisible){
+            panelPosOffset.x = Screen.width / 5;  
             panel.transform.position = Input.mousePosition + panelPosOffset;
         }
 
@@ -69,6 +68,6 @@ public class ShotStatus : MonoBehaviour
         lengthSlider.value = data.moveSpeed * data.disapCnt;
         amountSlider.value = data.maxAmount;
         energySlider.value = energySlider.maxValue - data.useEnergy;
-        rechargeSlider.value = rechargeSlider.maxValue - data.rechargeTime;
+        chargeSlider.value = chargeSlider.maxValue - data.rechargeTime;
     }
 }

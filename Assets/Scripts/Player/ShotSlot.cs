@@ -20,10 +20,15 @@ public class ShotSlot : MonoBehaviour
     private ParticleSystem particle; //撃った時に発生させるパーティクル
     private ParticleSystem.MainModule particleMain; //パーティクルの値を制御
     [SerializeField]private SlotState state; //ショットの現在の状態
+
+    private AudioManager audioManager;
+    private AudioSource audioSource;
     
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
+        audioSource = GetComponent<AudioSource>();
         state = SlotState.Ready;
         particle = GetComponent<ParticleSystem>();
         particleMain = particle.main;
@@ -69,6 +74,7 @@ public class ShotSlot : MonoBehaviour
         --shotAmount; 
         particle.Play();
         shot.Instance();
+        audioManager.PlaySE("Shot", audioSource);
 
         if(shotAmount > 0){ //ショットを放った後に残弾数が0だったら自動でリチャージ
             StartCoroutine(ShotRateCo());
@@ -90,12 +96,14 @@ public class ShotSlot : MonoBehaviour
     private IEnumerator ShotRechargeCo() //ショットのリチャージ
     {
         if(player.energy >= shot.shotData.useEnergy){
+            audioManager.PlaySE("Recharge", audioSource);
             state = SlotState.Recharging;
             player.energy -= shot.shotData.useEnergy;
 
             float rechargeTime = shot.shotData.rechargeTime;
             yield return new WaitForSeconds(rechargeTime);
 
+            audioManager.PlaySE("RechargeFinish", audioSource);
             shotAmount = shot.shotData.maxAmount;
             state = SlotState.Ready;
         }

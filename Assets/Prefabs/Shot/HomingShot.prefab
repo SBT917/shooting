@@ -237,6 +237,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: HomingSearch
       objectReference: {fileID: 0}
+    - target: {fileID: 2115489881887308505, guid: 195d2fa366f98ac46bbab6575b74f13b, type: 3}
+      propertyPath: rolloffMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2115489881887308505, guid: 195d2fa366f98ac46bbab6575b74f13b, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2115489881887308505, guid: 195d2fa366f98ac46bbab6575b74f13b, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2115489881887308505, guid: 195d2fa366f98ac46bbab6575b74f13b, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3484383809048176488, guid: 195d2fa366f98ac46bbab6575b74f13b, type: 3}
       propertyPath: m_Radius
       value: 3

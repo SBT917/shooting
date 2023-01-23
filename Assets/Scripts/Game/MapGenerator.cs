@@ -18,6 +18,7 @@ public class MapGenerator : MonoBehaviour
 
      void Awake() 
     {
+        mapNum = Random.Range(1, 4);
         MapGenerate();
     }
 

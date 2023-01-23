@@ -13,10 +13,13 @@ public abstract class Shot : MonoBehaviour
     protected ParticleSystem particle; //壁や敵に当たった時のパーティクル
     private ParticleSystem.MainModule particleMain;
 
+    protected AudioManager audioManager;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
         particle = GetComponentInChildren<ParticleSystem>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         particleMain = particle.main;
         particleMain.startColor = GetComponent<Renderer>().sharedMaterial.color;
         disapCnt = shotData.disapCnt;
@@ -49,13 +52,16 @@ public abstract class Shot : MonoBehaviour
     {
         if (other.CompareTag("Enemy")){
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+            audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
-            Destroy(gameObject);
             other.GetComponent<Enemy>().TakeDamage(shotData.damage);
+            Destroy(gameObject);
+            
         }
         
         if(other.CompareTag("Wall")){
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+            audioManager.PlaySE("HitWall", p.GetComponent<AudioSource>());
             p.Play();
             Destroy(gameObject);
         }

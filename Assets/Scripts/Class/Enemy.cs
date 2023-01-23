@@ -30,10 +30,11 @@ public abstract class Enemy : MonoBehaviour
 
     protected GameManager gameManager;
     protected EnemySpawner enemySpawner;
+    protected AudioManager audioManager;
     [SerializeField]protected EnemyState state;
     private GameObject enemyCanvas;
-    private float canvasDisapCnt;
-    
+    private float canvasDisapCnt; 
+    private AudioSource audioSource;    
 
     protected virtual void Awake()
     {
@@ -44,6 +45,7 @@ public abstract class Enemy : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         targetObjects = GameObject.FindGameObjectsWithTag("Target");  
         enemyCanvas = transform.Find("EnemyCanvas").gameObject;
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         enemySpawner = GameObject.FindWithTag("EnemySpawner").GetComponent<EnemySpawner>();
         state = EnemyState.Normal;
@@ -85,6 +87,8 @@ public abstract class Enemy : MonoBehaviour
     {   
         state = EnemyState.Death;
         ParticleSystem p = Instantiate<ParticleSystem>(deadParticle, transform.position, Quaternion.identity);
+
+        audioManager.PlaySE("DeadEnemy", p.GetComponent<AudioSource>());
         p.Play();
         --enemySpawner.enemyCount;
 

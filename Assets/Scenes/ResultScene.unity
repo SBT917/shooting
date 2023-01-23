@@ -358,6 +358,7 @@ MonoBehaviour:
   waveText: {fileID: 1834057744}
   scoreText: {fileID: 97865261}
   returnTitleText: {fileID: 647840078}
+  transitionColor: {r: 1, g: 1, b: 1, a: 0}
 --- !u!4 &488546362
 Transform:
   m_ObjectHideFlags: 0
@@ -565,7 +566,7 @@ GameObject:
   - component: {fileID: 647840081}
   - component: {fileID: 647840080}
   m_Layer: 5
-  m_Name: ReturnTitle
+  m_Name: Restart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
