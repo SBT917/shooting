@@ -64,10 +64,6 @@ public class GameManager : MonoBehaviour
 
         CheckEnemyCount();
         CheckGameOver();
-
-        if(Input.GetKeyDown(KeyCode.T)){
-            shotShop.DrawingShop();
-        }
     }
 
     private IEnumerator GameStart()

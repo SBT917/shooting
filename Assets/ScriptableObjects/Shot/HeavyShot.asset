@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeavyShot
   m_EditorClassIdentifier: 
   shotName: HeavyShot
-  icon: {fileID: 21300000, guid: 96d61a88e2f525b45b0ffd7686d0cd9d, type: 3}
+  icon: {fileID: 21300000, guid: 1bcd3fe7a925d614d8a846183ae9c631, type: 3}
   rarity: {fileID: 11400000, guid: e9631131dff861d449573f6d5326cf46, type: 2}
   moveSpeed: 10
   damage: 1.5

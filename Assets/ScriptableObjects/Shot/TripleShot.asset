@@ -17,10 +17,10 @@ MonoBehaviour:
   rarity: {fileID: 11400000, guid: 17c9b61ec87be004fbfc03fdbdcdbd14, type: 2}
   moveSpeed: 20
   damage: 0.5
-  maxAmount: 15
-  rechargeTime: 0.5
-  useEnergy: 30
-  rate: 0.2
+  maxAmount: 10
+  rechargeTime: 1
+  useEnergy: 35
+  rate: 0.25
   disapCnt: 1
   blur: 0
-  price: 12
+  price: 15
