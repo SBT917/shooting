@@ -9,6 +9,8 @@ public class TitleManager : MonoBehaviour
 {
     private AudioSource audioSource;
     [SerializeField]private Color transitionColor;
+    [SerializeField]private GameObject settingMenu;
+    [SerializeField]private GameObject buttons;
 
     void Start()
     {
@@ -27,9 +29,14 @@ public class TitleManager : MonoBehaviour
         StartCoroutine(Load());
     }
 
+    public void OnSettingButton()
+    {
+        settingMenu.SetActive(true);
+        buttons.SetActive(false);
+    }
+
     public void OnExitButton()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 

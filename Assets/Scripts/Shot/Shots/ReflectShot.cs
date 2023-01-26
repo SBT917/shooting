@@ -36,12 +36,11 @@ public class ReflectShot : Shot
 
     private void Reflection()
     {
+        if(reflectCount >= reflectMax) Destroy(gameObject);
+
+        ++reflectCount;
         int randomRotate = Random.Range(-120, -240);
         Vector3 rotate = new Vector3(0, randomRotate, 0);
         transform.Rotate(rotate);
-        ++reflectCount;
-        if(reflectCount >= reflectMax){
-            Destroy(gameObject);
-        }
     }
 }

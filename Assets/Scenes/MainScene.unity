@@ -3345,7 +3345,6 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   hpContainer: {fileID: 1245113817}
   menu: {fileID: 1089873733}
-  minimapCamera: {fileID: 36431075}
   shotSlots:
   - {fileID: 645862064}
   - {fileID: 1418215927}
@@ -4256,10 +4255,13 @@ MonoBehaviour:
   - {fileID: 2798265538326500782, guid: 252d112a42fab244d91c803b1e394b0a, type: 3}
   - {fileID: 8654740162610509146, guid: 660d267c178da8b408a862877c8b1662, type: 3}
   - {fileID: 8693787602170276183, guid: ef4df8dc94f29c24593b4507d816c498, type: 3}
+  - {fileID: 8279188879743047635, guid: 545d6c6f7d92fb24db5ce679b9abd95a, type: 3}
+  - {fileID: 8815398613452187483, guid: c23de6e419437f84996017480633fa1d, type: 3}
   rarities:
   - {fileID: 11400000, guid: e9631131dff861d449573f6d5326cf46, type: 2}
   - {fileID: 11400000, guid: 17c9b61ec87be004fbfc03fdbdcdbd14, type: 2}
   - {fileID: 11400000, guid: 983ded642cf26a24aace3b7feeae8ce8, type: 2}
+  - {fileID: 11400000, guid: 85004c704765d574eb7f4195db6b9803, type: 2}
   shotSlots:
   - {fileID: 645862064}
   - {fileID: 1418215927}
@@ -4927,6 +4929,7 @@ MonoBehaviour:
   shotShop: {fileID: 1421680881}
   enemySpawnGroups:
   - {fileID: 11400000, guid: 2379b7128b571e042a2f9d4ce4df0db1, type: 2}
+  - {fileID: 11400000, guid: edb541f38b915744b95a6d4ca344992c, type: 2}
   - {fileID: 11400000, guid: 2ee5483fcf63f344481edb5a9bdbec3a, type: 2}
   - {fileID: 11400000, guid: edce7d3d848669d4a9eb03d17e7a4095, type: 2}
   - {fileID: 11400000, guid: 019dd266d2e39f54096c9645ab749db8, type: 2}
@@ -5839,6 +5842,9 @@ MonoBehaviour:
     volume: 0.5
   - name: RechargeFinish
     clip: {fileID: 8300000, guid: 4c1eee2429318054e924ac7baaefa91c, type: 3}
+    volume: 0.5
+  - name: Explosion
+    clip: {fileID: 8300000, guid: b5c4d5acc730f464fba73327a7dcfab7, type: 3}
     volume: 0.5
 --- !u!1001 &1971530175
 PrefabInstance:

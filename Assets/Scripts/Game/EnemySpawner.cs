@@ -45,7 +45,6 @@ public class EnemySpawner : MonoBehaviour
         Instantiate(spawnParticle, spawnRange, Quaternion.identity);
         yield return new WaitForSeconds(spawnParticle.main.duration);
         Instantiate(spawnEnemys[spawnEnemyValue], spawnRange, Quaternion.identity);
-        ++enemyCount;
     }
 
     public IEnumerator SpawnCo(GameObject[] enemys, int count, int span, int spawnOneTime)
@@ -59,6 +58,7 @@ public class EnemySpawner : MonoBehaviour
                 timeCnt = span;
                 --spawnCount;
                 for(int i = 0; i < spawnOneTime; ++i){
+                    ++enemyCount;
                     StartCoroutine(Spawner(enemys));
                 }
 

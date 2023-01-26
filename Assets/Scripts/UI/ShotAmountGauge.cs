@@ -11,8 +11,6 @@ public class ShotAmountGauge : MonoBehaviour
     [SerializeField] private ShotSlot slot; //情報を受け取るショットスロット
     [SerializeField] private Image rechageImage;
     
-
-    //[SerializeField] private Image rechargeGauge;
     
     void Start()
     {

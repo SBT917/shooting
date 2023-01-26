@@ -1,0 +1,6 @@
+Base path: 'C:/Program Files/Unity/Hub/Editor/2021.2.14f1/Editor/Data', plugins path 'C:/Program Files/Unity/Hub/Editor/2021.2.14f1/Editor/Data/PlaybackEngines'
+Cmd: initializeCompiler
+
+Cmd: disassembleShader
+ name=Legacy Shaders/Particles/Additive (Soft) platform=d3d11 type=17 mask=6 insize=810 outsize=1677 ok=1
+

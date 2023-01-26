@@ -93,11 +93,12 @@ public class ShotSlot : MonoBehaviour
         state = SlotState.Ready;
     }
 
-    private IEnumerator ShotRechargeCo() //ショットのリチャージ
+    public IEnumerator ShotRechargeCo() //ショットのリチャージ
     {
         if(player.energy >= shot.shotData.useEnergy){
             audioManager.PlaySE("Recharge", audioSource);
             state = SlotState.Recharging;
+            shotAmount = 0;
             player.energy -= shot.shotData.useEnergy;
 
             float rechargeTime = shot.shotData.rechargeTime;

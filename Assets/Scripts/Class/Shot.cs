@@ -11,7 +11,7 @@ public abstract class Shot : MonoBehaviour
     public ShotData shotData; //ショットのデータをスクリプタブルオブジェクトから取得
     protected float disapCnt; //ショットが消滅するまでの時間
     protected ParticleSystem particle; //壁や敵に当たった時のパーティクル
-    private ParticleSystem.MainModule particleMain;
+    protected ParticleSystem.MainModule particleMain;
 
     protected AudioManager audioManager;
 
@@ -33,10 +33,11 @@ public abstract class Shot : MonoBehaviour
     //移動処理
     protected virtual void Move()
     {
+        if (disapCnt < 0) Destroy(gameObject);
+            
         disapCnt -= Time.deltaTime;
         rb.position += transform.forward * shotData.moveSpeed * Time.deltaTime;
-        if (disapCnt < 0)
-            Destroy(gameObject);
+        
     }
 
     //ショットを出現させる際の処理
