@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88268fa288e0d6b4d885b8163be54ef4, type: 3}
   m_Name: RedBossEnemy
   m_EditorClassIdentifier: 
-  maxHp: 200
+  maxHp: 300
   attackToPlayer: 1
   attackToObject: 999
   normalSpeed: 0.7

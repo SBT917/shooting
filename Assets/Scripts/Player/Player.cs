@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
     private AudioManager audioManager;
     public HpContainer hpContainer;
     [SerializeField]private GameObject menu;
-    [SerializeField]private Camera minimapCamera;
     [SerializeField]private ShotSlot[] shotSlots;
     [SerializeField]private Material defaultMaterial;
     [SerializeField]private Material invisibleMaterial;
@@ -66,6 +65,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (state != PlayerState.Death && gm.GetState() != GameState.GameOver){
+            LookMousePoint();
+            MovingRangeFixed(); 
             Shot();
             Invisible();
             EnergyController();
@@ -190,7 +191,7 @@ public class Player : MonoBehaviour
         if(state != PlayerState.Normal) return;
         if(menu.activeSelf == true) return;
 
-        if(Input.GetButton("Fire1")){
+            if(Input.GetButton("Fire1") || (shotSlots[1].shot != null && Input.GetButton("Fire2")) ){
             Plane plane = new Plane();
 	        float distance = 0;
 
@@ -220,8 +221,7 @@ public class Player : MonoBehaviour
             rb.position += velocity;
         }
 
-        LookMousePoint();
-        MovingRangeFixed(); 
+        
     }
 
     //ショットを放つ
@@ -230,8 +230,11 @@ public class Player : MonoBehaviour
         if(state != PlayerState.Normal) return;
         if(menu.activeSelf == true) return;
         
-        if (Input.GetButton("Fire1")){
+        if (Input.GetButton("Fire1") && !Input.GetButton("Fire2")){
             shotSlots[0].Fire();
+        }
+
+        if (Input.GetButton("Fire2") && !Input.GetButton("Fire1")){
             shotSlots[1].Fire();
         }
     }

@@ -232,9 +232,9 @@ public class GameManager : MonoBehaviour
     {
         ++waveCount;
         isBossWave = waveCount % 5 == 0;
+        int index = waveCount % 5;
         
         if(!isBossWave){
-            int index = Mathf.Clamp(waveCount - 1, 1, 3);
             int count = Mathf.Clamp(3 + ((waveCount - 1) * 2), 0, 10);
             int span = Mathf.Clamp(30 - ((waveCount - 1) * 5), 15, 30);
             int oneTime = Mathf.Clamp(10 + ((waveCount - 1) * 3), 0, 30);

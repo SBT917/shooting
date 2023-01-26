@@ -16,7 +16,7 @@ public class ResultController : MonoBehaviour
     void Awake()
     {
         Time.timeScale = 1.0f;
-        Cursor.visible = true;
+        Cursor.visible = false;
         waveText.text = "WAVE:" + GameManager.finalWave.ToString();
         scoreText.text = "SCORE:" + GameManager.finalScore.ToString();
         InvokeRepeating("FlashText", 0.5f, 0.5f);
