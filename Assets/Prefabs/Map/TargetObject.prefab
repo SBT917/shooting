@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8873923bbe6301247824683b7c6dfa4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 10
+  maxHp: 15
   hp: 0
   hitParticle: {fileID: 9138255879455957892}
   breakParticle: {fileID: 7599779517739641188}

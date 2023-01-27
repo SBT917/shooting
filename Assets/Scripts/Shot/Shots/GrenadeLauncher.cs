@@ -33,7 +33,7 @@ public class GrenadeLauncher : Shot
     private void Explosion()
     {
         GameObject go = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        go.GetComponent<Explosion>().shotData = shotData;
+        go.GetComponent<RangeDamage>().shotData = shotData;
         Destroy(gameObject);
     }
 }

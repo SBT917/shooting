@@ -17,7 +17,7 @@ public class TargetObject : MonoBehaviour
     private GameManager gm;
     private AudioManager audioManager;
 
-    public float maxHp = 100.0f; //最大HP
+    public float  maxHp; //最大HP
     public float hp; //現在のHP
     private TargetState state;
     private AudioSource audioSource;

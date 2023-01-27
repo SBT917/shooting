@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Explosion : MonoBehaviour
+public class RangeDamage : MonoBehaviour
 {
     [HideInInspector]public ShotData shotData;
-
     void Awake()
     {
         StartCoroutine(ColliderDisabling());

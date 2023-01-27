@@ -22,5 +22,5 @@ MonoBehaviour:
   useEnergy: 5
   rate: 0.05
   disapCnt: 0.2
-  blur: 30
+  blur: 15
   price: 5

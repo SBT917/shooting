@@ -15,12 +15,13 @@ public class TitleManager : MonoBehaviour
     void Start()
     {
         Cursor.visible = false;
+        Time.timeScale = 1;
         audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-
+        buttons.SetActive(!settingMenu.activeSelf);
     }
 
     public void OnStartButton(Button button)
@@ -32,9 +33,8 @@ public class TitleManager : MonoBehaviour
     public void OnSettingButton()
     {
         settingMenu.SetActive(true);
-        buttons.SetActive(false);
     }
-
+    
     public void OnExitButton()
     {
         Application.Quit();
@@ -48,7 +48,7 @@ public class TitleManager : MonoBehaviour
             squareColor = transitionColor,
             nextScene = 1
         };
-        yield return new WaitForSeconds(audioSource.clip.length); 
+        yield return new WaitForSeconds(1.5f); 
         TransitionKit.instance.transitionWithDelegate(transition);
     }
 }

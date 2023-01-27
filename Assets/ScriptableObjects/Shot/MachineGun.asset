@@ -16,11 +16,11 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6ac65629079ed8247bcfbe0ed922129e, type: 3}
   rarity: {fileID: 11400000, guid: 983ded642cf26a24aace3b7feeae8ce8, type: 2}
   moveSpeed: 30
-  damage: 0.2
+  damage: 0.3
   maxAmount: 200
   rechargeTime: 5
   useEnergy: 30
-  rate: 0.01
+  rate: 0.03
   disapCnt: 1
-  blur: 15
-  price: 20
+  blur: 10
+  price: 15

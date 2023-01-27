@@ -27,12 +27,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]private ScoreCounter scoreCounter;
     [SerializeField]private ShotShop shotShop;
     [SerializeField]private EnemySpawnGroup[] enemySpawnGroups;
+    [SerializeField]private PointBonus pointBonus;
     private AudioManager audioManager;
     private EnemySpawner enemySpawner;
     private TargetSpawner targetSpawner;
     private Player player;
     private GameObject[] targetObjects;
-    private int waveCount = 0;
+    private int waveCount;
     private int startCount;
 
     private Coroutine spawnCo;
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
     {   
         state = GameState.BreakTime;
         audioManager.PlayBGM();
+        pointBonus.AppendBonus();
         hintText.gameObject.SetActive(true);
         
         shotShop.DrawingShop();
