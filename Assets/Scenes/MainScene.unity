@@ -4656,6 +4656,7 @@ MonoBehaviour:
   - {fileID: 8693787602170276183, guid: ef4df8dc94f29c24593b4507d816c498, type: 3}
   - {fileID: 8279188879743047635, guid: 545d6c6f7d92fb24db5ce679b9abd95a, type: 3}
   - {fileID: 8815398613452187483, guid: c23de6e419437f84996017480633fa1d, type: 3}
+  - {fileID: 1185146994122533177, guid: d18874b4d8d73c8479962a01281736b7, type: 3}
   - {fileID: 6650685306119281475, guid: 17edb06567fb3d440ab4e1617bf788fe, type: 3}
   rarities:
   - {fileID: 11400000, guid: e9631131dff861d449573f6d5326cf46, type: 2}
@@ -6784,7 +6785,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
