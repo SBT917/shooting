@@ -19,7 +19,7 @@ MonoBehaviour:
   attackSpeed: 1
   score: 500
   searchAngle: 30
-  attackOutRange: 10
-  searchTime: 2
+  attackOutRange: 30
+  searchTime: 5
   itemDropRatio: 100
   dropItem: {fileID: 6739383237830082110, guid: 841eaf2cebae4ca438be32c5cc5a4f48, type: 3}

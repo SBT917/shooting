@@ -33,6 +33,7 @@ public abstract class Enemy : MonoBehaviour
     protected AudioManager audioManager;
     [SerializeField]protected EnemyState state;
     private GameObject enemyCanvas;
+    private GameObject hpBar;
     private float canvasDisapCnt; 
     private AudioSource audioSource;    
 
@@ -45,13 +46,14 @@ public abstract class Enemy : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         targetObjects = GameObject.FindGameObjectsWithTag("Target");  
         enemyCanvas = transform.Find("EnemyCanvas").gameObject;
+        hpBar = enemyCanvas.transform.Find("EnemyHpBar").gameObject;
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         enemySpawner = GameObject.FindWithTag("EnemySpawner").GetComponent<EnemySpawner>();
         state = EnemyState.Normal;
         hp = enemyData.maxHp;
         nav.speed = enemyData.normalSpeed;
-        enemyCanvas.SetActive(false);
+        hpBar.SetActive(false);
     }
 
     protected virtual void Update()
@@ -191,9 +193,9 @@ public abstract class Enemy : MonoBehaviour
     {
         canvasDisapCnt = 10.0f;
 
-        if(!enemyCanvas.activeSelf)
+        if(!hpBar.activeSelf)
         {
-            enemyCanvas.SetActive(true);
+            hpBar.SetActive(true);
 
             while(canvasDisapCnt > 0.0f) //一定時間ダメージを受けなければHPバーは消える
             {
@@ -201,7 +203,7 @@ public abstract class Enemy : MonoBehaviour
                 yield return new WaitForSeconds(1.0f);
             }
             
-            enemyCanvas.SetActive(false);
+            hpBar.SetActive(false);
         }
         else
         {

@@ -90,16 +90,21 @@ public class ShotSlot : MonoBehaviour
     {
         state = SlotState.Wait;
         yield return new WaitForSeconds(shot.shotData.rate);
+        if(state != SlotState.Wait) yield break;
         state = SlotState.Ready;
     }
 
     public IEnumerator ShotRechargeCo() //ショットのリチャージ
     {
-        if(player.energy >= shot.shotData.useEnergy){
+        if(shot == null) yield break;
+        if(state == SlotState.Recharging) yield break;
+        if(shotAmount == shot.shotData.maxAmount) yield break;
+
+        float useEnergy = shot.shotData.useEnergy - (shot.shotData.useEnergy * ((float)shotAmount / (float)shot.shotData.maxAmount));
+        if(player.energy >= useEnergy){
             audioManager.PlaySE("Recharge", audioSource);
             state = SlotState.Recharging;
-            shotAmount = 0;
-            player.energy -= shot.shotData.useEnergy;
+            player.energy -= useEnergy;
 
             float rechargeTime = shot.shotData.rechargeTime;
             yield return new WaitForSeconds(rechargeTime);

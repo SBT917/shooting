@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Prime31.TransitionKit;
 
 public class ResultController : MonoBehaviour
 {
     [SerializeField]private TextMeshProUGUI waveText;
     [SerializeField]private TextMeshProUGUI scoreText;
     [SerializeField]private GameObject returnTitleText;
-
-    [SerializeField]private Color transitionColor;
 
     void Awake()
     {
@@ -25,12 +22,7 @@ public class ResultController : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButtonDown(1)){
-            SquaresTransition transition = new SquaresTransition()
-            {
-                squareColor = transitionColor,
-                nextScene = 0,
-            };
-            TransitionKit.instance.transitionWithDelegate(transition);
+            SceneManager.LoadScene("TitleScene");
         }
     }
 

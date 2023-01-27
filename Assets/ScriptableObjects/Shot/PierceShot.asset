@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6d77a71785fcd4aaea8f77a9c48fb9, type: 3}
+  m_Name: PierceShot
+  m_EditorClassIdentifier: 
+  shotName: PierceShot
+  icon: {fileID: 21300000, guid: 7bcaa9382a2ffef408dc9d97b2e590cd, type: 3}
+  rarity: {fileID: 11400000, guid: 17c9b61ec87be004fbfc03fdbdcdbd14, type: 2}
+  moveSpeed: 30
+  damage: 1
+  maxAmount: 7
+  rechargeTime: 1
+  useEnergy: 15
+  rate: 0.8
+  disapCnt: 1
+  blur: 5
+  price: 12

@@ -5,12 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
 
-public class SettingMenu : MonoBehaviour
+public class AudioSetting : MonoBehaviour
 {
     [SerializeField]private AudioMixer audioMixer;
     [SerializeField]private Slider BGMSlider;
     [SerializeField]private Slider SESlider;
-    [SerializeField]private GameObject buttons;
 
     void Awake() 
     {
@@ -31,7 +30,6 @@ public class SettingMenu : MonoBehaviour
     
     public void OnCloseButton()
     {
-        buttons.SetActive(true);
         gameObject.SetActive(false);
     }
 

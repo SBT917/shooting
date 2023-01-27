@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private AudioManager audioManager;
     public HpContainer hpContainer;
     [SerializeField]private GameObject menu;
+    [SerializeField]private GameObject pauseMenu;
     [SerializeField]private ShotSlot[] shotSlots;
     [SerializeField]private Material defaultMaterial;
     [SerializeField]private Material invisibleMaterial;
@@ -65,9 +66,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (state != PlayerState.Death && gm.GetState() != GameState.GameOver){
+            PauseMenuController();
+            if(pauseMenu.activeSelf) return;
+
             LookMousePoint();
             MovingRangeFixed(); 
             Shot();
+            Recharge();
             Invisible();
             EnergyController();
             BreakTimeController(); 
@@ -239,6 +244,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void Recharge()
+    {
+        if(Input.GetKeyDown(KeyCode.R)){
+            for(int i = 0; i < 2; ++i){
+                StartCoroutine(shotSlots[i].ShotRechargeCo());
+            }
+        }
+    }
+
     //透明化状態の処理
     Coroutine invCo;
     private void Invisible()
@@ -302,6 +316,22 @@ public class Player : MonoBehaviour
             if(menu.activeSelf){
                 menu.SetActive(false);
             }
+        }
+    }
+
+    private void PauseMenuController()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            audioManager.PlaySE("Pause", audioSource);
+            if(!pauseMenu.activeSelf){
+                pauseMenu.SetActive(true);
+                Time.timeScale = 0;
+            }
+            else{
+                pauseMenu.SetActive(false);
+                Time.timeScale = 1;
+            }
+            
         }
     }
 
