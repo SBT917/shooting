@@ -50,9 +50,7 @@ public abstract class Enemy : MonoBehaviour
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         enemySpawner = GameObject.FindWithTag("EnemySpawner").GetComponent<EnemySpawner>();
-        state = EnemyState.Normal;
         hp = enemyData.maxHp;
-        nav.speed = enemyData.normalSpeed;
         hpBar.SetActive(false);
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedBossEnemy : BossEnemy
+public class WhiteBossEnemy : BossEnemy
 {
     protected override void Awake()
     {

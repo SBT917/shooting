@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88268fa288e0d6b4d885b8163be54ef4, type: 3}
+  m_Name: NormalEnemy
+  m_EditorClassIdentifier: 
+  maxHp: 3
+  attackToPlayer: 1
+  attackToObject: 2
+  normalSpeed: 1.5
+  attackSpeed: 2
+  score: 100
+  searchAngle: 90
+  attackOutRange: 20
+  searchTime: 5
+  itemDropRatio: 30
+  dropItem: {fileID: 6739383237830082110, guid: 0548600664617414eb3c60f492d0409d, type: 3}
