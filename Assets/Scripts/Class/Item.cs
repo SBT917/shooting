@@ -18,7 +18,7 @@ public abstract class Item : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         disapCnt = 30.0f;
-        speed = 10.0f;
+        speed = 20.0f;
         range = 2.0f;
         StartCoroutine(DisapItem());
     }

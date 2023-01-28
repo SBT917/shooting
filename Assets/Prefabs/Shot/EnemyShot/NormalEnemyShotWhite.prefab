@@ -43,7 +43,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.08972891, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 3
   m_SpotAngle: 30
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 5836870435560644247}
   - component: {fileID: -4217859735570264033}
   m_Layer: 9
-  m_Name: NormalEnemyShot
+  m_Name: NormalEnemyShotWhite
   m_TagString: Shot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 490ca8bbf8da74646a2e0b7bc23c0b6e, type: 2}
+  - {fileID: 2100000, guid: 336672f34d466f6449d53400035fbccf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

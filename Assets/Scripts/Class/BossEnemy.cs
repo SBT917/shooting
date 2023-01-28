@@ -17,7 +17,12 @@ public abstract class BossEnemy : Enemy
 
     [SerializeField]private float shotSummonSpanMagnitude; //HPが半分になった後にショットを召喚するスパンを短くする倍率
 
+    [SerializeField]private float knockBakDamage; //ノックバックに必要な蓄積ダメージ
+    private float accumulationDamage; //蓄積ダメージ
+
     [SerializeField]private ParticleSystem spawnParticle;
+
+
     private bool isShoting;
     private bool isSeriousMode;
 
@@ -43,18 +48,15 @@ public abstract class BossEnemy : Enemy
     protected override void AttackAction(float outRange, float searchTime)
     {
         if(state == EnemyState.Attack){
-            nav.speed = enemyData.attackSpeed;
-            target = player.gameObject;
             if(!isShoting){
                 summonShotCo = StartCoroutine(SummoningShotCo(shotSummonSpan));
                 isShoting = true;
             } 
 
-            if(CheckDistance(player.gameObject) > outRange || player.GetState() == PlayerState.Invisible){ //プレイヤーが範囲外に行くか、透明状態になったらサーチ状態に移行
-                SetState(EnemyState.Search);
+            if(CheckDistance(player.gameObject) > outRange){ //プレイヤーが範囲外に行くか、透明状態になったら撃つのをやめる
                 StopCoroutine(summonShotCo);
                 isShoting = false;
-                StartCoroutine(SearchCo(searchTime));
+                SetState(EnemyState.Normal);
             }  
         }
     }
@@ -82,12 +84,7 @@ public abstract class BossEnemy : Enemy
         }    
     }
 
-    protected virtual void SummoningShot()
-    {
-        Vector3 summonPos = transform.localPosition + transform.forward;
-        summonPos.y = 0.75f;
-        Instantiate(enemyShot, summonPos, transform.rotation);
-    }
+    protected abstract void SummoningShot();
 
     protected IEnumerator SummoningShotCo(float span)
     {
@@ -108,6 +105,26 @@ public abstract class BossEnemy : Enemy
             shotSummonSpan *= shotSummonSpanMagnitude;
             isSeriousMode = true;
         }
+    }
+
+    protected IEnumerator KnockBack()
+    {
+        rb.AddForce(-transform.forward * 5, ForceMode.VelocityChange);
+        accumulationDamage = 0;
+        yield return new WaitForSeconds(0.2f);
+        rb.velocity = Vector3.zero;
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        if(state == EnemyState.Death) return;
+
+        accumulationDamage += damage;
+        if(accumulationDamage >= knockBakDamage){
+            StartCoroutine(KnockBack());
+        }
+        
+        base.TakeDamage(damage);
     }
 
     protected override void Dead()

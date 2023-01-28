@@ -49,7 +49,7 @@ public class EnemyStateIcon : MonoBehaviour
 
         stateIcon.color = new Color32(255, 255, 255, 255);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(5.0f);
         for(int i = 0; i < 255; ++i){
             stateIcon.color -= new Color32(0, 0, 0, 2);
             yield return null;
