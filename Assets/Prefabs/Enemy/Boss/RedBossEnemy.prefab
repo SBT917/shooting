@@ -112,7 +112,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
@@ -143,6 +143,7 @@ MonoBehaviour:
   enemySummonCountMagnitude: 2
   enemySummonSpanMagnitude: 0.9
   shotSummonSpanMagnitude: 0.5
+  knockBakDamage: 10
   spawnParticle: {fileID: 1291514814939681551, guid: be9f0def327e2a540be13707469e60b7, type: 3}
 --- !u!114 &5024117534388933072
 MonoBehaviour:
@@ -159,7 +160,7 @@ MonoBehaviour:
   cinemachineCamera: {fileID: 744356641002653963}
   targetGroup: {fileID: 3754338203303824418}
   inRange: 10
-  outRange: 10
+  outRange: 20
 --- !u!1 &8259271414466129279
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +488,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 915462805102263827}
     m_Modifications:
+    - target: {fileID: 5874550010618928912, guid: 1672c883f8b0a1849a462008314541f6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8883307862952662440, guid: 1672c883f8b0a1849a462008314541f6, type: 3}
       propertyPath: m_Name
       value: EnemyCanvas

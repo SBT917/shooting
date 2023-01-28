@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
     private IEnumerator HealEnergy()
     {
         float defaultEnergy = maxEnergy; //開始時の最大Energyをデフォルトとする
-        float healSpeed = 10.0f;
+        float healSpeed = 5.0f;
         
         while (true){
             if(state == PlayerState.Normal && energy < maxEnergy){

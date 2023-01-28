@@ -16,12 +16,13 @@ public class RedBossEnemy : BossEnemy
 
     protected override void SummoningShot()
     {
-        Vector3 summonPos = transform.localPosition + transform.forward;
+        Vector3 summonPos = transform.localPosition;
         summonPos.y = 0.75f;
 
-        Quaternion rotate = Quaternion.Euler(0, 10, 0);
-        Instantiate(enemyShot, summonPos, transform.rotation * rotate);
-        Instantiate(enemyShot, summonPos, transform.rotation * Quaternion.Inverse(rotate));
-        Instantiate(enemyShot, summonPos, transform.rotation);
+        for(int i = 0; i < 9; ++i){
+            Vector3 rotate = transform.eulerAngles;
+            rotate.y += 40 * i;
+            EnemyShot shot = Instantiate(enemyShot, summonPos, Quaternion.Euler(rotate));
+        }
     }
 }

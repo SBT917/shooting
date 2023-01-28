@@ -19,7 +19,7 @@ public enum EnemyState
 public abstract class Enemy : MonoBehaviour
 {
     public EnemyData enemyData; //エネミーデータの取得(スクリプタブルオブジェクト)
-    private Rigidbody rb;
+    protected Rigidbody rb;
     protected ParticleSystem deadParticle;
     protected NavMeshAgent nav;
 
@@ -167,7 +167,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     //ダメージを受けた際の処理
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         if(state == EnemyState.Death) return;
         hp -= damage;

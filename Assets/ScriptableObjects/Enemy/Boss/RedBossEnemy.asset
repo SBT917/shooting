@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88268fa288e0d6b4d885b8163be54ef4, type: 3}
   m_Name: RedBossEnemy
   m_EditorClassIdentifier: 
-  maxHp: 300
+  maxHp: 200
   attackToPlayer: 1
   attackToObject: 999
-  normalSpeed: 0.7
-  attackSpeed: 1
+  normalSpeed: 0.5
+  attackSpeed: 0.5
   score: 500
-  searchAngle: 30
-  attackOutRange: 30
-  searchTime: 5
+  searchAngle: 180
+  attackOutRange: 20
+  searchTime: 0
   itemDropRatio: 100
   dropItem: {fileID: 6739383237830082110, guid: 841eaf2cebae4ca438be32c5cc5a4f48, type: 3}
