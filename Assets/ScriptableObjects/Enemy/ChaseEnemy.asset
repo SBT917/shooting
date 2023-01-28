@@ -16,10 +16,10 @@ MonoBehaviour:
   attackToPlayer: 1
   attackToObject: 2
   normalSpeed: 0
-  attackSpeed: 4
+  attackSpeed: 3.5
   score: 120
   searchAngle: 0
   attackOutRange: 0
   searchTime: 0
-  itemDropRatio: 50
+  itemDropRatio: 60
   dropItem: {fileID: 6739383237830082110, guid: 0548600664617414eb3c60f492d0409d, type: 3}

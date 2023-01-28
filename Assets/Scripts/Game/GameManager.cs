@@ -239,7 +239,7 @@ public class GameManager : MonoBehaviour
         if(!isBossWave){
             int count = Mathf.Clamp(3 + ((waveCount - 1) * 2), 0, 10);
             int span = Mathf.Clamp(30 - ((waveCount - 1) * 5), 15, 30);
-            int oneTime = Mathf.Clamp(10 + ((waveCount - 1) * 3), 0, 30);
+            int oneTime = Mathf.Clamp(10 + ((waveCount - 1) * 2), 0, 30);
             SetParameter(index, count, span, oneTime);
             //SetParameter(1, 1, 1, 1);
 
