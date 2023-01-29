@@ -9,6 +9,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]private GameObject[] blocks;
     [SerializeField]private GameObject player;
     [SerializeField]private int mapNum;
+    [SerializeField]private TextAsset[] dataTexts;
     
     float objSize = 5.0f;
     float offset = 37.5f;
@@ -18,7 +19,7 @@ public class MapGenerator : MonoBehaviour
 
      void Awake() 
     {
-        mapNum = Random.Range(1, 4);
+        mapNum = Random.Range(0, dataTexts.Length);
         MapGenerate();
     }
 
@@ -71,7 +72,7 @@ public class MapGenerator : MonoBehaviour
     
     void FileLoad(in string[,] datas)
     {
-        TextAsset csvFile = Resources.Load("MapData/map" + mapNum) as TextAsset;
+        TextAsset csvFile = dataTexts[mapNum];
         if(csvFile == null) return;
 
         StringReader reader = new StringReader(csvFile.text);;

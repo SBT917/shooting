@@ -26,9 +26,16 @@ public class InvisibleEnemy : Enemy
         if(gameManager.GetState() == GameState.GameOver) return;
         if(state == EnemyState.Death) return;
         
-        if(Vector3.Distance(transform.position, target.transform.position) < 10.0f || state == EnemyState.Attack){
+        if(Vector3.Distance(transform.position, target.transform.position) < 5.0f || state != EnemyState.Normal){
             Visualize();
         }
+    }
+
+    protected override void AttackAction(float outRange, float searchTime)
+    {
+        if(isInvisible) return;
+
+        base.AttackAction(outRange, searchTime);
     }
 
     private void Visualize()
@@ -61,12 +68,14 @@ public class InvisibleEnemy : Enemy
     protected override void OnTriggerEnter(Collider other)
     {
         if(isInvisible) return;
+
         base.OnTriggerEnter(other);
     }
 
     protected override void OnTriggerStay(Collider other)
     {
         if(isInvisible) return;
+        
         base.OnTriggerStay(other);
     }
 }
