@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotData: {fileID: 11400000, guid: 8dc1e5d3f8b7a5f4fb2796c809c32db4, type: 2}
-  shotAmount: 6
+  shotAmount: 8
 --- !u!1001 &1212618366831784344
 PrefabInstance:
   m_ObjectHideFlags: 0

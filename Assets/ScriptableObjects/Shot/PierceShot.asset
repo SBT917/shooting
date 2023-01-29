@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotName: PierceShot
   icon: {fileID: 21300000, guid: 7bcaa9382a2ffef408dc9d97b2e590cd, type: 3}
-  rarity: {fileID: 11400000, guid: 17c9b61ec87be004fbfc03fdbdcdbd14, type: 2}
+  rarity: {fileID: 11400000, guid: e9631131dff861d449573f6d5326cf46, type: 2}
   moveSpeed: 30
   damage: 1
-  maxAmount: 7
+  maxAmount: 6
   rechargeTime: 1
-  useEnergy: 15
+  useEnergy: 10
   rate: 0.8
   disapCnt: 1
   blur: 5
-  price: 12
+  price: 5

@@ -1683,7 +1683,7 @@ MonoBehaviour:
   - {fileID: 7177311397526938860, guid: c783f6b4286677345b64964c0b9cdaf5, type: 3}
   - {fileID: 7177311397526938860, guid: 19fdabb8b3bd7154485b184a5c1cf145, type: 3}
   player: {fileID: 1242735546}
-  mapNum: 5
+  mapNum: 0
   dataTexts:
   - {fileID: 4900000, guid: f259469b0722cf5458bcaab1d3faf016, type: 3}
   - {fileID: 4900000, guid: dac64e31dae1d62489f79456b56e523c, type: 3}
@@ -1691,6 +1691,7 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 13e9802ae89c77542a29fea9280d988c, type: 3}
   - {fileID: 4900000, guid: 9cf4bf324995be142a4af3407e7ffa8f, type: 3}
   - {fileID: 4900000, guid: e22290291691354448b0b43b51add333, type: 3}
+  - {fileID: 4900000, guid: d1ff1b202b6dd3149b89149e9d7958b1, type: 3}
 --- !u!114 &460450861 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3296521845049836412, guid: 0427d693db7a22d4c89431f026fbdbaf, type: 3}
@@ -3642,9 +3643,6 @@ MonoBehaviour:
   hpContainer: {fileID: 1245113817}
   menu: {fileID: 1089873733}
   pauseMenu: {fileID: 1871008080}
-  shotSlots:
-  - {fileID: 645862064}
-  - {fileID: 1418215927}
   defaultMaterial: {fileID: 2100000, guid: e0b9da266cc88c84080fc7628395d459, type: 2}
   invisibleMaterial: {fileID: 2100000, guid: 723c13177b96a0541a775ce9864a21a2, type: 2}
   particle: {fileID: 817056489029457023}
@@ -3654,6 +3652,9 @@ MonoBehaviour:
   maxEnergy: 50
   moveSpeed: 0
   defaultMoveSpeed: 4
+  shotSlots:
+  - {fileID: 645862064}
+  - {fileID: 1418215927}
   nowScore: 0
   nowPoint: 0
   inWall: 0
@@ -5556,6 +5557,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: edce7d3d848669d4a9eb03d17e7a4095, type: 2}
   - {fileID: 11400000, guid: 019dd266d2e39f54096c9645ab749db8, type: 2}
   pointBonus: {fileID: 647878191}
+  randomDefaultShots:
+  - {fileID: 8654740162610509146, guid: 660d267c178da8b408a862877c8b1662, type: 3}
+  - {fileID: 8693787602170276183, guid: ef4df8dc94f29c24593b4507d816c498, type: 3}
+  - {fileID: 1385997869526371094, guid: 47dafb3dfcf6a36448bf23bee74ecdb6, type: 3}
+  - {fileID: 1185146994122533177, guid: d18874b4d8d73c8479962a01281736b7, type: 3}
   isBossWave: 0
   enemySpawnGroupIndex: 0
   enemySpawnCount: 0
