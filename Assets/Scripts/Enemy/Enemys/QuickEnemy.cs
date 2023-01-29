@@ -18,4 +18,16 @@ public class QuickEnemy : Enemy
     {
         return;
     }
+
+    public override void TakeDamage(float damage)
+    {
+        if(state == EnemyState.Death) return;
+        hp -= damage;
+        StartCoroutine(CanvasAvtiveCo());
+
+        if(hp <= 0)
+        {
+            Dead();
+        }
+    }
 }

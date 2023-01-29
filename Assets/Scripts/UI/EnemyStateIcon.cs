@@ -26,8 +26,8 @@ public class EnemyStateIcon : MonoBehaviour
     {
         currentState = parentEnemy.GetState();
         
-        if(preState != currentState){
-            if(co != null) StopCoroutine(co);
+        if(currentState != preState && currentState != EnemyState.Normal){
+            if(co != null ) StopCoroutine(co);
             co = StartCoroutine(ChangeStateIcon(currentState));
         }
 
@@ -36,6 +36,8 @@ public class EnemyStateIcon : MonoBehaviour
 
     private IEnumerator ChangeStateIcon(EnemyState state)
     {
+        
+
         switch(state){
             case EnemyState.Attack:
                 stateIcon.sprite = icons[0];
@@ -44,9 +46,9 @@ public class EnemyStateIcon : MonoBehaviour
                 stateIcon.sprite = icons[1];
                 break;
             default:
-                yield break;
+                yield break; 
         }
-
+        
         stateIcon.color = new Color32(255, 255, 255, 255);
 
         yield return new WaitForSeconds(5.0f);

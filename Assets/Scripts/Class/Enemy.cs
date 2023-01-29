@@ -187,7 +187,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     //プレイヤーからダメージを受けた際、頭上にHPバーを表示する
-    private IEnumerator CanvasAvtiveCo()
+    protected IEnumerator CanvasAvtiveCo()
     {
         canvasDisapCnt = 10.0f;
 

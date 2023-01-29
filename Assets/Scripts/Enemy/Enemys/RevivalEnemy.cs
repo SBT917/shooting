@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class RevivalEnemy : Enemy
@@ -19,10 +20,11 @@ public class RevivalEnemy : Enemy
         gameObject.SetActive(false);
     }
 
-    private void Revival()
+    private async void Revival()
     {
         int value = Random.Range(0, revivalEnemys.Length);
         Enemy enemy = revivalEnemys[value];
+        await Task.Delay(200);
         Instantiate<Enemy>(enemy, transform.position, transform.rotation);
     }
 }
