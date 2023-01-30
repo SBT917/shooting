@@ -16,6 +16,7 @@ public class DivisionShot : Shot
             audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
             other.GetComponent<Enemy>().TakeDamage(shotData.damage);
+            GiveKnockBack(other);
             ShotDivide();
         }
         

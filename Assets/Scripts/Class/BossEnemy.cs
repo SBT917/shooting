@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //ボスエネミーのクラス
-public abstract class BossEnemy : Enemy
+public abstract class BossEnemy : Enemy, IKnockBackObject
 {
     [SerializeField]protected Enemy[] summonEnemys; //召喚するエネミー配列
     [SerializeField]protected EnemyShot enemyShot; //召喚するショット
@@ -22,8 +22,6 @@ public abstract class BossEnemy : Enemy
 
     [SerializeField]private ParticleSystem spawnParticle;
 
-
-    private bool isShoting;
     private bool isSeriousMode;
 
     Coroutine summonEnemyCo;
@@ -48,14 +46,13 @@ public abstract class BossEnemy : Enemy
     protected override void AttackAction(float outRange, float searchTime)
     {
         if(state == EnemyState.Attack){
-            if(!isShoting){
+            if(summonShotCo == null){
                 summonShotCo = StartCoroutine(SummoningShotCo(shotSummonSpan));
-                isShoting = true;
             } 
 
-            if(CheckDistance(player.gameObject) > outRange){ //プレイヤーが範囲外に行くか、透明状態になったら撃つのをやめる
+            if(CheckDistance(player.gameObject) > outRange){ //プレイヤーが範囲外に行ったら撃つのをやめる
                 StopCoroutine(summonShotCo);
-                isShoting = false;
+                summonShotCo = null;
                 SetState(EnemyState.Normal);
             }  
         }
@@ -98,33 +95,45 @@ public abstract class BossEnemy : Enemy
     protected void CheckHalfHp()
     {
         if(isSeriousMode) return;
-
         if(hp <= enemyData.maxHp / 2){
-            StopCoroutine(summonEnemyCo);
+            isSeriousMode = true;
+            
+            if(summonEnemyCo != null){
+                StopCoroutine(summonEnemyCo);
+                summonEnemyCo = null;
+            } 
+
+            if(summonShotCo != null){
+                StopCoroutine(summonShotCo);
+                summonShotCo = null;
+            }
+            
             summonEnemyCo = StartCoroutine(SummoningEnemyCo(enemySummonCount + enemySummonCountMagnitude , enemySummonSpan *= enemySummonSpanMagnitude));
             shotSummonSpan *= shotSummonSpanMagnitude;
-            isSeriousMode = true;
         }
-    }
-
-    protected IEnumerator KnockBack()
-    {
-        rb.AddForce(-transform.forward * 5, ForceMode.VelocityChange);
-        accumulationDamage = 0;
-        yield return new WaitForSeconds(0.2f);
-        rb.velocity = Vector3.zero;
     }
 
     public override void TakeDamage(float damage)
     {
         if(state == EnemyState.Death) return;
-
         accumulationDamage += damage;
-        if(accumulationDamage >= knockBakDamage){
-            StartCoroutine(KnockBack());
-        }
-        
         base.TakeDamage(damage);
+    }
+
+    protected IEnumerator KnockCo(Vector3 direction)
+    {
+        rb.AddForce(direction * 7, ForceMode.VelocityChange);
+        accumulationDamage = 0;
+        yield return new WaitForSeconds(0.2f);
+        rb.velocity = Vector3.zero;
+    }
+
+
+    public void KnockBack(Vector3 direction)
+    {
+        if(accumulationDamage >= knockBakDamage){
+            StartCoroutine(KnockCo(direction));
+        }
     }
 
     protected override void Dead()

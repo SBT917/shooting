@@ -49,6 +49,14 @@ public abstract class Shot : MonoBehaviour
         Instantiate(gameObject, player.transform.localPosition + player.transform.forward, player.transform.rotation * rotate);
     }
 
+    protected void GiveKnockBack(Collider other)
+    {
+        var knock = other.GetComponent<IKnockBackObject>();
+        if(knock != null){
+            knock.KnockBack(transform.forward);
+        }
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy")){
@@ -56,8 +64,8 @@ public abstract class Shot : MonoBehaviour
             audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
             other.GetComponent<Enemy>().TakeDamage(shotData.damage);
-            Destroy(gameObject);
-            
+            GiveKnockBack(other);
+            Destroy(gameObject);    
         }
         
         if(other.CompareTag("Wall")){

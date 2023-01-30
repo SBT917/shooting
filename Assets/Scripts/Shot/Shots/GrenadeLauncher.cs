@@ -22,6 +22,7 @@ public class GrenadeLauncher : Shot
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy")){
+            GiveKnockBack(other);
             Explosion();
         }
         
