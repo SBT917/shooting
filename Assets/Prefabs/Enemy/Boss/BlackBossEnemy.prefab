@@ -144,8 +144,8 @@ MonoBehaviour:
   shotSummonSpan: 0.2
   enemySummonCountMagnitude: 2
   enemySummonSpanMagnitude: 0.8
-  shotSummonSpanMagnitude: 0.5
-  knockBakDamage: 15
+  shotSummonSpanMagnitude: 0.6
+  knockBackDamage: 15
   spawnParticle: {fileID: 1291514814939681551, guid: be9f0def327e2a540be13707469e60b7, type: 3}
 --- !u!114 &5024117534388933072
 MonoBehaviour:

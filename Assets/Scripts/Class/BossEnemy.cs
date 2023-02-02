@@ -17,7 +17,7 @@ public abstract class BossEnemy : Enemy, IKnockBackObject
 
     [SerializeField]private float shotSummonSpanMagnitude; //HPが半分になった後にショットを召喚するスパンを短くする倍率
 
-    [SerializeField]private float knockBakDamage; //ノックバックに必要な蓄積ダメージ
+    [SerializeField]private float knockBackDamage; //ノックバックに必要な蓄積ダメージ
     private float accumulationDamage; //蓄積ダメージ
 
     [SerializeField]private ParticleSystem spawnParticle;
@@ -131,7 +131,7 @@ public abstract class BossEnemy : Enemy, IKnockBackObject
 
     public void KnockBack(Vector3 direction)
     {
-        if(accumulationDamage >= knockBakDamage){
+        if(accumulationDamage >= knockBackDamage){
             StartCoroutine(KnockCo(direction));
         }
     }

@@ -17,7 +17,7 @@ public class MapGenerator : MonoBehaviour
     const int mapSizeZ = 16;
     string[,] mapData = new string[mapSizeX, mapSizeZ];
 
-     void Awake() 
+    void Awake() 
     {
         mapNum = Random.Range(0, dataTexts.Length);
         MapGenerate();
