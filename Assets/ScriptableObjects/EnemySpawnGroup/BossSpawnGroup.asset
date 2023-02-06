@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BossSpawnGroup
   m_EditorClassIdentifier: 
   enemys:
-  - {fileID: 915462805102263828, guid: fd74aad33de33fb42b6d718b88b5efee, type: 3}
   - {fileID: 915462805102263828, guid: 287e9813eb02d5d49ad50bb4a33d25dc, type: 3}
+  - {fileID: 915462805102263828, guid: fd74aad33de33fb42b6d718b88b5efee, type: 3}

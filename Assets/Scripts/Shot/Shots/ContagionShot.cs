@@ -17,6 +17,7 @@ public class ContagionShot : Shot
             audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
             other.GetComponent<Enemy>().TakeDamage(shotData.damage + (damageIncrease * hitCount));
+            GiveKnockBack(other);
             homing.targetEnemys.Remove(other.gameObject);
             if(homing.targetEnemys.Count > 0){
                 int index = UnityEngine.Random.Range(0, homing.targetEnemys.Count);

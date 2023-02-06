@@ -23,6 +23,7 @@ public class ReflectShot : Shot
             audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
             other.GetComponent<Enemy>().TakeDamage(shotData.damage);
+            GiveKnockBack(other);
             Reflection();
         }
         

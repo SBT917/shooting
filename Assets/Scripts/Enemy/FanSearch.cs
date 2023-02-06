@@ -7,12 +7,26 @@ public class FanSearch : MonoBehaviour
     private float angle;
     private Player player;
     private Enemy parentEnemy;
+    private SphereCollider sphereCollider;
+    private float defaultColliderRadius;
 
     void Start() 
     {
         angle = transform.root.gameObject.GetComponent<Enemy>().enemyData.searchAngle;
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         parentEnemy = transform.root.gameObject.GetComponent<Enemy>();
+        sphereCollider = GetComponent<SphereCollider>();
+        defaultColliderRadius = sphereCollider.radius;
+    }
+
+    void Update()
+    {
+        if(parentEnemy.GetState() == EnemyState.Search){
+            sphereCollider.radius = defaultColliderRadius * 2;
+        }
+        else{
+            sphereCollider.radius = defaultColliderRadius;
+        }
     }
 
     public void OnTriggerStay(Collider other)

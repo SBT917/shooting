@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]private ShotShop shotShop;
     [SerializeField]private EnemySpawnGroup[] enemySpawnGroups;
     [SerializeField]private PointBonus pointBonus;
+    [SerializeField]private Shot[] randomDefaultShots;
     private AudioManager audioManager;
     private EnemySpawner enemySpawner;
     private TargetSpawner targetSpawner;
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameStart()
     {
         state = GameState.Start;
+        SetDefaultShot();
         ChangeLevel();
         
         startCount = 10;
@@ -210,6 +212,12 @@ public class GameManager : MonoBehaviour
         targetObjects = GameObject.FindGameObjectsWithTag("Target");
 
         hintText.gameObject.SetActive(true);
+    }
+
+    private void SetDefaultShot()
+    {
+        int randValue = UnityEngine.Random.Range(0, randomDefaultShots.Length);
+        player.shotSlots[1].shot = randomDefaultShots[randValue];
     }
 
     private IEnumerator HitStop()

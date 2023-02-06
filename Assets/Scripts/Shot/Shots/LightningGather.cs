@@ -15,6 +15,7 @@ public class LightningGather : Shot
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy")){
+            GiveKnockBack(other);
             SummonLightning(other.transform.position);
         }
     }

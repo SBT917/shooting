@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     public HpContainer hpContainer;
     [SerializeField]private GameObject menu;
     [SerializeField]private GameObject pauseMenu;
-    [SerializeField]private ShotSlot[] shotSlots;
     [SerializeField]private Material defaultMaterial;
     [SerializeField]private Material invisibleMaterial;
     [SerializeField]private ParticleSystem particle;
@@ -34,6 +33,7 @@ public class Player : MonoBehaviour
     public float maxEnergy; //最大ENERGY
     public float moveSpeed; //移動速度
     public float defaultMoveSpeed; //移動速度の初期値
+    public ShotSlot[] shotSlots;
     public int nowScore; //現在のスコア
     public int nowPoint; //現在のポイント数
     public bool inWall; //壁の中にいるかどうか
