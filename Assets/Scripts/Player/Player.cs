@@ -212,21 +212,19 @@ public class Player : MonoBehaviour
     //移動処理
     private protected void Move()
     {
-        velocity = Vector3.zero;
+        //velocity = Vector3.zero;
 
-        velocity.x += Input.GetAxisRaw("Horizontal");
-        velocity.z += Input.GetAxisRaw("Vertical"); 
+        //velocity.x += Input.GetAxisRaw("Horizontal");
+        //velocity.z += Input.GetAxisRaw("Vertical"); 
 
-        velocity = velocity.normalized * moveSpeed * Time.deltaTime;
-        
-        //入力された方向に向く処理
-        if (velocity.magnitude > 0){
-            float turnSpeed = 0.2f;
-            rb.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), turnSpeed);
-            rb.position += velocity;
-        }
+        //velocity = velocity.normalized * moveSpeed * Time.deltaTime;
 
-        
+        ////入力された方向に向く処理
+        //if (velocity.magnitude > 0){
+        //    float turnSpeed = 0.2f;
+        //    rb.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), turnSpeed);
+        //    rb.position += velocity;
+        //}
     }
 
     //ショットを放つ

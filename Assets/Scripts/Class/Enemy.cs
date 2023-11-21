@@ -16,7 +16,7 @@ public enum EnemyState
 }
 
 //エネミーのクラス
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IDamageable
 {
     public EnemyData enemyData; //エネミーデータの取得(スクリプタブルオブジェクト)
     protected Rigidbody rb;
@@ -31,11 +31,11 @@ public abstract class Enemy : MonoBehaviour
     protected GameManager gameManager;
     protected EnemySpawner enemySpawner;
     protected AudioManager audioManager;
-    [SerializeField]protected EnemyState state;
+    [SerializeField] protected EnemyState state;
     private GameObject enemyCanvas;
     private GameObject hpBar;
-    private float canvasDisapCnt; 
-    private AudioSource audioSource;    
+    private float canvasDisapCnt;
+    private AudioSource audioSource;
 
     protected virtual void Awake()
     {
@@ -44,7 +44,7 @@ public abstract class Enemy : MonoBehaviour
         deadParticle = GetComponentInChildren<ParticleSystem>();
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        targetObjects = GameObject.FindGameObjectsWithTag("Target");  
+        targetObjects = GameObject.FindGameObjectsWithTag("Target");
         enemyCanvas = transform.Find("EnemyCanvas").gameObject;
         hpBar = enemyCanvas.transform.Find("EnemyHpBar").gameObject;
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
@@ -56,8 +56,8 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(gameManager.GetState() == GameState.GameOver) return;
-        if(state == EnemyState.Death) return;
+        if (gameManager.GetState() == GameState.GameOver) return;
+        if (state == EnemyState.Death) return;
 
         Act();
     }
@@ -75,7 +75,7 @@ public abstract class Enemy : MonoBehaviour
     //エネミーの行動
     protected virtual void Act()
     {
-        if(state == EnemyState.Death) return;
+        if (state == EnemyState.Death) return;
 
         NormalAction();
         AttackAction(enemyData.attackOutRange, enemyData.searchTime);
@@ -84,7 +84,7 @@ public abstract class Enemy : MonoBehaviour
 
     //プレイヤーに倒された時の処理
     protected virtual void Dead()
-    {   
+    {
         state = EnemyState.Death;
         ParticleSystem p = Instantiate<ParticleSystem>(deadParticle, transform.position, Quaternion.identity);
 
@@ -110,12 +110,13 @@ public abstract class Enemy : MonoBehaviour
     //通常状態の行動
     protected virtual void NormalAction()
     {
-        if(state == EnemyState.Normal)
+        if (state == EnemyState.Normal)
         {
             nav.speed = enemyData.normalSpeed;
 
             float[] distances = new float[targetObjects.Length]; //各ターゲットオブジェクトまでの距離を格納する
-            for(int i = 0; i < targetObjects.Length; ++i){
+            for (int i = 0; i < targetObjects.Length; ++i)
+            {
                 distances[i] = Vector3.Distance(targetObjects[i].transform.position, transform.position);
             }
             float min = distances.Min(); //配列の一番小さい値を代入
@@ -127,14 +128,16 @@ public abstract class Enemy : MonoBehaviour
     //攻撃状態の行動
     protected virtual void AttackAction(float outRange, float searchTime)
     {
-        if(state == EnemyState.Attack){
+        if (state == EnemyState.Attack)
+        {
             nav.speed = enemyData.attackSpeed;
             target = player.gameObject;
 
-            if(CheckDistance(player.gameObject) > outRange || player.GetState() == PlayerState.Invisible){ //プレイヤーが範囲外に行くか、透明状態になったらサーチ状態に移行
+            if (CheckDistance(player.gameObject) > outRange || player.GetState() == PlayerState.Invisible)
+            { //プレイヤーが範囲外に行くか、透明状態になったらサーチ状態に移行
                 SetState(EnemyState.Search);
                 StartCoroutine(SearchCo(searchTime));
-            }  
+            }
         }
     }
 
@@ -143,11 +146,11 @@ public abstract class Enemy : MonoBehaviour
     {
         float count = time * 10;
         nav.speed = 0.0f;
-        while(state == EnemyState.Search) 
-        {   
+        while (state == EnemyState.Search)
+        {
             yield return new WaitForSeconds(0.1f);
             count--;
-            if(count < 0) //サーチ状態のままカウントが0になればサーチ状態終了(通常状態に戻る)
+            if (count < 0) //サーチ状態のままカウントが0になればサーチ状態終了(通常状態に戻る)
             {
                 SetState(EnemyState.Normal);
                 yield break;
@@ -167,12 +170,12 @@ public abstract class Enemy : MonoBehaviour
     //ダメージを受けた際の処理
     public virtual void TakeDamage(float damage)
     {
-        if(state == EnemyState.Death) return;
+        if (state == EnemyState.Death) return;
         hp -= damage;
         SetState(EnemyState.Attack);
         StartCoroutine(CanvasAvtiveCo());
 
-        if(hp <= 0)
+        if (hp <= 0)
         {
             Dead();
         }
@@ -180,9 +183,9 @@ public abstract class Enemy : MonoBehaviour
 
     //アイテムのドロップ制御
     protected void ItemDrop()
-    {   
+    {
         int randValue = UnityEngine.Random.Range(0, 100);
-        if(enemyData.itemDropRatio < randValue) return;
+        if (enemyData.itemDropRatio < randValue) return;
         Instantiate(enemyData.dropItem, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
     }
 
@@ -191,27 +194,27 @@ public abstract class Enemy : MonoBehaviour
     {
         canvasDisapCnt = 10.0f;
 
-        if(!hpBar.activeSelf)
+        if (!hpBar.activeSelf)
         {
             hpBar.SetActive(true);
 
-            while(canvasDisapCnt > 0.0f) //一定時間ダメージを受けなければHPバーは消える
+            while (canvasDisapCnt > 0.0f) //一定時間ダメージを受けなければHPバーは消える
             {
                 canvasDisapCnt -= 1.0f;
                 yield return new WaitForSeconds(1.0f);
             }
-            
+
             hpBar.SetActive(false);
         }
         else
         {
             yield break;
-        }     
+        }
     }
-    
+
     protected virtual void OnTriggerEnter(Collider other)
     {
-        switch(other.tag)
+        switch (other.tag)
         {
             case "Player":
                 other.GetComponent<Player>().TakeDamage(enemyData.attackToPlayer);
@@ -221,12 +224,13 @@ public abstract class Enemy : MonoBehaviour
                 Disappearing();
                 break;
         }
-        
+
     }
 
     protected virtual void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player")){
+        if (other.CompareTag("Player"))
+        {
             other.GetComponent<Player>().TakeDamage(enemyData.attackToPlayer);
         }
     }

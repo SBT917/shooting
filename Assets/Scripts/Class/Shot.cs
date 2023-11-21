@@ -34,10 +34,10 @@ public abstract class Shot : MonoBehaviour
     protected virtual void Move()
     {
         if (disapCnt < 0) Destroy(gameObject);
-            
+
         disapCnt -= Time.deltaTime;
         rb.position += transform.forward * shotData.moveSpeed * Time.deltaTime;
-        
+
     }
 
     //ショットを出現させる際の処理
@@ -51,24 +51,27 @@ public abstract class Shot : MonoBehaviour
 
     protected void GiveKnockBack(Collider other)
     {
-        var knock = other.GetComponent<IKnockBackObject>();
-        if(knock != null){
+        var knock = other.GetComponent<IKnockBackable>();
+        if (knock != null)
+        {
             knock.KnockBack(transform.forward);
         }
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy")){
+        if (other.TryGetComponent(out IDamageable damageable))
+        {
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
             audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
-            other.GetComponent<Enemy>().TakeDamage(shotData.damage);
+            damageable.TakeDamage(shotData.damage);
             GiveKnockBack(other);
-            Destroy(gameObject);    
+            Destroy(gameObject);
         }
-        
-        if(other.CompareTag("Wall")){
+
+        if (other.CompareTag("Wall"))
+        {
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
             audioManager.PlaySE("HitWall", p.GetComponent<AudioSource>());
             p.Play();

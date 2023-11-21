@@ -5,18 +5,19 @@ using UnityEngine.UI;
 
 public class EnergyBar : MonoBehaviour
 {
-    private GameObject player;
+    [SerializeField] private Energy energy;
     private Slider slider;
 
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        slider = GetComponent<Slider>();
+        TryGetComponent(out slider);
+        slider.maxValue = energy.MaxEnergy;
+        slider.value = energy.CurrentEnergy;
+        energy.onUpdateEnergy += UpdateSlider;
     }
 
-    void Update()
+    void UpdateSlider(float amount)
     {
-        slider.maxValue = player.GetComponent<Player>().maxEnergy;
-        slider.value = player.GetComponent<Player>().energy;
+        slider.value = amount;
     }
 }

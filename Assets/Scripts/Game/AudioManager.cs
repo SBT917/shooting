@@ -14,7 +14,7 @@ public class AudioData
 }
 
 //BGMの制御
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
     [SerializeField]private AudioSource introSource; //イントロ部分のAudioSource
     [SerializeField]private AudioSource mainSource; //メイン部分のAudioSource

@@ -16,7 +16,7 @@ public enum GameState
 
 
 //ゲーム進行を制御する
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField]private GameState state;
     [SerializeField]private TextMeshProUGUI gameText;

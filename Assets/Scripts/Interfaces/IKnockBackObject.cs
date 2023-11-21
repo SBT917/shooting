@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IKnockBackObject
+public interface IKnockBackable
 {
-   public void KnockBack(Vector3 direction);
+    public void KnockBack(Vector3 direction);
 }
