@@ -12,12 +12,13 @@ public class Energy : MonoBehaviour
     public float CurrentEnergy { get; private set; }
     public bool IsHealing { get; set; }
 
+    private float defaultEnergy;
     public Action<float> onUpdateEnergy;
-
 
     void Awake()
     {
         CurrentEnergy = MaxEnergy;
+        defaultEnergy = MaxEnergy;
         IsHealing = true;
     }
 
@@ -30,7 +31,8 @@ public class Energy : MonoBehaviour
     {
         if (IsHealing && CurrentEnergy != MaxEnergy)
         {
-            IncreaseEnergy(HealSpeed * Time.deltaTime);
+            float amount = MaxEnergy / defaultEnergy;
+            IncreaseEnergy(amount * HealSpeed * Time.deltaTime);
         }
     }
 

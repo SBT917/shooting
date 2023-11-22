@@ -11,6 +11,7 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
     [SerializeField] private float inWallSpeedMagnification = 1.2f; //透明化かつ壁の中にいる時の移動速度倍率
     [SerializeField] private float inWallAndZeroEnergySpeedMagnification = 0.5f; //透明化かつ壁の中にいてEnergyが0の時の移動速度倍率
 
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material invisibleMaterial;
 
@@ -19,12 +20,10 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
     private MeshRenderer mesh;
     private Collider coll;
     private bool inWall;
+    private bool inWallCancell;
     private float defaultSpeed;
 
     public bool IsInvisible { get; set; }
-
-    private Action onWallIn; //壁の中に入った時のイベント
-    private Action onWallOut; //壁の中から出た時のイベント
 
     void Awake()
     {
@@ -41,14 +40,17 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
 
     public void StartInvisible()
     {
-        Debug.Log("透明開始");
-        IsInvisible = true;
-        //AudioManager.instance.PlaySE("InvisibleOn", audioSource);
+        if (IsInvisible) return;
 
+        IsInvisible = true;
+
+        energy.IsHealing = false; //透明化中はEnergyが回復しない
         defaultSpeed = move.Speed;
         move.Speed *= speedMagnification;
         mesh.material = invisibleMaterial;
         coll.isTrigger = true;
+
+        AudioManager.instance.PlaySE("InvisibleOn", audioSource);
     }
 
     public void UpdateInvisible()
@@ -62,29 +64,31 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
             return;
         }
 
-        energy.IsHealing = false; //透明化中はEnergyが回復しない
         energy.DecreaseEnergy(useEnergy * Time.deltaTime * useEnergySpeed); //Energyを消費
         if(inWall) move.Speed = defaultSpeed * speedMagnification * inWallSpeedMagnification;
         else move.Speed = defaultSpeed * speedMagnification;
+
+        if (!inWall && inWallCancell) { EndInvisible(); }
     }
 
     public void EndInvisible()
     {
-        //TODO:壁の中で透明化解除したときの処理を書こうね！
-        //if (inWall)
-        //{
-        //    Debug.Log("壁の中で透明化が解除されました。");
-        //    return;
-        //}
+        if(!IsInvisible) return;
+        if (inWall)
+        {
+            inWallCancell = true;
+            return;
+        }
 
-        Debug.Log("透明解除");
         IsInvisible = false;
-        //AudioManager.instance.PlaySE("InvisibleOff", audioSource);
-
+        inWallCancell = false;
+       
         move.Speed = defaultSpeed;
         energy.IsHealing = true; //透明化解除後はEnergyが回復する
         mesh.material = defaultMaterial;
         coll.isTrigger = false;
+
+        AudioManager.instance.PlaySE("InvisibleOff", audioSource);
     }
 
     private void OnTriggerStay(Collider other)
@@ -92,7 +96,6 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
         if (other.CompareTag("Wall"))
         {
             inWall = true;
-            onWallIn?.Invoke();
         }
     }
 
@@ -101,8 +104,6 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
         if (other.CompareTag("Wall"))
         {
             inWall = false;
-            onWallOut?.Invoke();
         }
     }
-
 }
