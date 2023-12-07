@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0110e64e8ff62b4fafe5a9a1f0682a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotData: {fileID: 11400000, guid: 7cd08dde1f6cdf74e8cfd009d6791692, type: 2}
+  <ShotData>k__BackingField: {fileID: 11400000, guid: 7cd08dde1f6cdf74e8cfd009d6791692, type: 2}
   divideCount: 0
   reflectCount: 0
   divideMax: 3

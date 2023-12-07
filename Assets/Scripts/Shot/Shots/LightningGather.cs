@@ -9,7 +9,7 @@ public class LightningGather : Shot
     protected override void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        disapCnt = shotData.disapCnt;
+        disapCnt = ShotData.disapCnt;
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -24,6 +24,6 @@ public class LightningGather : Shot
     {
         Vector3 summonPos = new Vector3(position.x, 10.0f, position.z);
         GameObject go = Instantiate(lightningEffect, summonPos, Quaternion.identity);
-        go.GetComponent<RangeDamage>().shotData = shotData;
+        go.GetComponent<RangeDamage>().shotData = ShotData;
     }
 }

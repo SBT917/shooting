@@ -16,7 +16,7 @@ public class ContagionShot : Shot
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
             audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
-            other.GetComponent<Enemy>().TakeDamage(shotData.damage + (damageIncrease * hitCount));
+            other.GetComponent<Enemy>().TakeDamage(ShotData.damage + (damageIncrease * hitCount));
             GiveKnockBack(other);
             homing.targetEnemys.Remove(other.gameObject);
             if(homing.targetEnemys.Count > 0){

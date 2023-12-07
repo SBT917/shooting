@@ -8,7 +8,7 @@ public class GrenadeLauncher : Shot
     protected override void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        disapCnt = shotData.disapCnt;
+        disapCnt = ShotData.disapCnt;
     }
 
     protected override void Move()
@@ -16,7 +16,7 @@ public class GrenadeLauncher : Shot
         if (disapCnt < 0) Explosion();
             
         disapCnt -= Time.deltaTime;
-        rb.position += transform.forward * shotData.moveSpeed * Time.deltaTime;
+        rb.position += transform.forward * ShotData.moveSpeed * Time.deltaTime;
     }
     
     protected override void OnTriggerEnter(Collider other)
@@ -34,7 +34,7 @@ public class GrenadeLauncher : Shot
     private void Explosion()
     {
         GameObject go = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        go.GetComponent<RangeDamage>().shotData = shotData;
+        go.GetComponent<RangeDamage>().shotData = ShotData;
         Destroy(gameObject);
     }
 }

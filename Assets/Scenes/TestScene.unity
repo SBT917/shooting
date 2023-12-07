@@ -3834,6 +3834,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53c6c6650d97674eab16e7dc95fd535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launchers:
+  - {fileID: 1242735557}
+  - {fileID: 1242735558}
 --- !u!114 &1242735554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3881,6 +3884,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxEnergy>k__BackingField: 50
   <HealSpeed>k__BackingField: 5
+--- !u!114 &1242735557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242735546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4a44af6de60c84d9e52edc444abacc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Shot>k__BackingField: {fileID: 8459624260820008937, guid: 4f6f57df77934c94dafcaeacc9b6ef6a, type: 3}
+--- !u!114 &1242735558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242735546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4a44af6de60c84d9e52edc444abacc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Shot>k__BackingField: {fileID: 374416368537215727, guid: 733e488670b00064fa626d4414c3fd5e, type: 3}
 --- !u!1 &1245078582
 GameObject:
   m_ObjectHideFlags: 0

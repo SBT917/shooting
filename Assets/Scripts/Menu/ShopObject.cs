@@ -25,7 +25,7 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
 
     void Start()
     {
-        shotData = shot.GetComponent<Shot>().shotData;
+        shotData = shot.GetComponent<Shot>().ShotData;
         shotName = shotData.shotName;
         price = shotData.price;
         rarity = shotData.rarity;
@@ -36,8 +36,8 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
 
         shotNameText.text = shotName;   
         priceText.text = price.ToString();
-        frame.color = shot.shotData.rarity.color;
-        icon.sprite = shot.shotData.icon;
+        frame.color = shot.ShotData.rarity.color;
+        icon.sprite = shot.ShotData.icon;
 
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
@@ -85,6 +85,6 @@ public class ShopObject : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragH
 
     public ShotData SendShotData()
     {
-        return shot.shotData;
+        return shot.ShotData;
     }
 }

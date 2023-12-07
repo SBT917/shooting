@@ -222,5 +222,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499f86a82cb636644bc431d9730e10b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotData: {fileID: 11400000, guid: 5219b3af1cb95e44e8edae666a515125, type: 2}
+  <ShotData>k__BackingField: {fileID: 11400000, guid: 5219b3af1cb95e44e8edae666a515125, type: 2}
   lightningEffect: {fileID: 7337783576293428784, guid: 015cd69f104288e4c85c7919a6331dd1, type: 3}

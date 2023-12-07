@@ -222,5 +222,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8a4b9ba1218ef84caea9a32a3e34839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotData: {fileID: 11400000, guid: d479bdec48b08ba49b6eb5904285a0f4, type: 2}
+  <ShotData>k__BackingField: {fileID: 11400000, guid: d479bdec48b08ba49b6eb5904285a0f4, type: 2}
   explosionEffect: {fileID: 7603486483579072325, guid: 6becdeeb0dd745249baba571ede08106, type: 3}

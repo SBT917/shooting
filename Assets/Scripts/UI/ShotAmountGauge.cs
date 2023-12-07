@@ -26,7 +26,7 @@ public class ShotAmountGauge : MonoBehaviour
         }
         
         gauge.color = slot.shotColor;
-        gauge.fillAmount = (float)slot.shotAmount / slot.shot.shotData.maxAmount; //ゲージとスロットの残弾数の同期
+        gauge.fillAmount = (float)slot.shotAmount / slot.shot.ShotData.maxAmount; //ゲージとスロットの残弾数の同期
 
         if(slot.GetState() == SlotState.Recharging && !rechageImage.gameObject.activeSelf){
             StartCoroutine(RechargeGaugeCo());
@@ -37,11 +37,11 @@ public class ShotAmountGauge : MonoBehaviour
     {
         rechageImage.gameObject.SetActive(true);
         rechageImage.fillAmount = 0;
-        float currentTime = slot.shot.shotData.rechargeTime;
+        float currentTime = slot.shot.ShotData.rechargeTime;
         while(slot.GetState() == SlotState.Recharging)  
         {
             currentTime -= Time.deltaTime;
-            rechageImage.fillAmount = 1 - currentTime / slot.shot.shotData.rechargeTime;
+            rechageImage.fillAmount = 1 - currentTime / slot.shot.ShotData.rechargeTime;
             yield return null;
         }
         rechageImage.gameObject.SetActive(false);
