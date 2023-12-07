@@ -12,7 +12,7 @@ public class HomingShot : Shot
             transform.LookAt(homing.targetEnemy.transform);
         }
         disapCnt -= Time.deltaTime;
-        transform.position += transform.forward * shotData.moveSpeed * Time.deltaTime;
+        transform.position += transform.forward * ShotData.moveSpeed * Time.deltaTime;
         if (disapCnt < 0)
             Destroy(gameObject);
     }

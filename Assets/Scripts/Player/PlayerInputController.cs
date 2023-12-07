@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using UnityEngine.WSA;
 
 public class PlayerInputController : MonoBehaviour
 {
     PlayerInput input;
     IMoveable move;
     IInvisible invisible;
-
+    [SerializeField] List<ShotLauncher> launchers;
+    IShotable[] shotables;
 
     private void Awake()
     {
         TryGetComponent(out input);
         TryGetComponent(out move);
         TryGetComponent(out invisible);
+        shotables = GetComponents<IShotable>();
     }
 
     private void OnEnable()
@@ -25,6 +28,11 @@ public class PlayerInputController : MonoBehaviour
 
         input.actions["Invisible"].started += OnStartInvisible;
         input.actions["Invisible"].canceled += OnEndInvisible;
+
+        input.actions["Launch1"].performed += OnStartLaunch;
+        input.actions["Launch1"].canceled += OnStopLaunch;
+        input.actions["Launch2"].performed += OnStartLaunch;
+        input.actions["Launch2"].canceled += OnStopLaunch;
     }
 
     private void OnDisable()
@@ -34,7 +42,14 @@ public class PlayerInputController : MonoBehaviour
 
         input.actions["Invisible"].started -= OnStartInvisible;
         input.actions["Invisible"].canceled -= OnEndInvisible;
+
+        input.actions["Launch1"].performed -= OnStartLaunch;
+        input.actions["Launch1"].canceled -= OnStopLaunch;
+        input.actions["Launch2"].performed -= OnStartLaunch;
+        input.actions["Launch2"].canceled -= OnStopLaunch;
+
     }
+
 
     //移動キーを押したときの処理
     void OnStartMove(InputAction.CallbackContext context)
@@ -49,10 +64,10 @@ public class PlayerInputController : MonoBehaviour
         move.Direction = Vector3.zero;
     }
 
-
     //透明化キーを押したときの処理
     void OnStartInvisible(InputAction.CallbackContext context)
     {
+        foreach(var l in launchers) { l.StopLaunch(); }
         invisible.StartInvisible();
     }
 
@@ -60,5 +75,25 @@ public class PlayerInputController : MonoBehaviour
     void OnEndInvisible(InputAction.CallbackContext context)
     {
         invisible.EndInvisible();
+    }
+
+
+    //発射キーを押したときの処理
+    void OnStartLaunch(InputAction.CallbackContext context)
+    {
+        if(invisible.IsInvisible) return;
+        foreach (var l in launchers) { l.StopLaunch(); }
+
+        int n = int.Parse(context.action.name[context.action.name.Length - 1].ToString());
+        launchers[n - 1].StartLaunch();
+    }
+
+    //発射キーを放したときの処理
+    void OnStopLaunch(InputAction.CallbackContext context)
+    {
+        if (invisible.IsInvisible) return;
+
+        int n = int.Parse(context.action.name[context.action.name.Length - 1].ToString());
+        launchers[n - 1].StopLaunch();
     }
 }

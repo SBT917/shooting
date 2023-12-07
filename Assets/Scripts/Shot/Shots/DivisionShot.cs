@@ -15,7 +15,7 @@ public class DivisionShot : Shot
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
             audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
-            other.GetComponent<Enemy>().TakeDamage(shotData.damage);
+            other.GetComponent<Enemy>().TakeDamage(ShotData.damage);
             GiveKnockBack(other);
             ShotDivide();
         }

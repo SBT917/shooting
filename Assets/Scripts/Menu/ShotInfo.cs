@@ -23,9 +23,9 @@ public class ShotInfo : MonoBehaviour, ISendShotData
         shot = slot.shot;
 
         if(shot != null){
-            nameText.text = shot.shotData.shotName;
-            icon.sprite = shot.shotData.icon;
-            Frame.color = shot.shotData.rarity.color;
+            nameText.text = shot.ShotData.shotName;
+            icon.sprite = shot.ShotData.icon;
+            Frame.color = shot.ShotData.rarity.color;
         }
         else{
             nameText.text = "-";
@@ -38,7 +38,7 @@ public class ShotInfo : MonoBehaviour, ISendShotData
     {
         if(shot == null) return null;
         
-        return shot.shotData;
+        return shot.ShotData;
     }
 
 }

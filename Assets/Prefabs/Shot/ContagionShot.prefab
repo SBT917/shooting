@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74340b19cb4793b44bac7e28b2e44835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotData: {fileID: 11400000, guid: 730abfd55fad6044fba79b0638fb241f, type: 2}
+  <ShotData>k__BackingField: {fileID: 11400000, guid: 730abfd55fad6044fba79b0638fb241f, type: 2}
   homing: {fileID: 435145637134644122}
   damageIncrease: 0.2
 --- !u!1001 &161981282826932443

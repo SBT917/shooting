@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class TripleShot : Shot
 {
-    public override void Instance()
+    public override void Init(Transform transform)
     {
-        player = GameObject.FindWithTag("Player");
         Quaternion rotate = Quaternion.Euler(0, 10, 0);
+        List<Shot> s = new List<Shot>();
+       
 
-        Instantiate(gameObject, player.transform.localPosition, player.transform.rotation * Quaternion.Inverse(rotate));
-        Instantiate(gameObject, player.transform.localPosition, player.transform.rotation * rotate);
-        Instantiate(gameObject, player.transform.localPosition, player.transform.rotation);
+        Instantiate(gameObject, transform.localPosition, transform.rotation * Quaternion.Inverse(rotate));
+        Instantiate(gameObject, transform.localPosition, transform.rotation * rotate);
+        Instantiate(gameObject, transform.localPosition, transform.rotation);
     }
 }

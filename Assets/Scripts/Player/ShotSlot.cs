@@ -34,7 +34,7 @@ public class ShotSlot : MonoBehaviour
         particleMain = particle.main;
 
         if(shot != null){
-            shotAmount = shot.shotData.maxAmount;
+            shotAmount = shot.ShotData.maxAmount;
             shotColor = shot.gameObject.GetComponent<Renderer>().sharedMaterial.color;
             particleMain.startColor = shotColor;
         }
@@ -55,7 +55,7 @@ public class ShotSlot : MonoBehaviour
     {
         shot = newShot;
         shotAmount = 0;
-        player.energy += newShot.shotData.useEnergy;
+        player.energy += newShot.ShotData.useEnergy;
         StartCoroutine(ShotRechargeCo());
         shotColor = shot.gameObject.GetComponent<Renderer>().sharedMaterial.color; //色をショットのマテリアルから取得
         particleMain.startColor = shotColor; //マテリアルから取得した色をパーティクルの色に設定
@@ -73,7 +73,7 @@ public class ShotSlot : MonoBehaviour
         
         --shotAmount; 
         particle.Play();
-        shot.Instance();
+        //shot.Init();
         audioManager.PlaySE("Shot", audioSource);
 
         if(shotAmount > 0){ //ショットを放った後に残弾数が0だったら自動でリチャージ
@@ -89,7 +89,7 @@ public class ShotSlot : MonoBehaviour
     private IEnumerator ShotRateCo() 
     {
         state = SlotState.Wait;
-        yield return new WaitForSeconds(shot.shotData.rate);
+        yield return new WaitForSeconds(shot.ShotData.rate);
         if(state != SlotState.Wait) yield break;
         state = SlotState.Ready;
     }
@@ -98,19 +98,19 @@ public class ShotSlot : MonoBehaviour
     {
         if(shot == null) yield break;
         if(state == SlotState.Recharging) yield break;
-        if(shotAmount == shot.shotData.maxAmount) yield break;
+        if(shotAmount == shot.ShotData.maxAmount) yield break;
 
-        float useEnergy = shot.shotData.useEnergy - (shot.shotData.useEnergy * ((float)shotAmount / (float)shot.shotData.maxAmount));
+        float useEnergy = shot.ShotData.useEnergy - (shot.ShotData.useEnergy * ((float)shotAmount / (float)shot.ShotData.maxAmount));
         if(player.energy >= useEnergy){
             audioManager.PlaySE("Recharge", audioSource);
             state = SlotState.Recharging;
             player.energy -= useEnergy;
 
-            float rechargeTime = shot.shotData.rechargeTime;
+            float rechargeTime = shot.ShotData.rechargeTime;
             yield return new WaitForSeconds(rechargeTime);
 
             audioManager.PlaySE("RechargeFinish", audioSource);
-            shotAmount = shot.shotData.maxAmount;
+            shotAmount = shot.ShotData.maxAmount;
             state = SlotState.Ready;
         }
     }

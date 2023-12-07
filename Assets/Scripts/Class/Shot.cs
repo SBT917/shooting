@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 //ショットのクラス
 public abstract class Shot : MonoBehaviour
@@ -8,12 +9,16 @@ public abstract class Shot : MonoBehaviour
     protected Rigidbody rb; //リジットボディ
     protected GameObject player; //プレイヤー
 
-    public ShotData shotData; //ショットのデータをスクリプタブルオブジェクトから取得
+    
     protected float disapCnt; //ショットが消滅するまでの時間
     protected ParticleSystem particle; //壁や敵に当たった時のパーティクル
     protected ParticleSystem.MainModule particleMain;
 
     protected AudioManager audioManager;
+
+    [field: SerializeField]public ShotData ShotData { get; private set; } //ショットのデータをスクリプタブルオブジェクトから取得
+    public IObjectPool<Shot> ShotPool { get; set; }
+    
 
     protected virtual void Awake()
     {
@@ -22,7 +27,11 @@ public abstract class Shot : MonoBehaviour
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         particleMain = particle.main;
         particleMain.startColor = GetComponent<Renderer>().sharedMaterial.color;
-        disapCnt = shotData.disapCnt;
+    }
+
+    protected virtual void OnEnable()
+    {
+        disapCnt = ShotData.disapCnt;
     }
 
     protected virtual void FixedUpdate()
@@ -30,23 +39,23 @@ public abstract class Shot : MonoBehaviour
         Move();
     }
 
+    //ショットが出現した際に呼ばれる
+    public virtual void Init(Transform transform)
+    {
+        float randomRotate = Random.Range(-ShotData.blur, ShotData.blur); //弾のブレをshotDataのblurから取得し、その分ランダムに回転させてブレを表す。
+        Quaternion rotate = Quaternion.Euler(0, randomRotate, 0);
+        this.transform.localPosition = transform.position + transform.forward;
+        this.transform.rotation = transform.rotation * rotate;
+    }
+
     //移動処理
     protected virtual void Move()
     {
-        if (disapCnt < 0) Destroy(gameObject);
+        if (disapCnt < 0) ShotPool.Release(this);
 
         disapCnt -= Time.deltaTime;
-        rb.position += transform.forward * shotData.moveSpeed * Time.deltaTime;
+        rb.position += transform.forward * ShotData.moveSpeed * Time.deltaTime;
 
-    }
-
-    //ショットを出現させる際の処理
-    public virtual void Instance()
-    {
-        player = GameObject.FindWithTag("Player");
-        float randomRotate = Random.Range(-shotData.blur, shotData.blur); //弾のブレをshotDataのblurから取得し、その分ランダムに回転させてブレを表す。
-        Quaternion rotate = Quaternion.Euler(0, randomRotate, 0);
-        Instantiate(gameObject, player.transform.localPosition + player.transform.forward, player.transform.rotation * rotate);
     }
 
     protected void GiveKnockBack(Collider other)
@@ -65,9 +74,9 @@ public abstract class Shot : MonoBehaviour
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
             audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
             p.Play();
-            damageable.TakeDamage(shotData.damage);
+            damageable.TakeDamage(ShotData.damage);
             GiveKnockBack(other);
-            Destroy(gameObject);
+            ShotPool.Release(this);
         }
 
         if (other.CompareTag("Wall"))
@@ -75,7 +84,9 @@ public abstract class Shot : MonoBehaviour
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
             audioManager.PlaySE("HitWall", p.GetComponent<AudioSource>());
             p.Play();
-            Destroy(gameObject);
+            ShotPool.Release(this);
         }
+
+        
     }
 }

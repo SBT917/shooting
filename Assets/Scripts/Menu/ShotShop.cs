@@ -18,7 +18,7 @@ public class ShotShop : MonoBehaviour
         }
 
         foreach(Shot shot in shots){
-            shotBox[shot.shotData.rarity.name].Add(shot);
+            shotBox[shot.ShotData.rarity.name].Add(shot);
         }
 
     }

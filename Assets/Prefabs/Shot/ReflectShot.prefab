@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b068b77d6999ca3409662177dabedc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotData: {fileID: 11400000, guid: c9d46f878cd83b540aac89e796dfd633, type: 2}
+  <ShotData>k__BackingField: {fileID: 11400000, guid: c9d46f878cd83b540aac89e796dfd633, type: 2}
   reflectMax: 5
 --- !u!1001 &3551290760385136131
 PrefabInstance:

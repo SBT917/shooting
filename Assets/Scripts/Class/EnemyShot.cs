@@ -14,7 +14,7 @@ public abstract class EnemyShot : Shot
             ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
             p.Play();
             Destroy(gameObject);
-            player.TakeDamage((int)shotData.damage);
+            player.TakeDamage((int)ShotData.damage);
         }
 
         if(other.CompareTag("Wall")){
