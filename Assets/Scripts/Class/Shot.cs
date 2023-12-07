@@ -18,7 +18,6 @@ public abstract class Shot : MonoBehaviour
 
     [field: SerializeField]public ShotData ShotData { get; private set; } //ショットのデータをスクリプタブルオブジェクトから取得
     public IObjectPool<Shot> ShotPool { get; set; }
-    
 
     protected virtual void Awake()
     {
@@ -33,7 +32,6 @@ public abstract class Shot : MonoBehaviour
     {
         disapCnt = ShotData.disapCnt;
     }
-
     protected virtual void FixedUpdate()
     {
         Move();
@@ -44,7 +42,7 @@ public abstract class Shot : MonoBehaviour
     {
         float randomRotate = Random.Range(-ShotData.blur, ShotData.blur); //弾のブレをshotDataのblurから取得し、その分ランダムに回転させてブレを表す。
         Quaternion rotate = Quaternion.Euler(0, randomRotate, 0);
-        this.transform.localPosition = transform.position + transform.forward;
+        this.transform.localPosition = transform.position;
         this.transform.rotation = transform.rotation * rotate;
     }
 

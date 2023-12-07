@@ -11,6 +11,7 @@ public class ShotData : ScriptableObject
     public float moveSpeed; //移動速度
     public float damage; //ダメージ量
     public int maxAmount; //最大弾数
+    public int shotNum; //一度に発射する弾数
     public float rechargeTime; //リチャージにかかる時間
     public float useEnergy; //リチャージに使用するEnergy
     public float rate; //連射速度

@@ -8,11 +8,18 @@ public class TripleShot : Shot
     public override void Init(Transform transform)
     {
         Quaternion rotate = Quaternion.Euler(0, 10, 0);
-        List<Shot> s = new List<Shot>();
-       
 
-        Instantiate(gameObject, transform.localPosition, transform.rotation * Quaternion.Inverse(rotate));
-        Instantiate(gameObject, transform.localPosition, transform.rotation * rotate);
-        Instantiate(gameObject, transform.localPosition, transform.rotation);
+        base.Init(transform);
+
+        var s1 = ShotPool.Get();
+        s1.transform.position = transform.position;
+        s1.transform.rotation = transform.rotation * Quaternion.Inverse(rotate);
+
+        var s2 = ShotPool.Get();
+        s2.transform.position = transform.position;
+        s2.transform.rotation = transform.rotation * rotate;
+
+        
+
     }
 }

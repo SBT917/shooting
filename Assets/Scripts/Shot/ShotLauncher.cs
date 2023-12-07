@@ -38,10 +38,9 @@ public class ShotLauncher : MonoBehaviour, IShotable
     }
 
     private void OnGetFromPool(Shot shot)
-    {
+    {        
         shot.gameObject.SetActive(true);
         shot.ShotPool = ShotPool;
-        shot.Init(transform);
     }
 
     private void OnReleaseToPool(Shot shot)
@@ -71,8 +70,9 @@ public class ShotLauncher : MonoBehaviour, IShotable
             return;
         }
 
+        var shot = ShotPool.Get();
+        shot.Init(transform);
 
-        ShotPool.Get();
         waitCount = Shot.ShotData.rate;
         isWait = true;
     }

@@ -18,6 +18,7 @@ MonoBehaviour:
   moveSpeed: 40
   damage: 10
   maxAmount: 2
+  shotNum: 1
   rechargeTime: 5
   useEnergy: 40
   rate: 3
