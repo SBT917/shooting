@@ -42,7 +42,7 @@ public abstract class Shot : MonoBehaviour
     {
         float randomRotate = Random.Range(-ShotData.blur, ShotData.blur); //弾のブレをshotDataのblurから取得し、その分ランダムに回転させてブレを表す。
         Quaternion rotate = Quaternion.Euler(0, randomRotate, 0);
-        this.transform.localPosition = transform.position;
+        this.transform.localPosition = transform.position + transform.forward;
         this.transform.rotation = transform.rotation * rotate;
     }
 

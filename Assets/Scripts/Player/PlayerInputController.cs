@@ -11,14 +11,12 @@ public class PlayerInputController : MonoBehaviour
     IMoveable move;
     IInvisible invisible;
     [SerializeField] List<ShotLauncher> launchers;
-    IShotable[] shotables;
 
     private void Awake()
     {
         TryGetComponent(out input);
         TryGetComponent(out move);
         TryGetComponent(out invisible);
-        shotables = GetComponents<IShotable>();
     }
 
     private void OnEnable()
@@ -33,6 +31,8 @@ public class PlayerInputController : MonoBehaviour
         input.actions["Launch1"].canceled += OnStopLaunch;
         input.actions["Launch2"].performed += OnStartLaunch;
         input.actions["Launch2"].canceled += OnStopLaunch;
+
+        input.actions["Recharge"].performed += OnRecharge;
     }
 
     private void OnDisable()
@@ -48,6 +48,7 @@ public class PlayerInputController : MonoBehaviour
         input.actions["Launch2"].performed -= OnStartLaunch;
         input.actions["Launch2"].canceled -= OnStopLaunch;
 
+        input.actions["Recharge"].performed -= OnRecharge;
     }
 
 
@@ -95,5 +96,15 @@ public class PlayerInputController : MonoBehaviour
 
         int n = int.Parse(context.action.name[context.action.name.Length - 1].ToString());
         launchers[n - 1].StopLaunch();
+    }
+
+    //リチャージキーを押したときの処理
+    void OnRecharge(InputAction.CallbackContext context)
+    {
+        if (invisible.IsInvisible) return;
+        foreach (var l in launchers) { 
+            l.StopLaunch();
+            l.StartRecharge();
+        }
     }
 }

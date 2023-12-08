@@ -12,11 +12,11 @@ public class TripleShot : Shot
         base.Init(transform);
 
         var s1 = ShotPool.Get();
-        s1.transform.position = transform.position;
+        s1.transform.position = transform.position + transform.forward;
         s1.transform.rotation = transform.rotation * Quaternion.Inverse(rotate);
 
         var s2 = ShotPool.Get();
-        s2.transform.position = transform.position;
+        s2.transform.position = transform.position + transform.forward;
         s2.transform.rotation = transform.rotation * rotate;
 
         

@@ -14,7 +14,7 @@ public class ShotGun : Shot
 
         randomRotate = Random.Range(-ShotData.blur, ShotData.blur);
         rotate = Quaternion.Euler(0, randomRotate, 0);
-        this.transform.position = transform.localPosition;
+        this.transform.position = transform.position + transform.forward; 
         this.transform.rotation = transform.rotation * rotate;
 
 
@@ -23,7 +23,7 @@ public class ShotGun : Shot
             randomRotate = Random.Range(-ShotData.blur, ShotData.blur);
             rotate = Quaternion.Euler(0, randomRotate, 0);
             var s = ShotPool.Get();
-            s.transform.position = transform.localPosition;
+            s.transform.position = transform.position + transform.forward;
             s.transform.rotation = transform.rotation * rotate;
         }
 

@@ -25,6 +25,9 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
 
     public bool IsInvisible { get; set; }
 
+    public Action onStartInvisible; //透明化時に発行されるイベント
+    public Action onEndInvisible; //透明化解除時に発行されるイベント
+
     void Awake()
     {
         TryGetComponent(out move);
@@ -49,6 +52,7 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
         move.Speed *= speedMagnification;
         mesh.material = invisibleMaterial;
         coll.isTrigger = true;
+        onStartInvisible?.Invoke();
 
         AudioManager.instance.PlaySE("InvisibleOn", audioSource);
     }
@@ -87,6 +91,7 @@ public class PlayerInvisible : MonoBehaviour, IInvisible
         energy.IsHealing = true; //透明化解除後はEnergyが回復する
         mesh.material = defaultMaterial;
         coll.isTrigger = false;
+        onEndInvisible?.Invoke();
 
         AudioManager.instance.PlaySE("InvisibleOff", audioSource);
     }

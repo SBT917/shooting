@@ -290,6 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f41c8bfbafb7042a5f5ed346997bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launcher: {fileID: 0}
   slot: {fileID: 0}
   rechageImage: {fileID: 6852962340461194823}
 --- !u!1 &8599486553783356682

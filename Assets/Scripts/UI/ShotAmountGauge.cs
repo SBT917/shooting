@@ -6,44 +6,34 @@ using UnityEngine.UI;
 //弾の残弾を表すゲージの制御
 public class ShotAmountGauge : MonoBehaviour
 {
-    private Player player; //プレイヤー
     private Image gauge;
+    [SerializeField] private ShotLauncher launcher; //情報を受け取るショットランチャー
     [SerializeField] private ShotSlot slot; //情報を受け取るショットスロット
     [SerializeField] private Image rechageImage;
     
     
     void Start()
     {
-        player = GetComponent<Player>();
-        gauge = GetComponent<Image>();
+        TryGetComponent(out gauge);
+
+        gauge.fillAmount = launcher.MaxAmount;
+        gauge.color = launcher.ShotColor;
+
+        launcher.onLaunch += UpdateGauge;
+        launcher.onUpdateRecharge += UpdateRechargeGauge;
+        launcher.onFinishRecharge += UpdateGauge;
     }
 
-    void Update()
+    private void UpdateGauge(int amount)
     {
-        if(slot.shot == null){
-            gauge.fillAmount = 0;
-            return;
-        }
-        
-        gauge.color = slot.shotColor;
-        gauge.fillAmount = (float)slot.shotAmount / slot.shot.ShotData.maxAmount; //ゲージとスロットの残弾数の同期
-
-        if(slot.GetState() == SlotState.Recharging && !rechageImage.gameObject.activeSelf){
-            StartCoroutine(RechargeGaugeCo());
-        }
+        gauge.fillAmount = (float)amount / launcher.MaxAmount;
     }
 
-    private IEnumerator RechargeGaugeCo()
+    private void UpdateRechargeGauge(float count)
     {
-        rechageImage.gameObject.SetActive(true);
-        rechageImage.fillAmount = 0;
-        float currentTime = slot.shot.ShotData.rechargeTime;
-        while(slot.GetState() == SlotState.Recharging)  
-        {
-            currentTime -= Time.deltaTime;
-            rechageImage.fillAmount = 1 - currentTime / slot.shot.ShotData.rechargeTime;
-            yield return null;
-        }
-        rechageImage.gameObject.SetActive(false);
+        if(!rechageImage.gameObject.activeSelf) rechageImage.gameObject.SetActive(true);
+        rechageImage.fillAmount = 1 - count / slot.shot.ShotData.rechargeTime;
+        if (launcher.RechargeCount <= 0) rechageImage.gameObject.SetActive(false);
     }
+
 }
