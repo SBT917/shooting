@@ -214,24 +214,35 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        switch (other.tag)
+        if(other.TryGetComponent(out IDamageable damageable))
         {
-            case "Player":
-                other.GetComponent<Player>().TakeDamage(enemyData.attackToPlayer);
-                break;
-            case "Target":
-                other.GetComponent<TargetObject>().TakeDamage(enemyData.attackToObject);
-                Disappearing();
-                break;
+            switch (other.tag)
+            {
+                case "Player":
+                    damageable.TakeDamage(enemyData.attackToPlayer);
+                    break;
+                case "Target":
+                    damageable.TakeDamage(enemyData.attackToObject);
+                    Disappearing();
+                    break;
+                default: 
+                    break;
+            }
         }
-
     }
 
     protected virtual void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.TryGetComponent(out IDamageable damageable))
         {
-            other.GetComponent<Player>().TakeDamage(enemyData.attackToPlayer);
+            switch (other.tag)
+            {
+                case "Player":
+                    damageable.TakeDamage(enemyData.attackToPlayer);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

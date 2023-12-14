@@ -67,14 +67,22 @@ public abstract class Shot : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IDamageable damageable))
+        if(other.TryGetComponent(out IDamageable damageable))
         {
-            ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
-            audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
-            p.Play();
-            damageable.TakeDamage(ShotData.damage);
-            GiveKnockBack(other);
-            ShotPool.Release(this);
+            switch (other.tag)
+            {
+                case "Enemy":
+                    ParticleSystem p = Instantiate<ParticleSystem>(particle, transform.position, Quaternion.identity);
+                    audioManager.PlaySE("HitEnemy", p.GetComponent<AudioSource>());
+                    p.Play();
+                    damageable.TakeDamage(ShotData.damage);
+                    GiveKnockBack(other);
+                    ShotPool.Release(this);
+                    break;
+                default: 
+                    break;
+
+            } 
         }
 
         if (other.CompareTag("Wall"))

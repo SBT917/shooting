@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
             audioManager.PlaySE("Damage", audioSource);
             hp -= damage;
             isInv = true;
-            hpContainer.TakeDamage();
+            //hpContainer.TakeDamage();
             StartCoroutine(InvTimeCo(invTime));
         }
             

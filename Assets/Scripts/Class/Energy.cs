@@ -7,13 +7,13 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class Energy : MonoBehaviour
 {
     
-    [field: SerializeField] public float MaxEnergy { get; private set; }
-    [field: SerializeField] private float HealSpeed { get; set; }
-    public float CurrentEnergy { get; private set; }
-    public bool IsHealing { get; set; }
+    [field: SerializeField] public float MaxEnergy { get; private set; } //エネルギーの最大値
+    [field: SerializeField] private float HealSpeed { get; set; } //エネルギーの回復速度
+    public float CurrentEnergy { get; private set; } //現在のエネルギー
+    public bool IsHealing { get; set; } //回復中かどうか
 
-    private float defaultEnergy;
-    public Action<float> onUpdateEnergy;
+    private float defaultEnergy; //エネルギーの最初期の値
+    public Action<float> onUpdateEnergy; //エネルギーが変動した時に呼ばれるイベント
 
     void Awake()
     {

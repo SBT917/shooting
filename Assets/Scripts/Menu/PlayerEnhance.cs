@@ -51,7 +51,7 @@ public class PlayerEnhance : MonoBehaviour
                 audioManager.PlaySE("Buy", player.audioSource);
                 ++player.maxHp;
                 player.hp = player.maxHp;
-                player.hpContainer.GetComponent<HpContainer>().Relocation();
+                //player.hpContainer.GetComponent<HpContainer>().Relocation();
 
                 player.nowPoint -= hp.needPoint; 
 
@@ -72,7 +72,7 @@ public class PlayerEnhance : MonoBehaviour
                 if(player.hp < player.maxHp){
                     audioManager.PlaySE("Buy", player.audioSource);
                     player.hp = player.maxHp;
-                    player.hpContainer.GetComponent<HpContainer>().Relocation();
+                    //player.hpContainer.GetComponent<HpContainer>().Relocation();
 
                     player.nowPoint -= hp.needPoint;
                 }
