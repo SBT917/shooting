@@ -20,7 +20,7 @@ public class HpContainer : MonoBehaviour
 
         for(int i = 0; i < currentHp + 1; ++i) //ここで再配置(UIの先頭にフタを設置するため+1)
         {
-            GameObject go = Instantiate<GameObject>(hpObj, transform);
+            GameObject go = Instantiate(hpObj, transform);
 
             if(i == hp.MaxHp){ //最終ループの時にSpriteをフタのSpriteに変えて、青いImageと背景を削除
                 Destroy(go.transform.GetChild(0).gameObject);

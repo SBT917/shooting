@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +52,28 @@ public class PlayerInputController : MonoBehaviour
         input.actions["Recharge"].performed -= OnRecharge;
     }
 
+    private void Update()
+    {
+        LookMousePoint();
+    }
+
+    //マウスポインターの方向を見る
+    private void LookMousePoint()
+    {
+        if (launchers.Find(l => l.IsShooting) == null) return;
+        if (input.currentControlScheme != "Keyboard&Mouse") return;
+
+        Plane plane = new Plane();
+        float distance = 0;
+
+        Ray ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
+        plane.SetNormalAndPosition(Vector3.up, transform.localPosition);
+        if (plane.Raycast(ray, out distance))
+        {
+            Vector3 lookPoint = ray.GetPoint(distance);
+            transform.LookAt(lookPoint);
+        }
+    }
 
     //移動キーを押したときの処理
     void OnStartMove(InputAction.CallbackContext context)
@@ -82,7 +105,7 @@ public class PlayerInputController : MonoBehaviour
     //発射キーを押したときの処理
     void OnStartLaunch(InputAction.CallbackContext context)
     {
-        if(invisible.IsInvisible) return;
+        if (invisible.IsInvisible) return;
         foreach (var l in launchers) { l.StopLaunch(); }
 
         int n = int.Parse(context.action.name[context.action.name.Length - 1].ToString());
@@ -107,4 +130,6 @@ public class PlayerInputController : MonoBehaviour
             l.StartRecharge();
         }
     }
+
+    
 }

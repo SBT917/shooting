@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -122,7 +123,7 @@ public class ShotLauncher : MonoBehaviour, IShotable
     private void Fire()
     {
         if(!IsShooting) return;
-        if(Amount <= 0) return;
+        if(Amount <= 0) StartRecharge();
         if(IsRecharging) return;
 
         var shot = ShotPool.Get();
@@ -149,6 +150,5 @@ public class ShotLauncher : MonoBehaviour, IShotable
         return true;
     }
 
-    
 
 }
