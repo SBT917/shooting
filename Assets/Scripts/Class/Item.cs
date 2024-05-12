@@ -8,7 +8,7 @@ public abstract class Item : MonoBehaviour
 {
     [SerializeField]protected int point; //獲得した際に増えるポイント
     private float disapCnt; //消えるまでの時間
-    private float speed; //プレイヤーの方向に吸い付くスピード
+    private float speed; //プレイヤーの方向に吸い付くスピード 
     private float range; //プレイヤーを感知する範囲
     protected Player player;
     protected AudioManager audioManager;
